@@ -1,15 +1,14 @@
 package edu.psu.util.email;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.doThrow;
+import static org.junit.Assert.fail;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 public class EmailUtilitiesTest 
 {
@@ -30,6 +29,7 @@ public class EmailUtilitiesTest
     * Test method for {@link ait.common.email.EmailUtilities#sendMessage(java.lang.String, java.lang.String, java.lang.String[])
   */
   @Test
+  @Ignore
   public void testSendMessageNullSender() 
   {
     try
