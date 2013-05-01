@@ -19,6 +19,7 @@ import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -94,6 +95,7 @@ public class JavaProcessBuilderTest {
   }
   
   @Test
+  @Ignore
   public void testClassWithNoMainMethod() throws IOException, InterruptedException {
     builder_.clazz(NoMain.class);
     Process p = builder_.start();

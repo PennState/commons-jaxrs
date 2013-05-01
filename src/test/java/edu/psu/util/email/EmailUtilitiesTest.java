@@ -29,7 +29,6 @@ public class EmailUtilitiesTest
     * Test method for {@link ait.common.email.EmailUtilities#sendMessage(java.lang.String, java.lang.String, java.lang.String[])
   */
   @Test
-  @Ignore
   public void testSendMessageNullSender() 
   {
     try
