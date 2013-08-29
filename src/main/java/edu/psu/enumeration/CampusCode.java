@@ -8,34 +8,53 @@ import java.util.Map;
 
 public enum CampusCode 
 {
-  AA("Altoona campus"),
-  AN("Lehigh Valley campus"),
-  BD("Penn State Erie, The Behrend College"),
-  BK("Berks campus"),
-  BR("Beaver campus"),
-  CL("Penn State Harrisburg, The Capital College"),
-  DE("Brandywine campus (formerly Delaware County campus)"),
-  DN("Carlisle campus"),
-  DS("DuBois campus"),
-  FE("Fayette campus"),
-  HN("Hazleton campus"),
-  HY("Milton S. Hershey Medical Center"),
-  KP("Penn State Great Valley"),
-  MA("Mont Alto campus"),
-  MK("Greater Allegheny campus"),
-  NK("New Kensington campus"),
-  OZ("Abington campus"),
-  PC("Pennsylvania College of Technology campus"),
-  SL("Schuylkill campus"),
-  SV("Shenango campus"),
-  UP("University Park campus"),
-  WB("Wilkes-Barre campus"),
-  WD("World Campus"),
-  WS("Worthington Scranton campus"),
-  XC("State College Continuing Education"),
-  XP("Keller Conference Center at University Park"),
-  XS("Foreign Studies Program"),
-  YK("York campus");
+	// REFERENCES:
+	// 1. Legacy ISIS codes - http://dus.psu.edu/legacy/codes.htm  
+	// 2. OPP building lists from FIS
+	// 3. OHR job campus/location list - https://app2.ohr.psu.edu/Jobs/External/EVMS2_External/currentap1.cfm
+	
+  AA("Altoona campus"),													// 1
+  AN("Lehigh Valley campus"),											// 1
+  BD("Penn State Erie, The Behrend College"),							// 1
+  BK("Berks campus"),													// 1
+  BR("Beaver campus"),													// 1
+  CL("Penn State Harrisburg, The Capital College"),						// 1
+  DE("Brandywine campus (formerly Delaware County campus)"),			// 1
+  DN("Carlisle campus"),												// 1
+  DS("DuBois campus"),													// 1 // See also DB
+  FE("Fayette campus"),													// 1
+  HN("Hazleton campus"),												// 1
+  HY("Milton S. Hershey Medical Center"),								// 1 // See also CM (College of Medicine)
+  KP("Penn State Great Valley"),										// 1 // Outdated?  See GV
+  MA("Mont Alto campus"),												// 1
+  MK("Greater Allegheny campus"),										// 1
+  NK("New Kensington campus"),											// 1
+  OZ("Abington campus"),												// 1
+  PC("Pennsylvania College of Technology campus"),						// 1
+  SL("Schuylkill campus"),												// 1
+  SV("Shenango campus"),												// 1
+  UP("University Park campus"),											// 1
+  WB("Wilkes-Barre campus"),											// 1
+  WD("World Campus"),													// 1
+  WS("Worthington Scranton campus"),									// 1
+  XC("State College Continuing Education"),								// 1
+  XP("Keller Conference Center at University Park"),					// 1
+  XS("Foreign Studies Program"),										// 1
+  YK("York campus"),													// 1
+
+  EC("SouthEast Agricultural Research & Extension Center"),				// 2 // in Landisville, PA
+  FR("Fruit Research Extension Office"),								// 2
+  GV("Great Valley"),													// 2
+  OC("Off Campus Sites"),												// 2 // Relative to UP -- transmitters, observatories, etc.
+  RS("Rock Springs");													// 2
+/*
+  CM("College of Medicine at the Milton S. Hershey Medical Center")		// 3 // Non-standard code?
+  DB("Penn State DuBois"),												// 3 // Non-standard code?
+  SK("Penn State Schuylkill"),											// 3 // Non-standard code?
+  AG("Penn State Extension"),											// 3
+  LT("Penn State Learning Center at Lewistown"),						// 3
+  WA("Navigation Center Penn State (Warminster, PA)"),					// 3
+*/
   
   private List<String> alternateCodes_ = new ArrayList<String>();
   private String campusName_;
