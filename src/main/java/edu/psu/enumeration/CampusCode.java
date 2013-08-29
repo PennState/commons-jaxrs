@@ -31,7 +31,9 @@ public enum CampusCode
   NK("New Kensington campus"),											// 1
   OZ("Abington campus"),												// 1
   PC("Pennsylvania College of Technology campus"),						// 1
+  SE("SouthEast Agricultural Research & Extension Center"),   // 2 // in Landisville, PA
   SL("Schuylkill campus"),												// 1
+  ST("Shaver's Creek Environmental Center"),    //2
   SV("Shenango campus"),												// 1
   UP("University Park campus"),											// 1
   WB("Wilkes-Barre campus"),											// 1
