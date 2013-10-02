@@ -252,6 +252,7 @@ public enum Country
   UMI("UM", "United States Minor Outlying Islands"),
   URY("UY", "Uruguay"),
   UZB("UZ", "Uzbekistan"),
+  UNK("XK", "Kosovo"),
   VUT("VU", "Vanuatu"),
   VEN("VE", "Venezuela, Bolivarian Republic of"),
   VNM("VN", "Viet Nam"),
