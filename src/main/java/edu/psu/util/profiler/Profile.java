@@ -47,74 +47,117 @@ public class Profile
   }
 */
 
-  public String generateReport()
-  {
-    long count = 0;
-    double delta = 0;
-    double perDelta = 0;
-    String perUnit = "";
-    String totalUnit = "";
-    
-    for( int i=0 ; i<stopTime_.size() ; ++i )
-    {
-      ++count;
-      delta += (double) stopTime_.get(i) - (double) startTime_.get(i);
-    }
-    
-    if( count > 0 ) 
-    {
-      perDelta = delta / (double)count;
+	public String generateReport() {
+		long count = 0;
+		double delta = 0;
+		double accumDelta = 0;
+		double accumSdev = 0;
+		double avg = 0;
+		double sdev = 0;
+		String avgUnit = "";
+		String totalUnit = "";
+		String returnMessage = "";
+		
+		for( int i=0 ; i<stopTime_.size() ; ++i ) {
+			if( stopTime_.get(i) != null ) {
+				++count;
+				delta = (double) stopTime_.get(i) - (double) startTime_.get(i);
+				accumDelta += delta;
+			}
+		}
 
-      if( delta < 999 )
-      {
-        totalUnit = "ns";
-      }
-      else if( delta < 999999 )
-      {
-        totalUnit = "µs";
-        delta /= 1000;
-      }
-      else if( delta < 999999999 )
-      {
-        totalUnit = "ms";
-        delta /= 1000000;
-      }
-      else if( delta > 999 )
-      {
-        totalUnit = " s";
-        delta /= 1000000000;
-      }
+		if( count > 0 ) {
+			avg = accumDelta / (double)count;
 
-      if( perDelta < 999 )
-      {
-        perUnit = "ns";
-      }
-      else if( perDelta < 999999 )
-      {
-        perUnit = "µs";
-        perDelta /= 1000;
-      }
-      else if( perDelta < 999999999 )
-      {
-        perUnit = "ms";
-        perDelta /= 1000000;
-      }
+			for( int i=0 ; i<stopTime_.size() ; ++i ) {
+				if( stopTime_.get(i) != null ) {
+					delta = (double) stopTime_.get(i) - (double) startTime_.get(i);
+					accumSdev += (delta - avg) * (delta - avg);
+				}
+			}
+			sdev = Math.sqrt( accumSdev / count );
 
-      else if( perDelta > 999 )
-      {
-        perUnit = " s";
-        perDelta /= 1000000000;
-      }
+			if( accumDelta < 999 ) {
+				totalUnit = "ns";
+			} else if( accumDelta < 999999 ) {
+				avgUnit = "us";//"µs";
+				accumDelta /= 1000;
+			} if( accumDelta < 999999999 ) {
+				totalUnit = "ms";
+				accumDelta /= 1000000;
+			} else if( accumDelta > 999 ) {
+				totalUnit = " s";
+				accumDelta /= 1000000000;
+			}
 
-      // %[argument_index$][flags][width][.precision]conversion
-      return( String.format(" %1$ 8d * %2$ 8.3f "+perUnit+" = %3$ 8.3f "+totalUnit, count, perDelta, delta ) );
-    }
-    else
-    {
-      return( "(no completed profiles taken)" );
-    }
-  }
+			if( avg < 999 ) {
+				avgUnit = "ns";
+			} else if( avg < 999999 ) {
+				avgUnit = "us";//"µs";
+				avg /= 1000;
+				sdev /= 1000;
+			} else if( avg < 999999999 ) {
+				avgUnit = "ms";
+				avg /= 1000000;
+				sdev /= 1000000;
+			} else if( avg > 999 ) {
+				avgUnit = " s";
+				avg /= 1000000000;
+				sdev /= 1000000000;
+			}
+
+			// %[argument_index$][flags][width][.precision]conversion
+			//return( String.format(" %1$ 8d * %2$ 8.3f "+perUnit+" = %3$ 8.3f "+totalUnit, count, avg, delta ) );
+			//return( String.format(" %1$ 8d * %2$ 8.3f "+avgUnit+" = %3$ 8.3f "+totalUnit, count, avg, accumDelta ) );
+			returnMessage = String.format(" %1$ 8d * %2$ 8.3f "+avgUnit+" = %3$ 8.3f "+totalUnit+"  σ %4$8.3f "+avgUnit, count, avg, accumDelta, sdev );
+
+			if( sdev > avg ) {
+				returnMessage += "\r\n" + this.dumpData();
+			}
+			
+			return returnMessage;
+		}
+		else {
+			return( "(no completed profiles taken)" );
+		}
+	}
 
   // ------------------------------------------------------------------------------------------ //
+
+	public String dumpData() {
+		long count = 0;
+		double total = 0;
+		double delta = 0;
+		double avg = 0;
+		double sdev = 0;
+		String returnString = "      ";
+    
+		for( int i=0 ; i<stopTime_.size() ; ++i ) {
+			++count;
+			if( ! returnString.equalsIgnoreCase("      ") ) 	{returnString += ", ";}
+			if( i > 0 && i % 5 == 0 ) 							{returnString += "\r\n      ";}
+			delta = ((double) stopTime_.get(i) - (double) startTime_.get(i)) / 1000000000;
+			total += delta;
+			// %[argument_index$][flags][width][.precision]conversion
+			returnString += (String.format("%1$ 8.5f", delta ));
+		}
+		returnString += "\r\n";
+		
+		avg = (double)(total / count);
+		total = 0;
+		for( int i=0 ; i<stopTime_.size() ; ++i ) {
+			delta = ((double) stopTime_.get(i) - (double) startTime_.get(i)) / 1000000000;
+			total += (delta - avg) * (delta - avg);
+//			returnString += (String.format("      RUNNING: %1$ 8.5f += (%2$ 8.5f - %3$ 8.5f) ^ 2\r\n", total, delta, avg ));
+		}
+		sdev = Math.sqrt( total / count );
+//		returnString += (String.format("      TOTAL: %1$ 8.5f\r\n", total ));
+//		returnString += (String.format("      COUNT: %1$ 8d\r\n", count ));
+		returnString += (String.format("      AVG: %1$ 8.5f s   SDEV: %2$ 8.5f s", avg, sdev ));
+		return( returnString );
+	}
+
+  // ------------------------------------------------------------------------------------------ //
+
 }
 
