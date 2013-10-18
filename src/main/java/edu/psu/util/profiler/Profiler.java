@@ -40,7 +40,7 @@ public class Profiler {
     } else {
       currentTree_ = currentTree_ + " -- " + pattern;
     }
-    
+
     if( ! patterns_.contains( currentTree_ ) ) {
       patterns_.add( currentTree_ );
       profiles_.put( currentTree_, new Profile() );
@@ -80,18 +80,18 @@ public class Profiler {
     report = "  PATTERN                                                      :     COUNT *    TIME PER =  TOTAL TIME  STDEV\r\n";
   
     for( String key : patterns_ ) {
-      depth_ = patternDepth_.get(key);
+      int depth = patternDepth_.get(key);
 
-      if( depth_ <= max_maxDepth_ ) {
+      if( depth <= max_maxDepth_ ) {
         if( key.lastIndexOf(" -- ") > -1 ) {
           displayKey = key.substring( key.lastIndexOf(" -- ") + 4);
         } else {
           displayKey = key;
         }
-        if( displayKey.length() > 60 - 2 * depth_ ) {
-          displayKey = key.substring( 0, 60 - 2 * depth_ );
+        if( displayKey.length() > 60 - 2 * depth ) {
+          displayKey = key.substring( 0, 60 - 2 * depth );
         }
-        report += String.format(" %1$"+(2*depth_)+"s %2$-"+(60-2*depth_)+"s : ", "", displayKey) + profiles_.get( key ).generateReport() + "\r\n";
+        report += String.format(" %1$"+(2*depth)+"s %2$-"+(60-2*depth)+"s : ", "", displayKey) + profiles_.get( key ).generateReport() + "\r\n";
       }
 
     }
@@ -110,13 +110,12 @@ public class Profiler {
 		String report = "";
 	  
 		for( String key : patterns_ ) {
-			depth_ = patternDepth_.get(key);
+			int depth = patternDepth_.get(key);
 
-			if( depth_ <= max_maxDepth_ ) {
+			if( depth <= max_maxDepth_ ) {
 				report += key + ":\r\n";
 				report += profiles_.get( key ).dumpData() + "\r\n";
 			}
-
 		}
 		return( report );
 	}
