@@ -1,13 +1,14 @@
 package edu.psu.util.email;
 
 import java.util.Properties;
-import javax.mail.Session;
+
 import javax.mail.Message;
-import javax.mail.Transport;
 import javax.mail.MessagingException;
-import javax.mail.internet.AddressException;
-import javax.mail.internet.MimeMessage;
+import javax.mail.SendFailedException;
+import javax.mail.Session;
+import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 
 public final class EmailUtilities
@@ -17,7 +18,7 @@ public final class EmailUtilities
 
   static final String MAIL_HOST = "smtp.psu.edu";
 
-  public static void sendMessage(String sender, String subject, String messageText, String ... recipients) throws AddressException, MessagingException
+  public static void sendMessage(String sender, String subject, String messageText, String ... recipients) throws SendFailedException, MessagingException
   {
     if (recipients == null || recipients.length == 0)
     {
