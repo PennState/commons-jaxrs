@@ -11,7 +11,7 @@
 	<groupId>edu.psu.libraries</groupId>
 	<artifactId>commons-psu</artifactId>
 	<name>Common Libraries - Java</name>
-	<version>1.1.5</version>
+	<version>1.1.6-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<url>${parent}/libraries/commonlibjava</url>
 
