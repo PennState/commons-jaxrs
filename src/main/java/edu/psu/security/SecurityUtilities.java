@@ -1,11 +1,14 @@
 package edu.psu.security;
 
 import java.io.UnsupportedEncodingException;
+import java.security.Security;
 import java.util.Date;
 import java.util.Random;
 
 import org.apache.commons.codec.binary.Base64;
 import org.bouncycastle.crypto.Digest;
+import org.bouncycastle.crypto.digests.SHA512Digest;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,6 +26,12 @@ public class SecurityUtilities
   private static Digest messageDigest_;
   
   private static final Random RANDOM = new Random(new Date().getTime());
+  
+  static 
+  {
+    Security.addProvider(new BouncyCastleProvider());
+    messageDigest_ = new SHA512Digest();
+  }
   
   public static String compressAndHashConvertString(String toBeHashed) throws UnsupportedEncodingException
   {
@@ -48,6 +57,11 @@ public class SecurityUtilities
   
   public static String generateRandomString(int size)
   {
+    if (size < 1)
+    {
+      throw new IllegalArgumentException("String size must be at least one character");
+    }
+    
     StringBuilder password = new StringBuilder();
     
     int list = -1;
