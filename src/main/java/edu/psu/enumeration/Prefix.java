@@ -3,7 +3,9 @@
  */
 package edu.psu.enumeration;
 
+import java.util.EnumSet;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -20,13 +22,29 @@ public enum Prefix
    
    private String prettyString_;
    private static Map<String, Prefix> reverseLookup_ = new HashMap<String, Prefix>();
+   private static String ILLEGAL_ARGUMENT_MESSAGE = null;
+   
    static
    {
-     reverseLookup_.put("None", NONE);
-     reverseLookup_.put("Mr.", MR);
-     reverseLookup_.put("Ms.", MS);
-     reverseLookup_.put("Mrs.", MRS);
-     reverseLookup_.put("Dr.", DR);
+     EnumSet<Prefix> set = EnumSet.allOf(Prefix.class);
+     
+     StringBuilder sb = new StringBuilder();
+     Iterator<Prefix> iter = set.iterator();
+     
+     while(iter.hasNext())
+     {
+       Prefix s = iter.next();
+
+       reverseLookup_.put(s.prettyString_,  s);
+
+       sb.append(s.name());
+       if (iter.hasNext())
+       {
+         sb.append(",");
+       }            
+     }
+      
+     ILLEGAL_ARGUMENT_MESSAGE = "The value you passed for PREFIX was illegal, legal values are: " + sb.toString();
    }
    
    /**
@@ -72,4 +90,28 @@ public enum Prefix
      return prettyString_;
    }
   
+   public static Prefix enumValue(String stringValue)
+   {
+     if (stringValue == null)
+     {
+       throw new IllegalArgumentException(ILLEGAL_ARGUMENT_MESSAGE);
+     }
+     
+     Prefix s = null;
+     try
+     {
+       s = Prefix.valueOf(stringValue.toUpperCase());
+     }
+     catch(IllegalArgumentException e)
+     {
+       //Try from pretty string
+       s = Prefix.fromPrettyString(stringValue);
+       if (s == null)
+       {
+         throw new IllegalArgumentException(ILLEGAL_ARGUMENT_MESSAGE);
+       }
+     }
+     
+     return s;
+   }
 }

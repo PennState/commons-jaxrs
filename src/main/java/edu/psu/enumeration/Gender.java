@@ -3,7 +3,9 @@
  */
 package edu.psu.enumeration;
 
+import java.util.EnumSet;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 public enum Gender
@@ -16,20 +18,35 @@ public enum Gender
   private String prettyString_;
   private String shortString_;
   
+  private static String ILLEGAL_ARGUMENT_MESSAGE = null;
+  
   private static Map<String, Gender> reverseTranslation_ = new HashMap<String, Gender>();
   private static Map<String, Gender> shortValueTranslation_ = new HashMap<String, Gender>();
 
   static
   {
-    reverseTranslation_.put("Female", FEMALE);
-    reverseTranslation_.put("Male", MALE);
-    reverseTranslation_.put("Other", OTHER);
-    reverseTranslation_.put("Not Specified", NOT_SPECIFIED);  
+    EnumSet<Gender> set = EnumSet.allOf(Gender.class);
     
-    shortValueTranslation_.put("F", FEMALE);
-    shortValueTranslation_.put("M", MALE);
-    shortValueTranslation_.put("O", OTHER);
-    shortValueTranslation_.put("N", NOT_SPECIFIED);
+    StringBuilder sb = new StringBuilder();
+    Iterator<Gender> iter = set.iterator();
+    
+    while(iter.hasNext())
+    {
+      Gender g = iter.next();
+      
+      reverseTranslation_.put(g.prettyString_,  g);
+      shortValueTranslation_.put(g.shortString_,  g);
+
+      sb.append(g.name());
+      sb.append(",");
+      sb.append(g.shortString_);
+      if (iter.hasNext())
+      {
+        sb.append(",");
+      }            
+    }
+     
+    ILLEGAL_ARGUMENT_MESSAGE = "The value you passed for GENDER was illegal, legal values are: " + sb.toString();
   }
   
   Gender(String prettyString, String shortString)
@@ -109,6 +126,36 @@ public enum Gender
   public String toString()
   {
     return prettyString_;
+  }
+  
+  public static Gender enumValue(String stringValue)
+  {
+    if (stringValue == null)
+    {
+      throw new IllegalArgumentException(ILLEGAL_ARGUMENT_MESSAGE);
+    }
+    
+    Gender g = null;
+    try
+    {
+      g = Gender.valueOf(stringValue.toUpperCase());
+    }
+    catch(IllegalArgumentException e)
+    {
+      //Try from pretty string
+      g = Gender.fromPrettyString(stringValue);
+      if (g == null)
+      {
+        g = Gender.fromShortString(stringValue);
+        
+        if (g == null)
+        {
+          throw new IllegalArgumentException(ILLEGAL_ARGUMENT_MESSAGE);
+        }
+      }
+    }
+    
+    return g;
   }
 }
 

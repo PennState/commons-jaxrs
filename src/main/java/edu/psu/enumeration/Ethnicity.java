@@ -1,6 +1,8 @@
 package edu.psu.enumeration;
 
+import java.util.EnumSet;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 public enum Ethnicity
@@ -17,17 +19,30 @@ public enum Ethnicity
   
   private String prettyString_;
   private static Map<String, Ethnicity> prettyStringTranslation_ = new HashMap<String, Ethnicity>();
+  
+  private static String ILLEGAL_ARGUMENT_MESSAGE = null;
+  
   static
   {
-    prettyStringTranslation_.put("White", WHITE);
-    prettyStringTranslation_.put("Hispanic/Latino", HISPANIC);
-    prettyStringTranslation_.put("Black/African American", BLACK);
-    prettyStringTranslation_.put("Asian", ASIAN);
-    prettyStringTranslation_.put("American Indian or Alaska Native", AMERICAN_INDIAN);
-    prettyStringTranslation_.put("Native Hawaiian or other Pacific Islander", PACIFIC_ISLANDER);
-    prettyStringTranslation_.put("Multiple Ethnicities", MULTIPLE);
-    prettyStringTranslation_.put("Other", OTHER);
-    prettyStringTranslation_.put("No Response", NO_RESPONSE);
+    EnumSet<Ethnicity> set = EnumSet.allOf(Ethnicity.class);
+    
+    StringBuilder sb = new StringBuilder();
+    Iterator<Ethnicity> iter = set.iterator();
+    
+    while(iter.hasNext())
+    {
+      Ethnicity e = iter.next();
+      
+      prettyStringTranslation_.put(e.prettyString_,  e);
+
+      sb.append(e.name());
+      if (iter.hasNext())
+      {
+        sb.append(",");
+      }     
+    }
+
+    ILLEGAL_ARGUMENT_MESSAGE = "The value you passed for ETHNICITY was illegal, legal values are: " + sb.toString();
   }
   
   /**

@@ -3,7 +3,9 @@
  */
 package edu.psu.enumeration;
 
+import java.util.EnumSet;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -27,21 +29,30 @@ public enum Suffix
   
   private String prettyString_;
   private static Map<String, Suffix> reverseTranslation_ = new HashMap<String, Suffix>();
+  private static String ILLEGAL_ARGUMENT_MESSAGE = null;
   
   static
   {
-    reverseTranslation_.put("", NONE);
-    reverseTranslation_.put("Jr.", JR);
-    reverseTranslation_.put("Sr.", SR);    
-    reverseTranslation_.put("II", II);
-    reverseTranslation_.put("III", III);
-    reverseTranslation_.put("IV", IV);
-    reverseTranslation_.put("V", V);
-    reverseTranslation_.put("VI", VI);
-    reverseTranslation_.put("VII", VII);
-    reverseTranslation_.put("VIII", VIII);
-    reverseTranslation_.put("IX", IX);
-    reverseTranslation_.put("X", X);
+    EnumSet<Suffix> set = EnumSet.allOf(Suffix.class);
+    
+    StringBuilder sb = new StringBuilder();
+
+    Iterator<Suffix> iter = set.iterator();
+    
+    while(iter.hasNext())
+    {
+      Suffix s = iter.next();
+      sb.append(s.name());
+      
+      if (iter.hasNext())
+      {
+        sb.append(",");
+      }
+           
+      reverseTranslation_.put(s.prettyString_,  s);
+    }
+     
+    ILLEGAL_ARGUMENT_MESSAGE = "The value you passed for SUFFIX was illegal, legal values are: " + sb.toString();
   }
   
   Suffix(String prettyString)
@@ -82,5 +93,30 @@ public enum Suffix
     }
     
     return prettyString_;
+  }
+  
+  public static Suffix enumValue(String stringValue)
+  {
+    if (stringValue == null)
+    {
+      throw new IllegalArgumentException(ILLEGAL_ARGUMENT_MESSAGE);
+    }
+    
+    Suffix s = null;
+    try
+    {
+      s = Suffix.valueOf(stringValue.toUpperCase());
+    }
+    catch(IllegalArgumentException e)
+    {
+      //Try from pretty string
+      s = Suffix.fromPrettyString(stringValue);
+      if (s == null)
+      {
+        throw new IllegalArgumentException(ILLEGAL_ARGUMENT_MESSAGE);
+      }
+    }
+    
+    return s;
   }
 }
