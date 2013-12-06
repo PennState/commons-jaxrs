@@ -85,4 +85,29 @@ public enum Ethnicity
   { 
     return prettyString_;
   }
+  
+  public static Ethnicity enumValue(String stringValue)
+  {
+    if (stringValue == null)
+    {
+      throw new IllegalArgumentException(ILLEGAL_ARGUMENT_MESSAGE);
+    }
+    
+    Ethnicity e = null;
+    try
+    {
+      e = Ethnicity.valueOf(stringValue.toUpperCase());
+    }
+    catch(IllegalArgumentException ex)
+    {
+      //Try from pretty string
+      e = Ethnicity.fromPrettyString(stringValue);
+      if (e == null)
+      {
+        throw new IllegalArgumentException(ILLEGAL_ARGUMENT_MESSAGE);
+      }
+    }
+    
+    return e;
+  }
 }
