@@ -3,7 +3,9 @@
  */
 package edu.psu.enumeration;
 
+import java.util.EnumSet;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -271,11 +273,38 @@ public enum Country
   private static Map<String, Country> prettyStringLookup_;
   private static Map<String, Country> twoLetterLookup_;
   
+  private static String ILLEGAL_ARGUMENT_MESSAGE = null;
+  
+  static
+  {
+    EnumSet<Country> set = EnumSet.allOf(Country.class);
+    
+    StringBuilder sb = new StringBuilder();
+    Iterator<Country> iter = set.iterator();
+    
+    while(iter.hasNext())
+    {
+      Country c = iter.next();
+      
+      prettyStringLookup_.put(c.prettyString_,  c);
+      twoLetterLookup_.put(c.twoLetterNotation_, c);
+
+      sb.append(c.name());
+      sb.append(",");
+      sb.append(c.twoLetterNotation_);
+      if (iter.hasNext())
+      {
+        sb.append(",");
+      }     
+    }
+
+    ILLEGAL_ARGUMENT_MESSAGE = "The value you passed for ETHNICITY was illegal, legal values are: " + sb.toString();
+  }
+  
   Country(String twoLetterNotation, String prettyName)
   {
     twoLetterNotation_ = twoLetterNotation;
     prettyString_ = prettyName;
-    addReverseLookupInformation(this, twoLetterNotation, prettyName);
   }
   
   /**
@@ -308,19 +337,33 @@ public enum Country
     return prettyString_;
   }
   
-  private static synchronized void addReverseLookupInformation(Country country, String twoLetterName, String prettyName)
+  public static Country enumValue(String stringValue)
   {
-    if (prettyStringLookup_ == null)
+    if (stringValue == null)
     {
-      prettyStringLookup_ = new HashMap<String, Country>();
+      throw new IllegalArgumentException(ILLEGAL_ARGUMENT_MESSAGE);
     }
     
-    if (twoLetterLookup_ == null)
+    Country c = null;
+    try
     {
-      twoLetterLookup_ = new HashMap<String, Country>();
+      c = Country.valueOf(stringValue.toUpperCase());
+    }
+    catch(IllegalArgumentException ex)
+    {
+      c = Country.fromTwoLetterNotation(stringValue.toUpperCase());
+      
+      if (c == null)
+      {
+        //Try from pretty string
+        c = Country.fromPrettyString(stringValue);
+        if (c == null)
+        {
+          throw new IllegalArgumentException(ILLEGAL_ARGUMENT_MESSAGE);
+        }
+      }
     }
     
-    prettyStringLookup_.put(prettyName, country);
-    twoLetterLookup_.put(twoLetterName, country);
+    return c;
   }
 }
