@@ -270,8 +270,8 @@ public enum Country
   private String twoLetterNotation_;
   private String prettyString_;
   
-  private static Map<String, Country> prettyStringLookup_;
-  private static Map<String, Country> twoLetterLookup_;
+  private static Map<String, Country> prettyStringLookup_ = new HashMap<String,Country>();
+  private static Map<String, Country> twoLetterLookup_ = new HashMap<String,Country>();
   
   private static String ILLEGAL_ARGUMENT_MESSAGE = null;
   
