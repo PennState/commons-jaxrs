@@ -3,7 +3,9 @@
  */
 package edu.psu.enumeration;
 
+import java.util.EnumSet;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -61,6 +63,31 @@ public enum SecurityQuestion
   
   private String prettyString_;
   
+  private static String ILLEGAL_ARGUMENT_MESSAGE = null;
+  
+  static
+  {
+    EnumSet<SecurityQuestion> set = EnumSet.allOf(SecurityQuestion.class);
+    
+    StringBuilder sb = new StringBuilder();
+    Iterator<SecurityQuestion> iter = set.iterator();
+    
+    while(iter.hasNext())
+    {
+      SecurityQuestion s = iter.next();
+
+      reverseLookup_.put(s.prettyString_,  s);
+
+      sb.append(s.name());
+      if (iter.hasNext())
+      {
+        sb.append(",");
+      }            
+    }
+     
+    ILLEGAL_ARGUMENT_MESSAGE = "The value you passed for Security Question was illegal, legal values are: " + sb.toString();
+  }
+  
   /**
    * Constructs a SecurityQuestion with a "presentation" version
    * @param prettyQuestion
@@ -68,7 +95,6 @@ public enum SecurityQuestion
   SecurityQuestion(String prettyQuestion)
   {
     prettyString_ = prettyQuestion;
-    addPrettyQuestion(this, prettyQuestion);
   }
 
   /**
@@ -76,7 +102,7 @@ public enum SecurityQuestion
    * @param prettyString
    * @return SecurityQuestion if valid, null otherwise
    */
-  public SecurityQuestion fromPrettyString(String prettyString)
+  public static SecurityQuestion fromPrettyString(String prettyString)
   {
     return reverseLookup_.get(prettyString.trim());
   }
@@ -87,12 +113,28 @@ public enum SecurityQuestion
     return prettyString_;
   }
   
-  private static synchronized void addPrettyQuestion(SecurityQuestion sq, String prettyQuestion)
+  public static SecurityQuestion enumValue(String stringValue)
   {
-    if(reverseLookup_ == null) {
-      reverseLookup_ = new HashMap<String, SecurityQuestion>();
+    if (stringValue == null)
+    {
+      throw new IllegalArgumentException(ILLEGAL_ARGUMENT_MESSAGE);
     }
     
-    reverseLookup_.put(prettyQuestion, sq);
+    SecurityQuestion s = null;
+    try
+    {
+      s = SecurityQuestion.valueOf(stringValue.toUpperCase());
+    }
+    catch(IllegalArgumentException e)
+    {
+      //Try from pretty string
+      s = SecurityQuestion.fromPrettyString(stringValue);
+      if (s == null)
+      {
+        throw new IllegalArgumentException(ILLEGAL_ARGUMENT_MESSAGE);
+      }
+    }
+    
+    return s;
   }
 }
