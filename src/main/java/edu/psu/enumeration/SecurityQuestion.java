@@ -59,7 +59,7 @@ public enum SecurityQuestion
   HOME_COUNTY("What is your home county?"),
   PHONE_NUMBER_LAST_FOUR("What are the last four digits of your phone number?");    
 
-  private static Map<String, SecurityQuestion> reverseLookup_ = null;
+  private static Map<String, SecurityQuestion> reverseLookup_ = new HashMap<String, SecurityQuestion>();
   
   private String prettyString_;
   
