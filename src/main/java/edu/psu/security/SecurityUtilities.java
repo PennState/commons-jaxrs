@@ -92,4 +92,8 @@ public class SecurityUtilities
     
     return password.toString();
   }
+  
+  //Prevent Construction
+  private SecurityUtilities()
+  {}
 }
