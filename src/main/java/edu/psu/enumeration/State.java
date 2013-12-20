@@ -181,17 +181,18 @@ public enum State
     }
     
     State s = null;
+    String trimmedValue = stringValue.trim();
     try
     {
-      s = State.valueOf(stringValue.toUpperCase());
+      s = State.valueOf(trimmedValue.toUpperCase());
     }
     catch(IllegalArgumentException e)
     {
       //Try from pretty string
-      s = State.fromPrettyString(stringValue);
+      s = State.fromPrettyString(trimmedValue);
       if (s == null)
       {
-        s = State.fromAbbreviation(stringValue);
+        s = State.fromAbbreviation(trimmedValue);
         
         if (s == null)
         {

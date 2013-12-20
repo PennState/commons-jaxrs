@@ -345,18 +345,19 @@ public enum Country
     }
     
     Country c = null;
+    String trimmedValue = stringValue.trim();
     try
     {
-      c = Country.valueOf(stringValue.toUpperCase());
+      c = Country.valueOf(trimmedValue.toUpperCase());
     }
     catch(IllegalArgumentException ex)
     {
-      c = Country.fromTwoLetterNotation(stringValue.toUpperCase());
+      c = Country.fromTwoLetterNotation(trimmedValue.toUpperCase());
       
       if (c == null)
       {
         //Try from pretty string
-        c = Country.fromPrettyString(stringValue);
+        c = Country.fromPrettyString(trimmedValue);
         if (c == null)
         {
           throw new IllegalArgumentException(ILLEGAL_ARGUMENT_MESSAGE);

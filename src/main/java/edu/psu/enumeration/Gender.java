@@ -136,17 +136,18 @@ public enum Gender
     }
     
     Gender g = null;
+    String trimmedValue = stringValue.trim();
     try
     {
-      g = Gender.valueOf(stringValue.toUpperCase());
+      g = Gender.valueOf(trimmedValue.toUpperCase());
     }
     catch(IllegalArgumentException e)
     {
       //Try from pretty string
-      g = Gender.fromPrettyString(stringValue);
+      g = Gender.fromPrettyString(trimmedValue);
       if (g == null)
       {
-        g = Gender.fromShortString(stringValue);
+        g = Gender.fromShortString(trimmedValue);
         
         if (g == null)
         {

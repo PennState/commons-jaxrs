@@ -121,14 +121,15 @@ public enum SecurityQuestion
     }
     
     SecurityQuestion s = null;
+    String trimmedValue = stringValue.trim();
     try
     {
-      s = SecurityQuestion.valueOf(stringValue.toUpperCase());
+      s = SecurityQuestion.valueOf(trimmedValue.toUpperCase());
     }
     catch(IllegalArgumentException e)
     {
       //Try from pretty string
-      s = SecurityQuestion.fromPrettyString(stringValue);
+      s = SecurityQuestion.fromPrettyString(trimmedValue);
       if (s == null)
       {
         throw new IllegalArgumentException(ILLEGAL_ARGUMENT_MESSAGE);

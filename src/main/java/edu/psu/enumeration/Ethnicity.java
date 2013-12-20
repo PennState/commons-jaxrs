@@ -94,14 +94,15 @@ public enum Ethnicity
     }
     
     Ethnicity e = null;
+    String trimmedValue = stringValue.trim();
     try
     {
-      e = Ethnicity.valueOf(stringValue.toUpperCase());
+      e = Ethnicity.valueOf(trimmedValue.toUpperCase());
     }
     catch(IllegalArgumentException ex)
     {
       //Try from pretty string
-      e = Ethnicity.fromPrettyString(stringValue);
+      e = Ethnicity.fromPrettyString(trimmedValue);
       if (e == null)
       {
         throw new IllegalArgumentException(ILLEGAL_ARGUMENT_MESSAGE);

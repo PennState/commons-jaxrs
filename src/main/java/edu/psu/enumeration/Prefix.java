@@ -98,14 +98,15 @@ public enum Prefix
      }
      
      Prefix s = null;
+     String trimmedValue = stringValue.trim();
      try
      {
-       s = Prefix.valueOf(stringValue.toUpperCase());
+       s = Prefix.valueOf(trimmedValue.toUpperCase());
      }
      catch(IllegalArgumentException e)
      {
        //Try from pretty string
-       s = Prefix.fromPrettyString(stringValue);
+       s = Prefix.fromPrettyString(trimmedValue);
        if (s == null)
        {
          throw new IllegalArgumentException(ILLEGAL_ARGUMENT_MESSAGE);
