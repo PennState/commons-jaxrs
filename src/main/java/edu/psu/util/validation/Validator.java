@@ -154,9 +154,12 @@ public final class Validator
       return PasswordCheckResult.HAS_QUOTES;
     }
 
-    if (newPassword.toLowerCase().contains(userID.toLowerCase()))
+    if (userID != null && !userID.isEmpty())
     {
-      return PasswordCheckResult.HAS_EMBEDDED_USERID;
+      if (newPassword.toLowerCase().contains(userID.toLowerCase()))
+      {
+        return PasswordCheckResult.HAS_EMBEDDED_USERID;
+      }
     }
     
     Pattern alpha = Pattern.compile("[a-zA-Z]");
