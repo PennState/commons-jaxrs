@@ -60,6 +60,8 @@ public enum SecurityQuestion
   PHONE_NUMBER_LAST_FOUR("What are the last four digits of your phone number?");    
 
   private static Map<String, SecurityQuestion> reverseLookup_ = new HashMap<String, SecurityQuestion>();
+  private static final String BARE_QUESTION_LOOKUP_REGEX = "[ \\p{Punct}]";
+
   
   private String prettyString_;
   
@@ -77,6 +79,7 @@ public enum SecurityQuestion
       SecurityQuestion s = iter.next();
 
       reverseLookup_.put(s.prettyString_,  s);
+      reverseLookup_.put(s.prettyString_.replaceAll(BARE_QUESTION_LOOKUP_REGEX, "").toLowerCase(), s);
 
       sb.append(s.name());
       if (iter.hasNext())
@@ -131,8 +134,13 @@ public enum SecurityQuestion
       //Try from pretty string
       s = SecurityQuestion.fromPrettyString(trimmedValue);
       if (s == null)
-      {
-        throw new IllegalArgumentException(ILLEGAL_ARGUMENT_MESSAGE);
+      { 
+        s = reverseLookup_.get(stringValue.replaceAll(BARE_QUESTION_LOOKUP_REGEX, "").toLowerCase());
+        
+        if (s == null)
+        {
+          throw new IllegalArgumentException(ILLEGAL_ARGUMENT_MESSAGE);
+        }
       }
     }
     
