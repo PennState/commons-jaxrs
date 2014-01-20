@@ -1,5 +1,7 @@
 package edu.psu.enumeration;
 
+import static edu.psu.enumeration.Constants.BARE_QUESTION_LOOKUP_REGEX;
+
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -72,13 +74,11 @@ public enum State
   private String shortVersion_;
   
   private static Map<String, State> reverseLookup_ = null;
-  private static Map<String, State> shortVersionLookup_ = null;
   private static String ILLEGAL_ARGUMENT_MESSAGE = null;
   
   static
   {
     reverseLookup_ = new HashMap<String, State>();
-    shortVersionLookup_ = new HashMap<String, State>();
     
     EnumSet<State> set = EnumSet.allOf(State.class);
     
@@ -88,7 +88,10 @@ public enum State
     {
       State s = iter.next();
       reverseLookup_.put(s.prettyString_, s);
-      shortVersionLookup_.put(s.shortVersion_,  s);
+      reverseLookup_.put(s.shortVersion_,  s);
+      reverseLookup_.put(s.shortVersion_.toLowerCase(),  s);
+      reverseLookup_.put(s.prettyString_.replaceAll(BARE_QUESTION_LOOKUP_REGEX, "").toLowerCase(), s);
+      reverseLookup_.put(s.name().toLowerCase(),  s);
       
       sb.append(s.name());
       sb.append(",");
@@ -145,7 +148,7 @@ public enum State
 		} 
 		else 
 		{
-			return shortVersionLookup_.get(abbreviation.toUpperCase().trim());
+			return reverseLookup_.get(abbreviation.trim());
 		}
 	}
     
@@ -189,10 +192,10 @@ public enum State
     catch(IllegalArgumentException e)
     {
       //Try from pretty string
-      s = State.fromPrettyString(trimmedValue);
+      s = reverseLookup_.get(trimmedValue.toLowerCase());
       if (s == null)
       {
-        s = State.fromAbbreviation(trimmedValue);
+        s = reverseLookup_.get(trimmedValue.replaceAll(BARE_QUESTION_LOOKUP_REGEX, "").toLowerCase());
         
         if (s == null)
         {

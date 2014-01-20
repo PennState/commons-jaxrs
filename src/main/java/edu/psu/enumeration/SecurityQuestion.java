@@ -7,6 +7,7 @@ import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import static edu.psu.enumeration.Constants.BARE_QUESTION_LOOKUP_REGEX;
 
 /**
  * This enumeration is a representation of all valid security questions that can be asked within the FPS system
@@ -60,7 +61,6 @@ public enum SecurityQuestion
   PHONE_NUMBER_LAST_FOUR("What are the last four digits of your phone number?");    
 
   private static Map<String, SecurityQuestion> reverseLookup_ = new HashMap<String, SecurityQuestion>();
-  private static final String BARE_QUESTION_LOOKUP_REGEX = "[ \\p{Punct}]";
 
   
   private String prettyString_;

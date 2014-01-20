@@ -3,6 +3,8 @@
  */
 package edu.psu.enumeration;
 
+import static edu.psu.enumeration.Constants.BARE_QUESTION_LOOKUP_REGEX;
+
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -270,8 +272,7 @@ public enum Country
   private String twoLetterNotation_;
   private String prettyString_;
   
-  private static Map<String, Country> prettyStringLookup_ = new HashMap<String,Country>();
-  private static Map<String, Country> twoLetterLookup_ = new HashMap<String,Country>();
+  private static Map<String, Country> reverseLookup_ = new HashMap<String,Country>();
   
   private static String ILLEGAL_ARGUMENT_MESSAGE = null;
   
@@ -286,8 +287,11 @@ public enum Country
     {
       Country c = iter.next();
       
-      prettyStringLookup_.put(c.prettyString_,  c);
-      twoLetterLookup_.put(c.twoLetterNotation_, c);
+      reverseLookup_.put(c.prettyString_,  c);
+      reverseLookup_.put(c.twoLetterNotation_, c);
+      reverseLookup_.put(c.twoLetterNotation_.toLowerCase(), c);
+      reverseLookup_.put(c.prettyString_.replaceAll(BARE_QUESTION_LOOKUP_REGEX, "").toLowerCase(), c);
+      reverseLookup_.put(c.name().toLowerCase(), c);
 
       sb.append(c.name());
       sb.append(",");
@@ -314,12 +318,12 @@ public enum Country
    */
   public static Country fromTwoLetterNotation(String notation)
   {
-    return twoLetterLookup_.get(notation.toUpperCase().trim());  
+    return reverseLookup_.get(notation.toUpperCase().trim());  
   }
   
   public static Country fromPrettyString(String prettyString)
   {
-    return prettyStringLookup_.get(prettyString.trim());  
+    return reverseLookup_.get(prettyString.trim());  
   }
   
   /**
@@ -352,12 +356,12 @@ public enum Country
     }
     catch(IllegalArgumentException ex)
     {
-      c = Country.fromTwoLetterNotation(trimmedValue.toUpperCase());
+      c = reverseLookup_.get(trimmedValue.toUpperCase());
       
       if (c == null)
       {
         //Try from pretty string
-        c = Country.fromPrettyString(trimmedValue);
+        c = reverseLookup_.get(stringValue.replaceAll(BARE_QUESTION_LOOKUP_REGEX, "").toLowerCase());
         if (c == null)
         {
           throw new IllegalArgumentException(ILLEGAL_ARGUMENT_MESSAGE);

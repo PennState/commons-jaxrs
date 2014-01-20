@@ -1,5 +1,7 @@
 package edu.psu.enumeration;
 
+import static edu.psu.enumeration.Constants.BARE_QUESTION_LOOKUP_REGEX;
+
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -18,7 +20,7 @@ public enum Ethnicity
   NO_RESPONSE("No Response");
   
   private String prettyString_;
-  private static Map<String, Ethnicity> prettyStringTranslation_ = new HashMap<String, Ethnicity>();
+  private static Map<String, Ethnicity> reverseLookup_ = new HashMap<String, Ethnicity>();
   
   private static String ILLEGAL_ARGUMENT_MESSAGE = null;
   
@@ -33,7 +35,9 @@ public enum Ethnicity
     {
       Ethnicity e = iter.next();
       
-      prettyStringTranslation_.put(e.prettyString_,  e);
+      reverseLookup_.put(e.prettyString_,  e);
+      reverseLookup_.put(e.prettyString_.replaceAll(BARE_QUESTION_LOOKUP_REGEX, "").toLowerCase(), e);
+      reverseLookup_.put(e.name().toLowerCase(), e);
 
       sb.append(e.name());
       if (iter.hasNext())
@@ -65,11 +69,11 @@ public enum Ethnicity
     {
       if (prettyString.trim().isEmpty())
       {
-        return prettyStringTranslation_.get("No Response");
+        return reverseLookup_.get("No Response");
       }
       else
       {
-        return prettyStringTranslation_.get(prettyString.trim());
+        return reverseLookup_.get(prettyString.trim());
       }
     }
 
@@ -102,10 +106,15 @@ public enum Ethnicity
     catch(IllegalArgumentException ex)
     {
       //Try from pretty string
-      e = Ethnicity.fromPrettyString(trimmedValue);
+      e = reverseLookup_.get(trimmedValue);
       if (e == null)
       {
-        throw new IllegalArgumentException(ILLEGAL_ARGUMENT_MESSAGE);
+        e = reverseLookup_.get(stringValue.replaceAll(BARE_QUESTION_LOOKUP_REGEX, "").toLowerCase());
+        
+        if (e == null)
+        {
+          throw new IllegalArgumentException(ILLEGAL_ARGUMENT_MESSAGE);
+        }
       }
     }
     

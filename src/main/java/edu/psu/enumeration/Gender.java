@@ -3,6 +3,8 @@
  */
 package edu.psu.enumeration;
 
+import static edu.psu.enumeration.Constants.BARE_QUESTION_LOOKUP_REGEX;
+
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -20,8 +22,7 @@ public enum Gender
   
   private static String ILLEGAL_ARGUMENT_MESSAGE = null;
   
-  private static Map<String, Gender> reverseTranslation_ = new HashMap<String, Gender>();
-  private static Map<String, Gender> shortValueTranslation_ = new HashMap<String, Gender>();
+  private static Map<String, Gender> reverseLookup_ = new HashMap<String, Gender>();
 
   static
   {
@@ -34,8 +35,11 @@ public enum Gender
     {
       Gender g = iter.next();
       
-      reverseTranslation_.put(g.prettyString_,  g);
-      shortValueTranslation_.put(g.shortString_,  g);
+      reverseLookup_.put(g.prettyString_,  g);
+      reverseLookup_.put(g.shortString_,  g);
+      reverseLookup_.put(g.shortString_.toLowerCase(), g);
+      reverseLookup_.put(g.prettyString_.replaceAll(BARE_QUESTION_LOOKUP_REGEX, "").toLowerCase(), g);
+      reverseLookup_.put(g.name().toLowerCase(), g);
 
       sb.append(g.name());
       sb.append(",");
@@ -70,7 +74,7 @@ public enum Gender
       }
       else
       {
-        return reverseTranslation_.get(prettyString.trim());
+        return reverseLookup_.get(prettyString.trim());
       }
     }
     
@@ -95,7 +99,7 @@ public enum Gender
       }
       else
       {
-        return shortValueTranslation_.get(shortString.trim().toUpperCase());
+        return reverseLookup_.get(shortString.trim().toUpperCase());
       }
     }
     
@@ -147,11 +151,16 @@ public enum Gender
       g = Gender.fromPrettyString(trimmedValue);
       if (g == null)
       {
-        g = Gender.fromShortString(trimmedValue);
+        g = reverseLookup_.get(trimmedValue);
         
         if (g == null)
         {
-          throw new IllegalArgumentException(ILLEGAL_ARGUMENT_MESSAGE);
+          g = reverseLookup_.get(stringValue.replaceAll(BARE_QUESTION_LOOKUP_REGEX, "").toLowerCase());
+          
+          if (g == null)
+          {
+            throw new IllegalArgumentException(ILLEGAL_ARGUMENT_MESSAGE);
+          }
         }
       }
     }

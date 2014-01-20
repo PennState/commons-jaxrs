@@ -3,6 +3,8 @@
  */
 package edu.psu.enumeration;
 
+import static edu.psu.enumeration.Constants.BARE_QUESTION_LOOKUP_REGEX;
+
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -28,7 +30,7 @@ public enum Suffix
   X("X");
   
   private String prettyString_;
-  private static Map<String, Suffix> reverseTranslation_ = new HashMap<String, Suffix>();
+  private static Map<String, Suffix> reverseLookup_ = new HashMap<String, Suffix>();
   private static String ILLEGAL_ARGUMENT_MESSAGE = null;
   
   static
@@ -49,7 +51,9 @@ public enum Suffix
         sb.append(",");
       }
            
-      reverseTranslation_.put(s.prettyString_,  s);
+      reverseLookup_.put(s.prettyString_,  s);
+      reverseLookup_.put(s.name().toLowerCase(), s);
+      reverseLookup_.put(s.prettyString_.replaceAll(BARE_QUESTION_LOOKUP_REGEX, "").toLowerCase(), s);
     }
      
     ILLEGAL_ARGUMENT_MESSAGE = "The value you passed for SUFFIX was illegal, legal values are: " + sb.toString();
@@ -74,7 +78,7 @@ public enum Suffix
         return Suffix.NONE;
       }
       
-      return reverseTranslation_.get(prettyString.trim());
+      return reverseLookup_.get(prettyString.trim());
     }
     
     return null;
@@ -110,10 +114,15 @@ public enum Suffix
     catch(IllegalArgumentException e)
     {
       //Try from pretty string
-      s = Suffix.fromPrettyString(stringValue);
+      s = reverseLookup_.get(stringValue);
       if (s == null)
       {
-        throw new IllegalArgumentException(ILLEGAL_ARGUMENT_MESSAGE);
+        s = reverseLookup_.get(stringValue.replaceAll(BARE_QUESTION_LOOKUP_REGEX, "").toLowerCase());
+        
+        if (s == null)
+        {
+          throw new IllegalArgumentException(ILLEGAL_ARGUMENT_MESSAGE);
+        }
       }
     }
     

@@ -7,6 +7,7 @@ import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import static edu.psu.enumeration.Constants.BARE_QUESTION_LOOKUP_REGEX;
 
 /**
  * @author ses44
@@ -36,6 +37,8 @@ public enum Prefix
        Prefix s = iter.next();
 
        reverseLookup_.put(s.prettyString_,  s);
+       reverseLookup_.put(s.prettyString_.replaceAll(BARE_QUESTION_LOOKUP_REGEX, "").toLowerCase(), s);
+       reverseLookup_.put(s.name().replaceAll(BARE_QUESTION_LOOKUP_REGEX, "").toLowerCase(), s);
 
        sb.append(s.name());
        if (iter.hasNext())

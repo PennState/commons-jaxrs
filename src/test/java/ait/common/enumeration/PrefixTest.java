@@ -3,6 +3,7 @@
  */
 package ait.common.enumeration;
 
+import static edu.psu.enumeration.Constants.BARE_QUESTION_LOOKUP_REGEX;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -65,6 +66,40 @@ public class PrefixTest
   public void testFromPrettyStringValid(String testName, String prettyPrefix, String prefix, boolean passes)
   {
     Prefix p1 = Prefix.fromPrettyString(prettyPrefix);
+    Prefix p2 = Prefix.valueOf(prefix);
+    assertEquals(p1, p2);
+  }
+  
+  /**
+   * Test method for {@link edu.psu.fps.model.enums.Prefix#fromPrettyString(java.lang.String)}.
+   */
+  @Test
+  @Parameters({
+    "Prefix MR,    Mr.,  MR,   true",
+    "Prefix MS,    Ms.,  MS,   true",
+    "Prefix MRS,   Mrs., MRS,  true",
+    "Prefix DR,    Dr.,  DR,   true"
+  })
+  public void testFromPrettyStringMinimizedValid(String testName, String prettyPrefix, String prefix, boolean passes)
+  {
+    Prefix p1 = Prefix.fromPrettyString(prettyPrefix.replaceAll(BARE_QUESTION_LOOKUP_REGEX, "").toLowerCase());
+    Prefix p2 = Prefix.valueOf(prefix);
+    assertEquals(p1, p2);
+  }
+  
+  /**
+   * Test method for {@link edu.psu.fps.model.enums.Prefix#fromPrettyString(java.lang.String)}.
+   */
+  @Test
+  @Parameters({
+    "Prefix MR,    MR,   true",
+    "Prefix MS,    MS,   true",
+    "Prefix MRS,   MRS,  true",
+    "Prefix DR,    DR,   true"
+  })
+  public void testFromNameLowerCase(String testName, String prefix, boolean passes)
+  {
+    Prefix p1 = Prefix.enumValue(prefix.toLowerCase());
     Prefix p2 = Prefix.valueOf(prefix);
     assertEquals(p1, p2);
   }
