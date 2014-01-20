@@ -82,6 +82,8 @@ public enum SecurityQuestion
       reverseLookup_.put(s.prettyString_.replaceAll(BARE_QUESTION_LOOKUP_REGEX, "").toLowerCase(), s);
 
       sb.append(s.name());
+      sb.append(", ");
+      sb.append(s.prettyString_);
       if (iter.hasNext())
       {
         sb.append(", ");
