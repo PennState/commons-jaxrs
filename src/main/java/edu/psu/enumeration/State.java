@@ -95,7 +95,7 @@ public enum State
       sb.append(s.shortVersion_);
       if (iter.hasNext())
       {
-        sb.append(",");
+        sb.append(", ");
       }           
     }
      

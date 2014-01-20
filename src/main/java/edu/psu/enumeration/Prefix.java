@@ -40,7 +40,7 @@ public enum Prefix
        sb.append(s.name());
        if (iter.hasNext())
        {
-         sb.append(",");
+         sb.append(", ");
        }            
      }
       

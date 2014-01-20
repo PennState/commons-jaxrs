@@ -46,7 +46,7 @@ public enum Suffix
       
       if (iter.hasNext())
       {
-        sb.append(",");
+        sb.append(", ");
       }
            
       reverseTranslation_.put(s.prettyString_,  s);
