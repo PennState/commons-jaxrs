@@ -1,7 +1,7 @@
 /**
  * 
  */
-package ait.common.enumeration;
+package edu.psu.enumeration;
 
 import static edu.psu.enumeration.Constants.BARE_QUESTION_LOOKUP_REGEX;
 import static org.junit.Assert.assertEquals;
@@ -185,5 +185,28 @@ public class SuffixTest
     Suffix s1 = Suffix.enumValue(emaciatedName);
     Suffix s2 = Suffix.valueOf(suffix);
     assertEquals(s1, s2);
+  }
+  
+  @SuppressWarnings("unused")
+  private Object[] getMalformedNames() {
+    List<Object> parameterSet = new ArrayList<Object>();
+    
+    Object [] nullMalformed = new Object[2];
+    nullMalformed[0] = "Prefix Null";
+    parameterSet.add(nullMalformed);
+    
+    Object [] malformed = new Object[2];
+    malformed[0] = "Suffix Malfored";
+    malformed[1] = "Shamwow";
+    parameterSet.add(malformed);
+    
+    return parameterSet.toArray();
+  }
+  
+  @Test(expected = IllegalArgumentException.class)
+  @Parameters(method = "getMalformedNames")
+  public void testIllegalValues(String testName, String illegalValue)
+  {
+    Suffix.enumValue(illegalValue);
   }
 }

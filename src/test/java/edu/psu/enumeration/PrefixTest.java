@@ -1,12 +1,16 @@
 /**
  * 
  */
-package ait.common.enumeration;
+package edu.psu.enumeration;
 
 import static edu.psu.enumeration.Constants.BARE_QUESTION_LOOKUP_REGEX;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 
@@ -149,5 +153,28 @@ public class PrefixTest
     Prefix p1 = Prefix.enumValue(prefixString);
     Prefix p2 = Prefix.valueOf(prefix);
     assertEquals(p1, p2);
+  }
+  
+  @SuppressWarnings("unused")
+  private Object[] getMalformedNames() {
+    List<Object> parameterSet = new ArrayList<Object>();
+    
+    Object [] nullMalformed = new Object[2];
+    nullMalformed[0] = "Prefix Null";
+    parameterSet.add(nullMalformed);
+    
+    Object [] malformed = new Object[2];
+    malformed[0] = "Prefix Malfored";
+    malformed[1] = "Shamwow";
+    parameterSet.add(malformed);
+    
+    return parameterSet.toArray();
+  }
+  
+  @Test(expected = IllegalArgumentException.class)
+  @Parameters(method = "getMalformedNames")
+  public void testIllegalValues(String testName, String illegalValue)
+  {
+    Prefix.enumValue(illegalValue);
   }
 }
