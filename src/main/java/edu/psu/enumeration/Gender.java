@@ -46,7 +46,7 @@ public enum Gender
       sb.append(g.shortString_);
       if (iter.hasNext())
       {
-        sb.append(",");
+        sb.append(", ");
       }            
     }
      

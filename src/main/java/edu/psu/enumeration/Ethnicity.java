@@ -42,7 +42,7 @@ public enum Ethnicity
       sb.append(e.name());
       if (iter.hasNext())
       {
-        sb.append(",");
+        sb.append(", ");
       }     
     }
 

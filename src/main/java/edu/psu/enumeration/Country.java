@@ -298,7 +298,7 @@ public enum Country
       sb.append(c.twoLetterNotation_);
       if (iter.hasNext())
       {
-        sb.append(",");
+        sb.append(", ");
       }     
     }
 
