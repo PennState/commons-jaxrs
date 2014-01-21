@@ -318,12 +318,20 @@ public enum Country
    */
   public static Country fromTwoLetterNotation(String notation)
   {
-    return reverseLookup_.get(notation.toUpperCase().trim());  
+    Country country = null;
+    if(notation != null) {
+      country = reverseLookup_.get(notation.toUpperCase().trim());
+    }
+    return country;
   }
   
   public static Country fromPrettyString(String prettyString)
   {
-    return reverseLookup_.get(prettyString.trim());  
+    Country country = null;
+    if(prettyString != null) {
+      country = reverseLookup_.get(prettyString.trim());
+    }
+    return country;
   }
   
   /**
