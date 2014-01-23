@@ -124,11 +124,6 @@ public enum State
    */
   public String asAbbreviation()
   {
-    if (this.equals(NOT_SPECIFIED))
-    {
-      return " ";
-    }
-    
     return shortVersion_;
   }
   

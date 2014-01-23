@@ -16,8 +16,8 @@ import java.util.Map;
  */
 public enum Country 
 {
-  USA("US", "United States"),
   NSP("NS", "Not Specified"),
+  USA("US", "United States"),
   AFG("AF", "Afghanistan"),
   ALA("AX", "Aland Islands"),
   ALB("AL", "Albania"),
