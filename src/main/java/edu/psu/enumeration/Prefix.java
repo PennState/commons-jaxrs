@@ -7,6 +7,7 @@ import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+
 import static edu.psu.enumeration.Constants.BARE_QUESTION_LOOKUP_REGEX;
 
 /**
@@ -21,6 +22,7 @@ public enum Prefix
    MRS("Mrs."), 
    DR("Dr.");
    
+   private static Prefix defaultValue_ = Prefix.NONE;
    private String prettyString_;
    private static Map<String, Prefix> reverseLookup_ = new HashMap<String, Prefix>();
    private static String ILLEGAL_ARGUMENT_MESSAGE = null;
@@ -57,7 +59,11 @@ public enum Prefix
    {
      prettyString_ = prettyString;
    }
-   
+
+   public Prefix getDefaultValue() {
+      return defaultValue_;
+   }
+
    /**
     * Does a reverse lookup from the pretty string to the Prefix enum
     * @param prettyString

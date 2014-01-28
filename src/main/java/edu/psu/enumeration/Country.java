@@ -268,7 +268,7 @@ public enum Country
   ZMB("ZM", "Zambia"),
   ZWE("ZW", "Zimbabwe");
 
-
+  private static Country defaultValue_ = Country.NSP;
   private String twoLetterNotation_;
   private String prettyString_;
   
@@ -311,6 +311,10 @@ public enum Country
     prettyString_ = prettyName;
   }
   
+  public Country getDefaultValue() {
+    return defaultValue_;
+  }
+
   /**
    * Attempts to translate a two letter notation to the appropriate enumeration
    * @param notation

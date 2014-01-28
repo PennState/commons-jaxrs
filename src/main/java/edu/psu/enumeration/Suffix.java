@@ -29,6 +29,7 @@ public enum Suffix
   IX("IX"),
   X("X");
   
+  private static Suffix defaultValue_ = Suffix.NONE;
   private String prettyString_;
   private static Map<String, Suffix> reverseLookup_ = new HashMap<String, Suffix>();
   private static String ILLEGAL_ARGUMENT_MESSAGE = null;
@@ -64,6 +65,10 @@ public enum Suffix
     prettyString_ = prettyString;
   }
   
+  public Suffix getDefaultValue() {
+    return defaultValue_;
+  }
+
   /**
    * Translates from the English readable string to the appropriate Enumerted value
    * @param prettyString

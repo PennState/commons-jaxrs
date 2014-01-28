@@ -7,6 +7,7 @@ import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+
 import static edu.psu.enumeration.Constants.BARE_QUESTION_LOOKUP_REGEX;
 
 /**
@@ -14,7 +15,7 @@ import static edu.psu.enumeration.Constants.BARE_QUESTION_LOOKUP_REGEX;
  */
 public enum SecurityQuestion 
 {
-	NOT_SELECTED("NOT SELECTED"),
+  NOT_SELECTED("NOT SELECTED"),
   MATERNAL_GRANDFATHER_JOB("What did your maternal grandfather do for a living?"),
   FAVORITE_BOOK("What is the name of your favorite book?"),
   NEW_FIRST_NAME("If you could choose a new first name, what would it be?"),
@@ -60,8 +61,8 @@ public enum SecurityQuestion
   HOME_COUNTY("What is your home county?"),
   PHONE_NUMBER_LAST_FOUR("What are the last four digits of your phone number?");    
 
+  private static SecurityQuestion defaultValue_ = SecurityQuestion.NOT_SELECTED;
   private static Map<String, SecurityQuestion> reverseLookup_ = new HashMap<String, SecurityQuestion>();
-
   
   private String prettyString_;
   
@@ -100,6 +101,10 @@ public enum SecurityQuestion
   SecurityQuestion(String prettyQuestion)
   {
     prettyString_ = prettyQuestion;
+  }
+
+  public SecurityQuestion getDefaultValue() {
+    return defaultValue_;
   }
 
   /**

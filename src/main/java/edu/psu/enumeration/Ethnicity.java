@@ -9,6 +9,7 @@ import java.util.Map;
 
 public enum Ethnicity
 {
+  NO_RESPONSE("No Response"),
   WHITE("White"),
   HISPANIC("Hispanic/Latino"),
   BLACK("Black/African American"),
@@ -16,9 +17,9 @@ public enum Ethnicity
   AMERICAN_INDIAN("American Indian or Alaska Native"),
   PACIFIC_ISLANDER("Native Hawaiian or other Pacific Islander"),
   MULTIPLE("Multiple Ethnicities"),
-  OTHER("Other"),
-  NO_RESPONSE("No Response");
-  
+  OTHER("Other");
+
+  private static Ethnicity defaultValue_ = Ethnicity.NO_RESPONSE;
   private String prettyString_;
   private static Map<String, Ethnicity> reverseLookup_ = new HashMap<String, Ethnicity>();
   
@@ -57,7 +58,11 @@ public enum Ethnicity
   {
     prettyString_ = prettyString;
   }
-  
+
+  public Ethnicity getDefaultValue() {
+    return defaultValue_;
+  }
+
   /**
    * Returns the enumerated equivalent of the associated pretty string
    * @param prettyString
@@ -120,4 +125,5 @@ public enum Ethnicity
     
     return e;
   }
+    
 }

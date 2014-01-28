@@ -70,6 +70,7 @@ public enum State
   WISCONSIN("WI", "Wisconsin"),
   WYOMING("WY", "Wyoming");   
   
+  private static State defaultValue_ = State.NOT_SPECIFIED;
   private String prettyString_;
   private String shortVersion_;
   
@@ -117,6 +118,11 @@ public enum State
     //System.out.println("############ Calling addLookupValues");
     //State.addLookupValues(this, shortVersion_, prettyString_);
   }
+
+  public State getDefaultValue() {
+    return defaultValue_;
+  }
+
   
   /**
    * Returns the USPS abbreviated version of the state name

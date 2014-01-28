@@ -12,11 +12,12 @@ import java.util.Map;
 
 public enum Gender
 {
+  NOT_SPECIFIED("Not Specified", "N"),
   FEMALE("Female", "F"), 
   MALE("Male", "M"), 
-  OTHER("Other", "O"),
-  NOT_SPECIFIED("Not Specified", "N");
+  OTHER("Other", "O");
   
+  private static Gender defaultValue_ = Gender.NOT_SPECIFIED;
   private String prettyString_;
   private String shortString_;
   
@@ -58,7 +59,11 @@ public enum Gender
     prettyString_ = prettyString;
     shortString_ = shortString;
   }
-  
+
+  public Gender getDefaultValue() {
+    return defaultValue_;
+  }
+
   /**
    * Translates an English readable form of the enum to the enumerated value
    * @param prettyString
