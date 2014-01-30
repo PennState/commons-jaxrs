@@ -5,24 +5,29 @@ import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 
-public class Profiler {
+public class Profiler
+{
 
-  private Map<String,Integer> patternDepth_ = new HashMap<String,Integer>();
+  private Map<String, Integer> patternDepth_ = new HashMap<String, Integer>();
   private String currentTree_ = "";
   private List<String> patterns_ = new ArrayList<String>();
   private Map<String, Profile> profiles_ = new HashMap<String, Profile>();
 
   private int depth_ = 0;
 
-  // ------------------------------------------------------------------------------------------ //
+  // ------------------------------------------------------------------------------------------
+  // //
 
-  public Profiler( ) {
-    //reset();
+  public Profiler()
+  {
+    // reset();
   }
 
-  // ------------------------------------------------------------------------------------------ //
+  // ------------------------------------------------------------------------------------------
+  // //
 
-  public void reset() {
+  public void reset()
+  {
     patternDepth_.clear();
     currentTree_ = "";
     patterns_.clear();
@@ -30,101 +35,125 @@ public class Profiler {
     depth_ = 0;
   }
 
-  // ------------------------------------------------------------------------------------------ //
+  // ------------------------------------------------------------------------------------------
+  // //
 
-  public void start( String pattern ) {
+  public void start(String pattern)
+  {
     ++depth_;
 
-    if( currentTree_.equals("") ) {
+    if (currentTree_.equals(""))
+    {
       currentTree_ = pattern;
-    } else {
+    }
+    else
+    {
       currentTree_ = currentTree_ + " -- " + pattern;
     }
 
-    if( ! patterns_.contains( currentTree_ ) ) {
-      patterns_.add( currentTree_ );
-      profiles_.put( currentTree_, new Profile() );
-      patternDepth_.put( currentTree_, depth_ );
+    if (!patterns_.contains(currentTree_))
+    {
+      patterns_.add(currentTree_);
+      profiles_.put(currentTree_, new Profile());
+      patternDepth_.put(currentTree_, depth_);
     }
     profiles_.get(currentTree_).start();
   }
 
-  // ------------------------------------------------------------------------------------------ //
+  // ------------------------------------------------------------------------------------------
+  // //
 
-  public void stop( String pattern ) {
-    if( profiles_.containsKey( currentTree_ ) ) {
+  public void stop(String pattern)
+  {
+    if (profiles_.containsKey(currentTree_))
+    {
       profiles_.get(currentTree_).stop();
     }
 
     int lastIndex_ = currentTree_.lastIndexOf(" -- ");
-    if( lastIndex_ > 0 ) {
-      currentTree_ = currentTree_.substring( 0, lastIndex_ );
-    } else {
+    if (lastIndex_ > 0)
+    {
+      currentTree_ = currentTree_.substring(0, lastIndex_);
+    }
+    else
+    {
       currentTree_ = "";
     }
     --depth_;
   }
 
-  // ------------------------------------------------------------------------------------------ //
+  // ------------------------------------------------------------------------------------------
+  // //
 
-  public String generateReport( ) {
-    return generateReport( 8 );
+  public String generateReport()
+  {
+    return generateReport(8);
   }
 
-  // ------------------------------------------------------------------------------------------ //
+  // ------------------------------------------------------------------------------------------
+  // //
 
-  public String generateReport( int max_maxDepth_ ) {
-    String report = "";
+  public String generateReport(int max_maxDepth_)
+  {
+    StringBuilder report = new StringBuilder();
     String displayKey = "";
 
-    report = "  PATTERN                                                      :     COUNT *    TIME PER =  TOTAL TIME  STDEV\r\n";
-  
-    for( String key : patterns_ ) {
+    report.append("  PATTERN                                                      :     COUNT *    TIME PER =  TOTAL TIME  STDEV\r\n");
+
+    for (String key : patterns_)
+    {
       int depth = patternDepth_.get(key);
 
-      if( depth <= max_maxDepth_ ) {
-        if( key.lastIndexOf(" -- ") > -1 ) {
-          displayKey = key.substring( key.lastIndexOf(" -- ") + 4);
-        } else {
+      if (depth <= max_maxDepth_)
+      {
+        if (key.lastIndexOf(" -- ") > -1)
+        {
+          displayKey = key.substring(key.lastIndexOf(" -- ") + 4);
+        }
+        else
+        {
           displayKey = key;
         }
-        if( displayKey.length() > 60 - 2 * depth ) {
-          displayKey = key.substring( 0, 60 - 2 * depth );
+        if (displayKey.length() > 60 - 2 * depth)
+        {
+          displayKey = key.substring(0, 60 - 2 * depth);
         }
-        report += String.format(" %1$"+(2*depth)+"s %2$-"+(60-2*depth)+"s : ", "", displayKey) + profiles_.get( key ).generateReport() + "\r\n";
+        report.append(String.format(" %1$" + (2 * depth) + "s %2$-" + (60 - 2 * depth) + "s : ", "", displayKey) + profiles_.get(key).generateReport() + "\r\n");
       }
 
     }
-    return( report );
+    return (report.toString());
   }
 
-  // ------------------------------------------------------------------------------------------ //
+  // ------------------------------------------------------------------------------------------
+  // //
 
-	public String dumpData( ) {
-		return dumpData( 8 );
-	}
+  public String dumpData()
+  {
+    return dumpData(8);
+  }
 
-	// ------------------------------------------------------------------------------------------ //
+  // ------------------------------------------------------------------------------------------
+  // //
 
-	public String dumpData( int max_maxDepth_ ) {
-		String report = "";
-	  
-		for( String key : patterns_ ) {
-			int depth = patternDepth_.get(key);
+  public String dumpData(int max_maxDepth_)
+  {
+    String report = "";
 
-			if( depth <= max_maxDepth_ ) {
-				report += key + ":\r\n";
-				report += profiles_.get( key ).dumpData() + "\r\n";
-			}
-		}
-		return( report );
-	}
+    for (String key : patterns_)
+    {
+      int depth = patternDepth_.get(key);
 
-  // ------------------------------------------------------------------------------------------ //
+      if (depth <= max_maxDepth_)
+      {
+        report += key + ":\r\n";
+        report += profiles_.get(key).dumpData() + "\r\n";
+      }
+    }
+    return (report);
+  }
+
+  // ------------------------------------------------------------------------------------------
+  // //
 
 }
-
-
-
-
-
