@@ -81,7 +81,7 @@
   </build>
   
   <scm>
-    <connection>scm:git:ssh://git@ci.psu.edu/lcommons.git</connection>
+    <connection>scm:git:ssh://git@ci.psu.edu/commons.git</connection>
     <developerConnection>scm:git:ssh://git@ci.psu.edu/commons.git</developerConnection>
   </scm>
 
