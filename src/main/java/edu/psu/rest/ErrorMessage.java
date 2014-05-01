@@ -5,22 +5,21 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import javax.net.ssl.SSLEngineResult.Status;
+import javax.ws.rs.core.Response.Status;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
 public class ErrorMessage
 {
   @XmlElement(name="status")
-  private int status_;
-  
-  @XmlElement(name="message")
-  private String message_;
+  @XmlJavaTypeAdapter(XmlStatusAdapter.class)
+  private Status status_;
   
   @XmlElementWrapper(name="error-list")
   @XmlElement(name="error-message")
@@ -30,30 +29,22 @@ public class ErrorMessage
   @XmlElement(name = "link", nillable = true)
   List<String> externalLinks_ = null;
   
-  public ErrorMessage(int status, String message)
+  public ErrorMessage()
+  {}
+  
+  public ErrorMessage(Status status)
   {
     status_ = status;
-    message_ = message;
   }
    
   public void setStatus(Status status)
   {
-    status_ = status.ordinal();
+    status_ = status;
   }
   
   public Status getStatus()
   {
-    return Status.valueOf(Integer.toString(status_));
-  }
-  
-  public void setMessage(String message)
-  {
-    message_ = message;
-  }
-  
-  public String getMessage()
-  {
-    return message_;
+    return status_;
   }
   
   public void setErrorMessageList(List<String> messageList)
