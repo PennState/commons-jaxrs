@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
@@ -14,6 +15,11 @@
 	<version>1.5.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<url>${parent}/libraries/commonlibjava</url>
+
+	<properties>
+		<java.compiler.source>1.7</java.compiler.source>
+		<java.compiler.target>1.7</java.compiler.target>
+	</properties>
 
 	<dependencies>
 		<dependency>
@@ -55,6 +61,31 @@
 			<artifactId>org.apache.commons.codec</artifactId>
 			<version>1.6</version>
 		</dependency>
+		<dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-jaxrs</artifactId>
+			<version>3.0.1.Final</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-jaxb-provider</artifactId>
+			<version>3.0.1.Final</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-jackson2-provider</artifactId>
+			<version>3.0.1.Final</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- CAUTION, CAUTION, CAUTION - javaee-api needs to be below the resteasy 
+			dependencies or the tests will stop working -->
+		<dependency>
+			<groupId>javax</groupId>
+			<artifactId>javaee-api</artifactId>
+			<version>6.0</version>
+		</dependency>
 	</dependencies>
 
 	<reporting>
@@ -66,23 +97,32 @@
 			</plugin>
 		</plugins>
 	</reporting>
-	
-	  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-release-plugin</artifactId>
-        <version>2.2.2</version>
-        <configuration>
-          <tagNameFormat>COMMONS-@{project.version}</tagNameFormat>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
-  
-  <scm>
-    <connection>scm:git:ssh://git@ci.psu.edu/commons.git</connection>
-    <developerConnection>scm:git:ssh://git@ci.psu.edu/commons.git</developerConnection>
-  </scm>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>2.2.2</version>
+				<configuration>
+					<tagNameFormat>COMMONS-${project.version}</tagNameFormat>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>${java.compiler.source}</source>
+					<target>${java.compiler.target}</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<scm>
+		<connection>scm:git:ssh://git@ci.psu.edu/commons.git</connection>
+		<developerConnection>scm:git:ssh://git@ci.psu.edu/commons.git</developerConnection>
+	</scm>
 
 </project>
