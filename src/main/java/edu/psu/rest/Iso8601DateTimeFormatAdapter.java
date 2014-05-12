@@ -16,7 +16,7 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 public class Iso8601DateTimeFormatAdapter extends XmlAdapter<String, Date>
 {
-  public static final String ISO_8601_DATE_FORMAT = "yyyy-MM-ddTHH:mm+ss:SS";
+  public static final String ISO_8601_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm+ss:SS";
   
   private SimpleDateFormat dateFormat = new SimpleDateFormat(ISO_8601_DATE_FORMAT);
 
