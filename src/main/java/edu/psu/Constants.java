@@ -8,6 +8,8 @@ package edu.psu;
  */
 public final class Constants
 {
+  
+  private Constants() {}
 
   public static final String USER_ID = "Userid";
   
