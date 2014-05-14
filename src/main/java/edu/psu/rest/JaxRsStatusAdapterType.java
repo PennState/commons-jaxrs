@@ -16,6 +16,10 @@ public class JaxRsStatusAdapterType
   @XmlElement(name="message")
   private String message_;
   
+  public JaxRsStatusAdapterType() {
+    // Required no-argument constructor for JAXB marshalling/unmarshalling
+  }
+  
   public JaxRsStatusAdapterType(Status status)
   {
     code_ = status.getStatusCode();
