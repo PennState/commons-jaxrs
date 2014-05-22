@@ -10,6 +10,9 @@ public class RegexConstantsTest
   public static final String GOOD_CURRENCY_VALUE_NO_CENTS = "1233";
   public static final String GOOD_CURRENCY_VALUE_COMMA_SEPARATED = "1,233.13";
   
+  public static final String BAD_CURRENCY_PERIOD_ONLY = ".";
+  public static final String BAD_CURRENCY_MULTIPLE_PERIODS = "1234.22.22";
+
   @Test
   public void testGoodCurrencyWithCents()
   {
@@ -34,6 +37,33 @@ public class RegexConstantsTest
     if (!GOOD_CURRENCY_VALUE_COMMA_SEPARATED.matches(RegexConstants.CURRENCY_REGEX))
     {
       fail(GOOD_CURRENCY_VALUE_COMMA_SEPARATED + " failed match");
+    }
+  }
+  
+  @Test
+  public void testBadCurrencyPeriodOnly()
+  {
+    if (BAD_CURRENCY_PERIOD_ONLY.matches(RegexConstants.CURRENCY_REGEX))
+    {
+      fail(BAD_CURRENCY_PERIOD_ONLY + " should not match");
+    }
+  }
+  
+  @Test
+  public void testBadCurrencyEmptyString()
+  {
+    if ("".matches(RegexConstants.CURRENCY_REGEX))
+    {
+      fail("Empty string should not match");
+    }
+  }
+  
+  @Test
+  public void testBadMultiplePeriods()
+  {
+    if (BAD_CURRENCY_MULTIPLE_PERIODS.matches(RegexConstants.CURRENCY_REGEX))
+    {
+      fail(BAD_CURRENCY_MULTIPLE_PERIODS + " should not match");
     }
   }
 }
