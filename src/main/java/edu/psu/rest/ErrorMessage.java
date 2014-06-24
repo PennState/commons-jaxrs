@@ -88,4 +88,27 @@ public class ErrorMessage
   {
     return externalLinks_;
   }
+  
+  @Override
+  public String toString()
+  {
+    StringBuilder sb = new StringBuilder();
+    sb.append("Status = ");
+    sb.append(status_.getStatusCode());
+    sb.append("\n");
+    sb.append("Error Messages");
+    sb.append("\n");
+    for (String s : errorMessages_)
+    {
+      sb.append(s);
+      sb.append("\n");
+    }
+    sb.append("External Links");
+    for (String s : externalLinks_)
+    {
+      sb.append(s);
+      sb.append("\n");
+    }
+    return sb.toString();
+  }
 }
