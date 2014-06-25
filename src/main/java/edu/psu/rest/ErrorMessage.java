@@ -96,18 +96,26 @@ public class ErrorMessage
     sb.append("Status = ");
     sb.append(status_.getStatusCode());
     sb.append("\n");
-    sb.append("Error Messages");
-    sb.append("\n");
-    for (String s : errorMessages_)
+    
+    if (errorMessages_ != null)
     {
-      sb.append(s);
+      sb.append("Error Messages");
       sb.append("\n");
+      for (String s : errorMessages_)
+      {
+        sb.append(s);
+        sb.append("\n");
+      }
     }
-    sb.append("External Links");
-    for (String s : externalLinks_)
+    
+    if (externalLinks_ != null)
     {
-      sb.append(s);
-      sb.append("\n");
+      sb.append("External Links");
+      for (String s : externalLinks_)
+      {
+        sb.append(s);
+        sb.append("\n");
+      }
     }
     return sb.toString();
   }
