@@ -38,7 +38,7 @@ public class EnvironmentUtilities {
 	//		2. Looking up known environment variables (Linux/Apache, Windows).
 	//		3. Doing a reverse lookup on the default IP Address.
 	//		4. Making a system call to `hostname` as a last resort. (Linux, OSX, Windows)
-	String getHostname() {
+	public static String getHostname() {
 		String hostname = null;
 
 		List<String> propNames = Arrays.asList( "jboss.qualified.host.name","jboss.server.name","jboss.host.name","jboss.node.name" );
