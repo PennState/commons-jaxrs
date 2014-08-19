@@ -5,6 +5,8 @@ import java.util.Date;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
+import edu.psu.Constants;
+
 /**
  * This class is intended to provide an adaptor to convert Java Date's into
  * ISO 8601 formatted time stamps in JAXB produced documents.  
@@ -15,10 +17,8 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
  */
 
 public class Iso8601DateFormatAdapter extends XmlAdapter<String, Date>
-{
-  public static final String ISO_8601_DATE_FORMAT = "yyyy-MM-dd";
-  
-  private SimpleDateFormat dateFormat = new SimpleDateFormat(ISO_8601_DATE_FORMAT);
+{  
+  private SimpleDateFormat dateFormat = new SimpleDateFormat(Constants.ISO_8601_DATE_FORMAT);
 
   @Override
   public String marshal(Date date) 
