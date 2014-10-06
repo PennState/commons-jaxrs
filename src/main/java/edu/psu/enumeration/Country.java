@@ -302,7 +302,7 @@ public enum Country
       }     
     }
 
-    ILLEGAL_ARGUMENT_MESSAGE = "The value you passed for ETHNICITY was illegal, legal values are: " + sb.toString();
+    ILLEGAL_ARGUMENT_MESSAGE = "The value you passed for COUNTRY was illegal, legal values are: " + sb.toString();
   }
   
   Country(String twoLetterNotation, String prettyName)
