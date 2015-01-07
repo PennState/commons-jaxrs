@@ -13,7 +13,7 @@
 	<name>Common Libraries - Java</name>
 	<version>1.8.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
-	<url>${parent}/libraries/commonlibjava</url>
+	<url>${project.parent}/libraries/commonlibjava</url>
 
 	<properties>
 		<java.compiler.source>1.7</java.compiler.source>
@@ -120,8 +120,8 @@
 	</build>
 
 	<scm>
-		<connection>scm:git:ssh://git@ci.psu.edu/commons.git</connection>
-		<developerConnection>scm:git:ssh://git@ci.psu.edu/commons.git</developerConnection>
+		<connection>scm:git:ssh://git@git.psu.edu:5892/ais-swe/commons-psu.git</connection>
+		<developerConnection>scm:git:ssh://git@git.psu.edu:5892/ais-swe/commons-psu.git</developerConnection>
 	</scm>
 
 </project>
