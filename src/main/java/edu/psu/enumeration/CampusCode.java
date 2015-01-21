@@ -11,38 +11,38 @@ public enum CampusCode
 	// REFERENCES:
 	// 1. Legacy ISIS codes - http://dus.psu.edu/legacy/codes.htm  
 	// 2. OPP building lists from FIS
-	// 3. OHR job campus/location list - https://app2.ohr.psu.edu/Jobs/External/EVMS2_External/currentap1.cfm
+	// 3. OHR job Campus/location list - https://app2.ohr.psu.edu/Jobs/External/EVMS2_External/currentap1.cfm
 	
-  AA("Altoona campus"),													// 1
-  AN("Lehigh Valley campus"),											// 1
+  AA("Altoona Campus"),													// 1
+  AN("Lehigh Valley Campus"),											// 1
   BD("Penn State Erie, The Behrend College"),							// 1
-  BK("Berks campus"),													// 1
-  BR("Beaver campus"),													// 1
+  BK("Berks Campus"),													// 1
+  BR("Beaver Campus"),													// 1
   CL("Penn State Harrisburg, The Capital College"),						// 1
-  DE("Brandywine campus (formerly Delaware County campus)"),			// 1
-  DN("Carlisle campus"),												// 1
-  DS("DuBois campus"),													// 1 // See also DB
-  FE("Fayette campus"),													// 1
-  HN("Hazleton campus"),												// 1
+  DE("Brandywine Campus"),			// 1
+  DN("Carlisle Campus"),												// 1
+  DS("DuBois Campus"),													// 1 // See also DB
+  FE("Fayette Campus"),													// 1
+  HN("Hazleton Campus"),												// 1
   HY("Milton S. Hershey Medical Center"),								// 1 // See also CM (College of Medicine)
   KP("Penn State Great Valley"),										// 1 // Outdated?  See GV
-  MA("Mont Alto campus"),												// 1
-  MK("Greater Allegheny campus"),										// 1
-  NK("New Kensington campus"),											// 1
-  OZ("Abington campus"),												// 1
-  PC("Pennsylvania College of Technology campus"),						// 1
+  MA("Mont Alto Campus"),												// 1
+  MK("Greater Allegheny Campus"),										// 1
+  NK("New Kensington Campus"),											// 1
+  OZ("Abington Campus"),												// 1
+  PC("Pennsylvania College of Technology Campus"),						// 1
   SE("SouthEast Agricultural Research & Extension Center"),   // 2 // in Landisville, PA
-  SL("Schuylkill campus"),												// 1
+  SL("Schuylkill Campus"),												// 1
   ST("Shaver's Creek Environmental Center"),    //2
-  SV("Shenango campus"),												// 1
-  UP("University Park campus"),											// 1
-  WB("Wilkes-Barre campus"),											// 1
+  SV("Shenango Campus"),												// 1
+  UP("University Park Campus"),											// 1
+  WB("Wilkes-Barre Campus"),											// 1
   WD("World Campus"),													// 1
-  WS("Worthington Scranton campus"),									// 1
+  WS("Worthington Scranton Campus"),									// 1
   XC("State College Continuing Education"),								// 1
   XP("Keller Conference Center at University Park"),					// 1
   XS("Foreign Studies Program"),										// 1
-  YK("York campus"),													// 1
+  YK("York Campus"),													// 1
 
   EC("SouthEast Agricultural Research & Extension Center"),				// 2 // in Landisville, PA
   FR("Fruit Research Extension Office"),								// 2
@@ -85,14 +85,14 @@ public enum CampusCode
     return alternateCodes_.contains(other);
   }
   
-  private static synchronized void addReverseLookupInformation(CampusCode campusCode, String campusName)
+  private static synchronized void addReverseLookupInformation(CampusCode CampusCode, String CampusName)
   {
     if (prettyStringLookup_ == null)
     {
       prettyStringLookup_ = new HashMap<String, CampusCode>();
     }
     
-    prettyStringLookup_.put(campusName, campusCode);
+    prettyStringLookup_.put(CampusName, CampusCode);
   }
   
   
