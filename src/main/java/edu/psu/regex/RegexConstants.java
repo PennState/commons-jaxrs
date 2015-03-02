@@ -11,4 +11,6 @@ public class RegexConstants
    */
   public static final String PSU_ID_REGEX = "(?!987654321)(?!9(\\d)\\1{7})(?!9{8}\\d)^9\\d{8}$";
   
+  public static final String EMAIL_ADDRESS_REGEX = "[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?";
+  
 }
