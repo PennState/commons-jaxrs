@@ -32,7 +32,7 @@ public class VersionResource {
 	}
 	
 	@GET
-	@Produces(MediaType.APPLICATION_JSON)
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public Version getVersion() throws IOException {
 		if (clazz == null) {
 			LOG.warn("unable to determine version information, please add the VersionResource instance to the RestApplication singleton list.");
