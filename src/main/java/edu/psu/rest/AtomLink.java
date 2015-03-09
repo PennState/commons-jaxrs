@@ -11,7 +11,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * http://www.xml.com/pub/a/2004/06/16/dive.html
  * http://timelessrepo.com/haters-gonna-hateoas#hateoas
  * 
- * @author Steve Moyer <smoyer@psu.edu>
+ * @author Steve Moyer {@literal (<smoyer@psu.edu>)}
  */
 @XmlRootElement(name = "link")
 @XmlAccessorType(XmlAccessType.NONE)

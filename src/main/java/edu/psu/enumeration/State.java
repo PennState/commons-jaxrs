@@ -135,7 +135,7 @@ public enum State
   
   /**
    * Attempts to return the state enumeration from the abbreviated name
-   * @param abbreviation
+   * @param abbreviation state abbreviation
    * @return the State abbreviation or null if invalid
    */
   public static State fromAbbreviation(String abbreviation)
@@ -159,7 +159,7 @@ public enum State
   /**
    * Translates the displayable version of the enumerated type to an equivalent enum
    * @param prettyString or null if either not found or prettyString is null
-   * @return
+   * @return State represented by prettyString
    */
   public static State fromPrettyString(String prettyString)
   {

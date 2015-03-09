@@ -66,7 +66,7 @@ public enum Gender
 
   /**
    * Translates an English readable form of the enum to the enumerated value
-   * @param prettyString
+   * @param prettyString pretty string
    * @return Gender or null if the prettyString equals null or if no match is found
    */
   public static Gender fromPrettyString(String prettyString)
@@ -90,7 +90,7 @@ public enum Gender
   /**
    * Translates an single letter representation to the appropriate enum
    * This is primarily for historical purposes
-   * @param shortString
+   * @param shortString short string
    * @return Gender or null if the shortString equals null or if no match is found
    */
   @Deprecated

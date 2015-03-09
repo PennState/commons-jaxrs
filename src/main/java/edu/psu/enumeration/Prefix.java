@@ -66,7 +66,7 @@ public enum Prefix
 
    /**
     * Does a reverse lookup from the pretty string to the Prefix enum
-    * @param prettyString
+    * @param prettyString pretty string
     * @return Prefix or null if give either a null or invalid argument
     */
    public static Prefix fromPrettyString(String prettyString)
