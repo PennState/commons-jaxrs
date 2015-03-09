@@ -125,7 +125,9 @@
               <version>1.0-m4.3</version>
               <configuration>
                 <autoVersionSubmodules>true</autoVersionSubmodules>
-                
+                <flowInitContext>
+                  <versionTagPrefix>COM-</versionTagPrefix>
+                </flowInitContext>
               </configuration>
             </plugin>
           </plugins>
