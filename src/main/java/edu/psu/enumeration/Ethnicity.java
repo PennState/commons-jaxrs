@@ -65,7 +65,7 @@ public enum Ethnicity
 
   /**
    * Returns the enumerated equivalent of the associated pretty string
-   * @param prettyString
+   * @param prettyString pretty string
    * @return Ethnicity or null if no match is found or a null argument is passed
    */
   public static Ethnicity fromPrettyString(final String prettyString)

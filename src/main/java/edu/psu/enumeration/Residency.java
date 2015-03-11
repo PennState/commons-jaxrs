@@ -4,7 +4,7 @@ package edu.psu.enumeration;
 public enum Residency {
 
 	PA("Pennsylvania"),
-	NON_PA("Non Pennsylvania"),
+	NON_PA("Non-Pennsylvania"),
 	INTERNATIONAL("International");
 
 	private String displayName_;

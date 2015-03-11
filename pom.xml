@@ -11,7 +11,7 @@
 	<groupId>edu.psu.libraries</groupId>
 	<artifactId>commons-psu</artifactId>
 	<name>Common Libraries - Java</name>
-	<version>1.8.2-SNAPSHOT</version>
+	<version>1.8.2</version>
 	<packaging>jar</packaging>
 	<url>${project.parent}/libraries/commonlibjava</url>
 
@@ -83,7 +83,7 @@
 		<dependency>
 			<groupId>javax</groupId>
 			<artifactId>javaee-api</artifactId>
-			<version>6.0</version>
+			<version>7.0</version>
 		</dependency>
 	</dependencies>
 
@@ -116,7 +116,22 @@
 					<target>${java.compiler.target}</target>
 				</configuration>
 			</plugin>
-		</plugins>
+    	</plugins>
+        <pluginManagement>
+          <plugins>
+            <plugin>
+              <groupId>external.atlassian.jgitflow</groupId>
+              <artifactId>jgitflow-maven-plugin</artifactId>
+              <version>1.0-m4.3</version>
+              <configuration>
+                <autoVersionSubmodules>true</autoVersionSubmodules>
+                <flowInitContext>
+                  <versionTagPrefix>COM-</versionTagPrefix>
+                </flowInitContext>
+              </configuration>
+            </plugin>
+          </plugins>
+        </pluginManagement>
 	</build>
 
 	<scm>

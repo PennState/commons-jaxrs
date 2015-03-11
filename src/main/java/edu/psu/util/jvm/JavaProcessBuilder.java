@@ -76,7 +76,7 @@ public class JavaProcessBuilder {
 
   /**
    * Gets the list of arguments that will be passed to this Java process builder's
-   * Class<?> when the new JVM is spawned.
+   * {@literal (Class<?>)} when the new JVM is spawned.
    * 
    * @return the list of arguments
    */
@@ -86,10 +86,10 @@ public class JavaProcessBuilder {
   
   /**
    * Sets the list of arguments that will be passed to this Java process builder's
-   * Class<?> when the new JVM is spawned.
+   * {@literal (Class<?>)} when the new JVM is spawned.
    * 
-   * @param arguments
-   * @return
+   * @param arguments list of arguments
+   * @return JavaProcessBuilder
    */
   public JavaProcessBuilder arguments(List<String> arguments) {
     return command(clazz_, arguments);
@@ -112,7 +112,7 @@ public class JavaProcessBuilder {
   }
 
   /**
-   * Gets the classpath that will be used by the executed Class<?> when the
+   * Gets the classpath that will be used by the executed {@literal (Class<?>)} when the
    * new JVM is spawned.
    * 
    * @return a String containing the complete classpath
@@ -122,10 +122,10 @@ public class JavaProcessBuilder {
   }
   
   /**
-   * Sets the classpath that will be used by the executed Class<?> when the
+   * Sets the classpath that will be used by the executed {@literal (Class<?>)} when the
    * new JVM is spawned.
    * 
-   * @param classpath
+   * @param classpath the classpath
    * @return this Java process builder
    */
   public JavaProcessBuilder classpath(String classpath) {
@@ -134,19 +134,19 @@ public class JavaProcessBuilder {
   }
   
   /**
-   * Gets the Class<?> that will be executed by this Java process builder.
+   * Gets the {@literal (Class<?>)} that will be executed by this Java process builder.
    * 
-   * @return the Class<?> object
+   * @return the {@literal (Class<?>)} object
    */
   public Class<?> clazz() {
     return clazz_;
   }
   
   /**
-   * Sets the Class<?> that will be executed by this Java process builder. Note
+   * Sets the {@literal (Class<?>)} that will be executed by this Java process builder. Note
    * that this class must have a static void main(String[] args) method.
    * 
-   * @param clazz the Class<?> to be executed.
+   * @param clazz the {@literal (Class<?>)} to be executed.
    * @return this Java process builder
    */
   public JavaProcessBuilder clazz(Class<?> clazz) {

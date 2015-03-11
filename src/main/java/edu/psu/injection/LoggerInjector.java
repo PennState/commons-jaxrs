@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Provides methods that produce an SLF4J Logger instance.
  * 
- * @author Steve Moyer <smoyer@psu.edu>
+ * @author Steve Moyer {@literal (<smoyer@psu.edu>)}
  */
 public class LoggerInjector {
   

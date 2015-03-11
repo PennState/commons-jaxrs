@@ -7,7 +7,7 @@ public class RegexConstants
   
   /**
    * Matches Strings that contain valid PSU Ids according to the CIDR documentation
-   * available at:  <a href="https://wikispaces.psu.edu/display/IdSExternal/IAM+CIDR+Functionality" />
+   * available at:  <a href="https://wikispaces.psu.edu/display/IdSExternal/IAM+CIDR+Functionality">IAM CIDR Functionality</a>
    */
   public static final String PSU_ID_REGEX = "(?!987654321)(?!9(\\d)\\1{7})(?!9{8}\\d)^9\\d{8}$";
   

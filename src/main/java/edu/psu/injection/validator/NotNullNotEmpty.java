@@ -11,12 +11,12 @@ import static java.lang.annotation.ElementType.PARAMETER;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 
-@Constraint(validatedBy = NotNullNotEmptyCharacterValidator.class)
+@Constraint(validatedBy = NotNullNotEmptyValidator.class)
 @Target( { METHOD, FIELD, PARAMETER })
 @Retention(RetentionPolicy.RUNTIME)
-public @interface  NotNullNotEmptyCharacter 
+public @interface  NotNullNotEmpty 
 {
-  String message() default "Character field cannot be null or empty";
+  String message() default "String cannot be null or empty";
 	 
   Class<?>[] groups() default {};
   

@@ -22,7 +22,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
- * @author Steve Moyer <smoyer@psu.edu>
+ * @author Steve Moyer {@literal (<smoyer@psu.edu>)}
  *
  */
 @RunWith(JUnitParamsRunner.class)

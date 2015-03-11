@@ -71,7 +71,7 @@ public enum Suffix
 
   /**
    * Translates from the English readable string to the appropriate Enumerted value
-   * @param prettyString
+   * @param prettyString pretty string
    * @return Prefix or null if either not found or a null argument is received
    */
   public static Suffix fromPrettyString(String prettyString)

@@ -109,7 +109,7 @@ public enum SecurityQuestion
 
   /**
    * Attempts to turn a "presentation" version into the enumerated value
-   * @param prettyString
+   * @param prettyString pretty string
    * @return SecurityQuestion if valid, null otherwise
    */
   public static SecurityQuestion fromPrettyString(String prettyString)

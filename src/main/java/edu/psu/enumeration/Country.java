@@ -317,7 +317,7 @@ public enum Country
 
   /**
    * Attempts to translate a two letter notation to the appropriate enumeration
-   * @param notation
+   * @param notation two letter notation
    * @return a Country if correct, null if malformed
    */
   public static Country fromTwoLetterNotation(String notation)
