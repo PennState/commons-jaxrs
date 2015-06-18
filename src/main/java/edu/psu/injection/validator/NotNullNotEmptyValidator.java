@@ -3,10 +3,10 @@ package edu.psu.injection.validator;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-public class NotNullNotEmptyValidator implements ConstraintValidator<NotNullNotEmptyCharacter, String> 
+public class NotNullNotEmptyValidator implements ConstraintValidator<NotNullNotEmpty, String> 
 {
   @Override
-  public void initialize(NotNullNotEmptyCharacter validator) 
+  public void initialize(NotNullNotEmpty validator) 
   {}
 
   @Override
