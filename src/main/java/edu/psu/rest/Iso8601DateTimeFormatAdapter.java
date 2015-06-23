@@ -24,12 +24,22 @@ public class Iso8601DateTimeFormatAdapter extends XmlAdapter<String, Date>
   @Override
   public String marshal(Date date) 
   {
+    if (date == null)
+    {
+      return null;
+    }
+    
     return dateFormat.format(date);
   }
 
   @Override
   public Date unmarshal(String date) throws Exception
   {
+    if (date == null || date.isEmpty())
+    {
+      return null;
+    }
+    
     return dateFormat.parse(date);
   }
 }
