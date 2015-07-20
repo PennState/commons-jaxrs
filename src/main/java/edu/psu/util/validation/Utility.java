@@ -7,7 +7,7 @@ import javax.validation.ConstraintViolation;
 
 public class Utility
 {
-  public static String violationsToString(Set<ConstraintViolation<?>> violations)
+  public static <T>  String violationsToString(Set<ConstraintViolation<T>> violations)
   {
     return violations.stream()
                      .map(v -> v.getMessage())
