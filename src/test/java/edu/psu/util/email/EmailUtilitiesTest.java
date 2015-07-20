@@ -7,7 +7,6 @@ import javax.mail.internet.AddressException;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class EmailUtilitiesTest 
@@ -18,15 +17,15 @@ public class EmailUtilitiesTest
   }
 
   /**
-    * @throws java.lang.Exception
-  */
+   * @throws Exception
+   */
   @After
   public void tearDown() throws Exception 
   {
   }
 
   /**
-    * Test method for {@link ait.common.email.EmailUtilities#sendMessage(java.lang.String, java.lang.String, java.lang.String[])
+    * Test method for {@link ait.common.email.EmailUtilities#sendMessage(java.lang.String, java.lang.String, java.lang.String, java.lang.String[])
   */
   @Test
   public void testSendMessageNullSender() 
