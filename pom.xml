@@ -16,8 +16,8 @@
 	<url>${project.parent}/libraries/commonlibjava</url>
 
 	<properties>
-		<java.compiler.source>1.7</java.compiler.source>
-		<java.compiler.target>1.7</java.compiler.target>
+		<java.compiler.source>1.8</java.compiler.source>
+		<java.compiler.target>1.8</java.compiler.target>
 	</properties>
 
 	<dependencies>
