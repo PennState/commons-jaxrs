@@ -1,4 +1,4 @@
-/**
+/*
  * 
  */
 package edu.psu.enumeration;
@@ -20,15 +20,11 @@ import org.junit.runner.RunWith;
 
 import edu.psu.enumeration.Prefix;
 
-/**
- * @author ses44
- *
- */
 @RunWith(JUnitParamsRunner.class)
 public class PrefixTest
 {
 
-  /**
+  /*
    * @throws java.lang.Exception
    */
   @Before
@@ -36,7 +32,7 @@ public class PrefixTest
   {
   }
 
-  /**
+  /*
    * Test method for {@link edu.psu.fps.model.enums.Prefix#fromPrettyString(java.lang.String)}.
    */
   @Test
@@ -46,7 +42,7 @@ public class PrefixTest
     assertNull(p);
   }
 
-  /**
+  /*
    * Test method for {@link edu.psu.fps.model.enums.Prefix#fromPrettyString(java.lang.String)}.
    */
   @Test
@@ -57,7 +53,7 @@ public class PrefixTest
     assertEquals(p, Prefix.NONE);
   }
   
-  /**
+  /*
    * Test method for {@link edu.psu.fps.model.enums.Prefix#fromPrettyString(java.lang.String)}.
    */
   @Test
@@ -74,7 +70,7 @@ public class PrefixTest
     assertEquals(p1, p2);
   }
   
-  /**
+  /*
    * Test method for {@link edu.psu.fps.model.enums.Prefix#fromPrettyString(java.lang.String)}.
    */
   @Test
@@ -91,7 +87,7 @@ public class PrefixTest
     assertEquals(p1, p2);
   }
   
-  /**
+  /*
    * Test method for {@link edu.psu.fps.model.enums.Prefix#fromPrettyString(java.lang.String)}.
    */
   @Test
@@ -108,7 +104,7 @@ public class PrefixTest
     assertEquals(p1, p2);
   }
   
-  /**
+  /*
    * Test method for {@link edu.psu.fps.model.enums.Prefix#toString()}.
    */
   @Test
@@ -118,7 +114,7 @@ public class PrefixTest
     assertTrue(p.toString().trim().isEmpty());
   }
   
-  /**
+  /*
    * Test method for {@link edu.psu.fps.model.enums.Prefix#toString()}.
    */
   @Test
@@ -134,7 +130,7 @@ public class PrefixTest
     assertTrue(g.toString().equals(prettyPrefix));
   }
   
-  /**
+  /*
    * Test method for {@link edu.psu.fps.model.enums.Prefix#fromPrettyString(java.lang.String)}.
    */
   @Test

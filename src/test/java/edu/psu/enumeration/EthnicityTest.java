@@ -1,4 +1,4 @@
-/**
+/*
  * 
  */
 package edu.psu.enumeration;
@@ -17,15 +17,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-/**
- * @author ses44
- *
- */
 @RunWith(JUnitParamsRunner.class)
 public class EthnicityTest
 {
 
-  /**
+  /*
    * @throws java.lang.Exception
    */
   @Before
@@ -33,7 +29,7 @@ public class EthnicityTest
   {
   }
 
-  /**
+  /*
    * Test method for {@link edu.psu.fps.model.enums.Ethnicity#fromPrettyString(java.lang.String)}.
    */
   @Test
@@ -43,7 +39,7 @@ public class EthnicityTest
     assertNull(p);
   }
 
-  /**
+  /*
    * Test method for {@link edu.psu.fps.model.enums.Ethnicity#fromPrettyString(java.lang.String)}.
    */
   @Test
@@ -73,7 +69,7 @@ public class EthnicityTest
     return parameterSet.toArray();
   }
   
-  /**
+  /*
    * Test method for {@link edu.psu.fps.model.enums.Ethnicity#fromPrettyString(java.lang.String)}.
    */
   @Test
@@ -102,7 +98,7 @@ public class EthnicityTest
     return parameterSet.toArray();
   }
   
-  /**
+  /*
    * Test method for {@link edu.psu.fps.model.enums.Ethnicity#fromPrettyString(java.lang.String)}.
    */
   @Test
@@ -131,7 +127,7 @@ public class EthnicityTest
     return parameterSet.toArray();
   }
   
-  /**
+  /*
    * Test method for {@link edu.psu.fps.model.enums.Ethnicity#fromPrettyString(java.lang.String)}.
    */
   @Test

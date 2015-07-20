@@ -1,4 +1,4 @@
-/**
+/*
  * 
  */
 package edu.psu.rest;
@@ -13,14 +13,10 @@ import javax.xml.namespace.QName;
 import org.junit.Before;
 import org.junit.Test;
 
-/**
- * @author ses44
- *
- */
 public class ErrorMessageTest
 {
 
-  /**
+  /*
    * @throws java.lang.Exception
    */
   @Before

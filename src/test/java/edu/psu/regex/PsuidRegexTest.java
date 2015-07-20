@@ -1,4 +1,4 @@
-/**
+/*
  * 
  */
 package edu.psu.regex;
@@ -21,10 +21,6 @@ import junitparams.Parameters;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-/**
- * @author Steve Moyer {@literal (<smoyer@psu.edu>)}
- *
- */
 @RunWith(JUnitParamsRunner.class)
 public class PsuidRegexTest {
   
@@ -60,7 +56,7 @@ public class PsuidRegexTest {
     assertTrue(isStringMatchingPsuidRegex(idNumber));
   }
   
-  /**
+  /*
    * These parameters are the complete list of disallowed psuid numbers as defined
    * by the document at: <a href="https://wikispaces.psu.edu/display/IdSExternal/IAM+CIDR+Functionality" />
    * 
@@ -93,7 +89,7 @@ public class PsuidRegexTest {
     return parameters.toArray(new String[0]);
   }
   
-  /**
+  /*
    * 
    */
   @Test

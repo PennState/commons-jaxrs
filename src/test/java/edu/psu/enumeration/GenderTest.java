@@ -1,4 +1,4 @@
-/**
+/*
  * 
  */
 package edu.psu.enumeration;
@@ -17,15 +17,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-/**
- * @author ses44
- *
- */
 @RunWith(JUnitParamsRunner.class)
 public class GenderTest
 {
 
-  /**
+  /*
    * @throws java.lang.Exception
    */
   @Before
@@ -33,7 +29,7 @@ public class GenderTest
   {
   }
 
-  /**
+  /*
    * Test method for {@link edu.psu.fps.model.enums.Gender#fromPrettyString(java.lang.String)}.
    */
   @Test
@@ -50,7 +46,7 @@ public class GenderTest
     assertNull(p);
   }
   
-  /**
+  /*
    * Test method for {@link edu.psu.fps.model.enums.Gender#fromPrettyString(java.lang.String)}.
    */
   @Test
@@ -79,7 +75,7 @@ public class GenderTest
     return parameterSet.toArray();
   }
   
-  /**
+  /*
    * Test method for {@link edu.psu.fps.model.enums.Gender#fromPrettyString(java.lang.String)}.
    */
   @Test
@@ -108,7 +104,7 @@ public class GenderTest
     return parameterSet.toArray();
   }
   
-  /**
+  /*
    * Test method for {@link edu.psu.fps.model.enums.Gender#fromPrettyString(java.lang.String)}.
    */
   @Test
@@ -137,7 +133,7 @@ public class GenderTest
     return parameterSet.toArray();
   }
   
-  /**
+  /*
    * Test method for {@link edu.psu.fps.model.enums.Gender#fromPrettyString(java.lang.String)}.
    */
   @Test

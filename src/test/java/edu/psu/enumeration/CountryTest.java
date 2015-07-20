@@ -1,4 +1,4 @@
-/**
+/*
  * 
  */
 package edu.psu.enumeration;
@@ -17,15 +17,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-/**
- * @author ses44
- *
- */
 @RunWith(JUnitParamsRunner.class)
 public class CountryTest
 {
 
-  /**
+  /*
    * @throws java.lang.Exception
    */
   @Before
@@ -33,8 +29,8 @@ public class CountryTest
   {
   }
 
-  /**
-   * Test method for {@link edu.psu.fps.model.enums.Country#fromPrettyString(java.lang.String)}.
+  /*
+   * Test method for {@link edu.psu.IsoCountry.model.enums.Country#fromPrettyString(java.lang.String)}.
    */
   @Test
   public void testFromPrettyStringNull()
@@ -43,8 +39,8 @@ public class CountryTest
     assertNull(p);
   }
 
-  /**
-   * Test method for {@link edu.psu.fps.model.enums.Country#fromPrettyString(java.lang.String)}.
+  /*
+   * Test method for {@link edu.psu.IsoCountry.model.enums.Country#fromPrettyString(java.lang.String)}.
    */
   @Test
   public void testFromPrettyStringEmptyString()
@@ -72,8 +68,8 @@ public class CountryTest
     return parameterSet.toArray();
   }
   
-  /**
-   * Test method for {@link edu.psu.fps.model.enums.Country#fromPrettyString(java.lang.String)}.
+  /*
+   * Test method for {@link edu.psu.IsoCountry.model.enums.Country#fromPrettyString(java.lang.String)}.
    */
   @Test
   @Parameters(method = "getPrettyStrings")
@@ -101,8 +97,8 @@ public class CountryTest
     return parameterSet.toArray();
   }
   
-  /**
-   * Test method for {@link edu.psu.fps.model.enums.Country#fromPrettyString(java.lang.String)}.
+  /*
+   * Test method for {@link edu.psu.IsoCountry.model.enums.Country#fromPrettyString(java.lang.String)}.
    */
   @Test
   @Parameters(method = "getEmaciatedStrings")
@@ -130,8 +126,8 @@ public class CountryTest
     return parameterSet.toArray();
   }
   
-  /**
-   * Test method for {@link edu.psu.fps.model.enums.Country#fromPrettyString(java.lang.String)}.
+  /*
+   * Test method for {@link edu.psu.IsoCountry.model.enums.Country#fromPrettyString(java.lang.String)}.
    */
   @Test
   @Parameters(method = "getLowerNameValues")
