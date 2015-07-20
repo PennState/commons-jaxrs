@@ -1,4 +1,4 @@
-/**
+/*
  * 
  */
 package edu.psu.enumeration;
@@ -17,15 +17,12 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-/**
- * @author ses44
- *
- */
+
 @RunWith(JUnitParamsRunner.class)
 public class StateTest
 {
 
-  /**
+  /*
    * @throws java.lang.Exception
    */
   @Before
@@ -33,7 +30,7 @@ public class StateTest
   {
   }
 
-  /**
+  /*
    * Test method for {@link edu.psu.fps.model.enums.State#fromPrettyString(java.lang.String)}.
    */
   @Test
@@ -50,7 +47,7 @@ public class StateTest
     assertNull(p);
   }
   
-  /**
+  /*
    * Test method for {@link edu.psu.fps.model.enums.State#fromPrettyString(java.lang.String)}.
    */
   @Test
@@ -79,7 +76,7 @@ public class StateTest
     return parameterSet.toArray();
   }
   
-  /**
+  /*
    * Test method for {@link edu.psu.fps.model.enums.State#fromPrettyString(java.lang.String)}.
    */
   @Test
@@ -108,7 +105,7 @@ public class StateTest
     return parameterSet.toArray();
   }
   
-  /**
+  /*
    * Test method for {@link edu.psu.fps.model.enums.State#fromPrettyString(java.lang.String)}.
    */
   @Test
@@ -137,7 +134,7 @@ public class StateTest
     return parameterSet.toArray();
   }
   
-  /**
+  /*
    * Test method for {@link edu.psu.fps.model.enums.State#fromPrettyString(java.lang.String)}.
    */
   @Test

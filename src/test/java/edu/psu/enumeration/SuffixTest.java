@@ -1,4 +1,4 @@
-/**
+/*
  * 
  */
 package edu.psu.enumeration;
@@ -20,15 +20,12 @@ import org.junit.runner.RunWith;
 
 import edu.psu.enumeration.Suffix;
 
-/**
- * @author ses44
- *
- */
+
 @RunWith(JUnitParamsRunner.class)
 public class SuffixTest
 {
 
-  /**
+  /*
    * @throws java.lang.Exception
    */
   @Before
@@ -36,7 +33,7 @@ public class SuffixTest
   {
   }
 
-  /**
+  /*
    * Test method for {@link edu.psu.fps.model.enums.Prefix#fromPrettyString(java.lang.String)}.
    */
   @Test
@@ -46,7 +43,7 @@ public class SuffixTest
     assertNull(p);
   }
 
-  /**
+  /*
    * Test method for {@link edu.psu.fps.model.enums.Prefix#fromPrettyString(java.lang.String)}.
    */
   @Test
@@ -57,7 +54,7 @@ public class SuffixTest
     assertEquals(p, Suffix.NONE);
   }
   
-  /**
+  /*
    * Test method for {@link edu.psu.fps.model.enums.Prefix#fromPrettyString(java.lang.String)}.
    */
   @Test
@@ -81,7 +78,7 @@ public class SuffixTest
     assertEquals(p1, p2);
   }
   
-  /**
+  /*
    * Test method for {@link edu.psu.fps.model.enums.Prefix#fromPrettyString(java.lang.String)}.
    */
   @Test
@@ -119,7 +116,7 @@ public class SuffixTest
     return parameterSet.toArray();
   }
   
-  /**
+  /*
    * Test method for {@link edu.psu.fps.model.enums.Prefix#fromPrettyString(java.lang.String)}.
    */
   @Test
@@ -131,7 +128,7 @@ public class SuffixTest
     assertEquals(p1, p2);
   }
   
-  /**
+  /*
    * Test method for {@link edu.psu.fps.model.enums.Prefix#toString()}.
    */
   @Test
@@ -141,7 +138,7 @@ public class SuffixTest
     assertTrue(p.toString().trim().isEmpty());
   }
   
-  /**
+  /*
    * Test method for {@link edu.psu.fps.model.enums.Prefix#toString()}.
    */
   @Test

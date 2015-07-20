@@ -1,4 +1,4 @@
-/**
+/*
  * 
  */
 package edu.psu.enumeration;
@@ -20,28 +20,24 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-/**
- * @author stevemoyer
- *
- */
 @RunWith(JUnitParamsRunner.class)
 public class SecurityQuestionTest {
 
-  /**
+  /*
    * @throws java.lang.Exception
    */
   @Before
   public void setUp() throws Exception {
   }
 
-  /**
+  /*
    * @throws java.lang.Exception
    */
   @After
   public void tearDown() throws Exception {
   }
 
-  /**
+  /*
    * Provides parameters for tests that require a pretty string
    * @return
    */
@@ -71,7 +67,7 @@ public class SecurityQuestionTest {
     return parametersList.toArray();
   }
   
-  /**
+  /*
    * Test method for {@link edu.psu.enumeration.SecurityQuestion#fromPrettyString(java.lang.String)}.
    */
   @Test
@@ -85,7 +81,7 @@ public class SecurityQuestionTest {
     }
   }
 
-  /**
+  /*
    * Test method for {@link edu.psu.enumeration.SecurityQuestion#toString()}.
    */
   @Test
@@ -102,7 +98,7 @@ public class SecurityQuestionTest {
     }
   }
 
-  /**
+  /*
    * Provides parameters for tests that require a lowercase pretty string
    * @return
    */
@@ -132,7 +128,7 @@ public class SecurityQuestionTest {
     return parametersList.toArray();
   }
   
-    /**
+    /*
    * Test method for {@link edu.psu.enumeration.SecurityQuestion#enumValue(java.lang.String)}.
    */
   @Test
@@ -149,7 +145,7 @@ public class SecurityQuestionTest {
     }
   }
   
-  /**
+  /*
    * Provides parameters for tests that require a lowercase pretty string
    * @return
    */
@@ -179,7 +175,7 @@ public class SecurityQuestionTest {
     return parametersList.toArray();
   }
   
-  /**
+  /*
    * Test method for {@link edu.psu.enumeration.SecurityQuestion#enumValue(java.lang.String)}.
    */
   @Test
@@ -196,7 +192,7 @@ public class SecurityQuestionTest {
     }
   }
   
-  /**
+  /*
    * Test method for {@link edu.psu.enumeration.SecurityQuestion#enumValue(java.lang.String)}.
    */
   @Test(expected = IllegalArgumentException.class)
@@ -204,7 +200,7 @@ public class SecurityQuestionTest {
     SecurityQuestion.enumValue(null);
   }
   
-  /**
+  /*
    * Test method for {@link edu.psu.enumeration.SecurityQuestion#enumValue(java.lang.String)}.
    */
   @Test
@@ -221,7 +217,7 @@ public class SecurityQuestionTest {
     }
   }
   
-  /**
+  /*
    * Provides parameters for tests that require a lowercase pretty string
    * @return
    */
@@ -251,7 +247,7 @@ public class SecurityQuestionTest {
     return parametersList.toArray();
   }
   
-  /**
+  /*
    * Test method for {@link edu.psu.enumeration.SecurityQuestion#enumValue(java.lang.String)}.
    */
   @Test

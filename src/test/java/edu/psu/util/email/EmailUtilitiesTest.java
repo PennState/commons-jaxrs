@@ -16,15 +16,12 @@ public class EmailUtilitiesTest
   {
   }
 
-  /**
-   * @throws Exception
-   */
   @After
-  public void tearDown() throws Exception 
+  public void tearDown() 
   {
   }
 
-  /**
+  /*
     * Test method for {@link ait.common.email.EmailUtilities#sendMessage(java.lang.String, java.lang.String, java.lang.String, java.lang.String[])
   */
   @Test
