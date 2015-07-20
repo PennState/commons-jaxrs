@@ -120,6 +120,10 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
+				<goals>
+				  <goal>jar</goal>
+				  <goal>test-jar</goal>
+				</goals>
 				<configuration>
 					<additionalparam>-Xdoclint:none</additionalparam>
 				</configuration>
