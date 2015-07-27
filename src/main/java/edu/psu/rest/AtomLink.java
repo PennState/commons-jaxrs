@@ -29,6 +29,10 @@ public class AtomLink {
   @XmlElement(name = "type")
   private String type_;
   
+  public AtomLink(){
+	  
+  }
+  
   public AtomLink(String relation, String type, String hyperlink) {
     relation_ = relation;
     type_ = type;
