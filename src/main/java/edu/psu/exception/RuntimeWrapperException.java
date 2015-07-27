@@ -11,7 +11,7 @@ public class RuntimeWrapperException extends RuntimeException
     this.cause = cause;
   }
 
-  static void throwRuntimeWrapperException(Exception e)
+  static public void throwRuntimeWrapperException(Exception e)
   {
     throw new RuntimeWrapperException(e);
   }
