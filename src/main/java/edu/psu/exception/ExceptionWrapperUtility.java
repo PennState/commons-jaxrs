@@ -26,7 +26,7 @@ public final class ExceptionWrapperUtility {
     void accept() throws Exception;
   }
 
-  /**
+  /*
    * .forEach(rethrowConsumer(name -> System.out.println(Class.forName(name))));
    * or .forEach(rethrowConsumer(ClassNameUtil::println));
    */
@@ -40,7 +40,7 @@ public final class ExceptionWrapperUtility {
     };
   }
 
-  /**
+  /*
    * .map(rethrowFunction(name -> Class.forName(name))) or
    * .map(rethrowFunction(Class::forName))
    */
@@ -55,7 +55,7 @@ public final class ExceptionWrapperUtility {
     };
   }
 
-  /**
+  /*
    * rethrowSupplier(() -> new StringJoiner(new String(new byte[]{77, 97, 114,
    * 107}, "UTF-8"))),
    */
@@ -70,7 +70,7 @@ public final class ExceptionWrapperUtility {
     };
   }
 
-  /** uncheck(() -> Class.forName("xxx")); */
+  /* uncheck(() -> Class.forName("xxx")); */
   public static void uncheck(Runnable_WithExceptions t) {
     try {
       t.accept();
@@ -79,7 +79,7 @@ public final class ExceptionWrapperUtility {
     }
   }
 
-  /** uncheck(() -> Class.forName("xxx")); */
+  /* uncheck(() -> Class.forName("xxx")); */
   public static <R> R uncheck(Supplier_WithExceptions<R> supplier) {
     try {
       return supplier.get();
@@ -89,7 +89,7 @@ public final class ExceptionWrapperUtility {
     }
   }
 
-  /** uncheck(Class::forName, "xxx"); */
+  /* uncheck(Class::forName, "xxx"); */
   public static <T, R> R uncheck(Function_WithExceptions<T, R> function, T t) {
     try {
       return function.apply(t);
