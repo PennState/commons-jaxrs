@@ -23,7 +23,7 @@ public class AtomLink {
   @XmlElement(name = "rel")
   private String relation_;
   
-  @XmlElement(name = "title", nillable = true)
+  @XmlElement(name = "title")
   private String title_;
   
   @XmlElement(name = "type")
