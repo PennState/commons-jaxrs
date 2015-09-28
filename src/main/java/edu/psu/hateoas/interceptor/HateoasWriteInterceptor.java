@@ -108,11 +108,19 @@ public class HateoasWriteInterceptor implements WriterInterceptor {
             	Method method = object.getClass().getMethod(methodName);
             	//get value
             	Object value = method.invoke(object);            	
-            	//replace in path
-            	path = path.replaceAll(pattern, value.toString());
+            	
+            	// If we can't template the link, skip this link.  
+            	if (value == null) {
+            	  return;
+            	}
+            	
+              //replace in path
+            	String methodPattern = "\\{" + methodName + "\\}";
+            	path = path.replaceAll(methodPattern, value.toString());
             }
             catch(Exception e){
             	LOGGER.error("Error find method " + methodName + " : " + e.getMessage());
+            	return;
             }
         }
         			        			        			        
