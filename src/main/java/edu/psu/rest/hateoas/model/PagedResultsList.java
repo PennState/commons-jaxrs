@@ -1,4 +1,4 @@
-package edu.psu.hateoas.model;
+package edu.psu.rest.hateoas.model;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import edu.psu.hateoas.annotations.Link;
+import edu.psu.rest.hateoas.annotations.Link;
 
 @Link(rel="self", path="{getPath}?page[number]={getCurrentPage}&page[size]={getPageSize}")
 @Link(rel="first", path="{getPath}?page[number]={getFirstPage}&page[size]={getPageSize}")

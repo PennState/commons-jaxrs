@@ -1,4 +1,4 @@
-package edu.psu.hateoas.model;
+package edu.psu.rest.hateoas.model;
 
 import java.util.ArrayList;
 import java.util.List;

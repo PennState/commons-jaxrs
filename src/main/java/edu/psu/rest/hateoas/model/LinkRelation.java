@@ -1,4 +1,4 @@
-package edu.psu.hateoas.model;
+package edu.psu.rest.hateoas.model;
 
 public enum LinkRelation {
   ABOUT("about","Refers to a resource that is the subject of the link's context."),
