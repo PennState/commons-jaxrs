@@ -1,4 +1,4 @@
-package edu.psu.converter;
+package edu.psu.persistence;
 
 import java.time.Instant;
 import java.util.Date;
@@ -7,7 +7,7 @@ import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 
 @Converter(autoApply = true)
-public class InstantPersistenceConverter implements AttributeConverter<Instant, Date> {
+public class InstantConverter implements AttributeConverter<Instant, Date> {
 
 	@Override
 	public Date convertToDatabaseColumn(Instant attribute) {

@@ -1,4 +1,4 @@
-package edu.psu.converter;
+package edu.psu.persistence;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -8,7 +8,7 @@ import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 
 @Converter(autoApply = true)
-public class LocalDatePeristenceConverter implements AttributeConverter<LocalDate, Date> {
+public class LocalDateConverter implements AttributeConverter<LocalDate, Date> {
 
 	@Override
 	public Date convertToDatabaseColumn(LocalDate attribute) {
