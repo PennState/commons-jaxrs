@@ -1,4 +1,4 @@
-package edu.psu.version;
+package edu.psu.rest.common;
 
 import java.io.IOException;
 import java.net.URL;

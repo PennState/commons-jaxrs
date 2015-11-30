@@ -11,7 +11,7 @@ import javax.ws.rs.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import edu.psu.version.Version;
+import edu.psu.rest.common.Version;
 
 public class ManifestUtil {
 
