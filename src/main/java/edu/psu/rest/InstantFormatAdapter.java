@@ -12,12 +12,18 @@ public class InstantFormatAdapter extends XmlAdapter<String, Instant>
   @Override
   public String marshal(Instant value) throws Exception
   {
+	  if (value == null) {
+		  return null;
+	  }
     return FORMATTER.format(value);
   }
 
   @Override
   public Instant unmarshal(String s) throws Exception
   {
+	  if (s == null || s.trim().isEmpty()) {
+		  return null;
+	  }
     return Instant.parse(s);
   }
 }
