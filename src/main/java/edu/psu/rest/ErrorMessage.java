@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -87,6 +88,11 @@ public class ErrorMessage
   public List<String> getExternalLinkList()
   {
     return externalLinks_;
+  }
+  
+  public Response toResponse()
+  {
+    return Response.status(status_).entity(this).build();
   }
   
   @Override
