@@ -23,6 +23,9 @@ public class RestResourceMetadata {
   @XmlElement
   private String version;
 
+  public RestResourceMetadata()
+  {}
+  
   public RestResourceMetadata(RestResourceMetadata other)
   {
     resourceType = other.getResourceType();
