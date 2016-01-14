@@ -23,7 +23,7 @@ public class RestResource<T> {
   @XmlElementWrapper(name = "links")
   @XmlElement(name = "link")
   @JsonProperty("links")
-  private List<String> links;
+  private List<AtomLink> links;
 
   public RestResource(RestResourceMetadata meta) {
     this.meta = meta;
@@ -48,11 +48,11 @@ public class RestResource<T> {
     return copy;
   }
 
-  public List<String> getLinks() {
+  public List<AtomLink> getLinks() {
     return links;
   }
 
-  public void setLinks(List<String> links) {
+  public void setLinks(List<AtomLink> links) {
     this.links = links;
   }
 
