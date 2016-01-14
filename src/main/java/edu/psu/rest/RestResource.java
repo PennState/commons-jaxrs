@@ -42,8 +42,10 @@ public class RestResource<T> {
     this.resource = resource;
   }
 
+  //Break the reference binding before returning
   public RestResourceMetadata getMeta() {
-    return meta;
+    final RestResourceMetadata copy = new RestResourceMetadata(meta);
+    return copy;
   }
 
   public List<String> getLinks() {
