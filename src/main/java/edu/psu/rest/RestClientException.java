@@ -1,5 +1,8 @@
 package edu.psu.rest;
 
+import javax.ws.rs.ProcessingException;
+import javax.ws.rs.core.Response;
+
 
 public class RestClientException extends Exception
 {
@@ -7,6 +10,16 @@ public class RestClientException extends Exception
 
   private int statusCode_;
   private ErrorMessage errorMessage_;
+  
+  public RestClientException(Response response)
+  {
+    statusCode_ = response.getStatus();
+    try {
+      errorMessage_ = response.readEntity(ErrorMessage.class);
+    } catch (ProcessingException e) {
+      errorMessage_ = null;
+    }
+  }
   
   public RestClientException(int statusCode, ErrorMessage errorMessage)
   {
