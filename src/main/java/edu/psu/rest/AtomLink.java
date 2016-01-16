@@ -27,7 +27,7 @@ public class AtomLink {
   private String title_;
   
   @XmlElement(name = "type")
-  private String type_;
+  private String mimeType_;
   
   public AtomLink(){
 	  
@@ -35,7 +35,7 @@ public class AtomLink {
   
   public AtomLink(String relation, String type, String hyperlink) {
     relation_ = relation;
-    type_ = type;
+    mimeType_ = type;
     hyperlink_ = hyperlink;
   }
   
@@ -68,12 +68,12 @@ public class AtomLink {
     title_ = title;
   }
 
-  public String getType() {
-    return type_;
+  public String getMkmeType() {
+    return mimeType_;
   }
 
-  public void setType(String type) {
-    type_ = type;
+  public void setMimeType(String type) {
+    mimeType_ = type;
   }
   
 }
