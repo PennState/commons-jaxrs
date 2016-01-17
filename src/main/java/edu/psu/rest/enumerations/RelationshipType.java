@@ -84,7 +84,8 @@ public enum RelationshipType
     this.description = description;
   }
   
-  public String getRelationshipAsString()
+  @Override
+  public String toString()
   {
     return relationship;
   }
