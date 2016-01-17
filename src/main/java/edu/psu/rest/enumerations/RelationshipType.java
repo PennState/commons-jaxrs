@@ -1,4 +1,4 @@
-package edu.psu.rest;
+package edu.psu.rest.enumerations;
 
 public enum RelationshipType
 {
