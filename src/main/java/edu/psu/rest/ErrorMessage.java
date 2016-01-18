@@ -23,11 +23,11 @@ public class ErrorMessage
   private Status status_;
   
   @XmlElementWrapper(name="error-message-list")
-  //@XmlElement(name="error-message")
+  @XmlElement(name="error-message")
   List<String> errorMessages_ = new ArrayList<>();
   
   @XmlElementWrapper(name="reference-list", nillable = true)
-  //@XmlElement(name = "link", nillable = true)
+  @XmlElement(name = "link", nillable = true)
   List<String> externalLinks_ = null;
   
   public ErrorMessage()

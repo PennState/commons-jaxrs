@@ -11,16 +11,16 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.NONE)
 public class RestResourceMetadata {
 
-  @XmlElement
+  @XmlElement(nillable=true)
   private String resourceType;
 
-  @XmlElement
+  @XmlElement(nillable=true)
   private Instant created;
 
-  @XmlElement
+  @XmlElement(nillable=true)
   private Instant lastUpdated;
 
-  @XmlElement
+  @XmlElement(nillable=true)
   private String version;
 
   public RestResourceMetadata()
@@ -34,6 +34,13 @@ public class RestResourceMetadata {
     version = other.getVersion();
   }
   
+  public RestResourceMetadata(String resourceType, Instant created, Instant lastUpdated, String version)
+  {
+    this.resourceType = resourceType;
+    this.created = created;
+    this.lastUpdated = lastUpdated;
+    this.version = version;
+  }
   public String getResourceType() {
     return resourceType;
   }
