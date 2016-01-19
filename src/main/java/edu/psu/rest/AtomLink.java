@@ -68,7 +68,7 @@ public class AtomLink {
     title_ = title;
   }
 
-  public String getMkmeType() {
+  public String getMimeType() {
     return mimeType_;
   }
 
