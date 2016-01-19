@@ -22,11 +22,11 @@ public class ErrorMessage
   @XmlJavaTypeAdapter(XmlStatusAdapter.class)
   private Status status_;
   
-  @XmlElementWrapper(name="error-message-list")
+  @XmlElementWrapper(name="errorMessageList")
   @XmlElement(name="error-message")
   List<String> errorMessages_ = new ArrayList<>();
   
-  @XmlElementWrapper(name="reference-list", nillable = true)
+  @XmlElementWrapper(name="referenceList", nillable = true)
   @XmlElement(name = "link", nillable = true)
   List<String> externalLinks_ = null;
   
