@@ -28,12 +28,16 @@ public class RestResource<T> {
   public RestResource(RestResourceMetadata meta) {
     this.meta = meta;
   }
-  
+
+  private RestResource() {
+
+  }
+
   public RestResource(T resource, RestResourceMetadata meta) {
     this.resource = resource;
     this.meta = meta;
   }
-  
+
   public T getResource() {
     return resource;
   }
