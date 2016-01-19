@@ -6,6 +6,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
@@ -15,9 +16,11 @@ public class RestResourceMetadata {
   private String resourceType;
 
   @XmlElement(nillable=true)
+  @XmlJavaTypeAdapter(InstantFormatAdapter.class)
   private Instant created;
 
   @XmlElement(nillable=true)
+  @XmlJavaTypeAdapter(InstantFormatAdapter.class)
   private Instant lastUpdated;
 
   @XmlElement(nillable=true)
@@ -25,7 +28,7 @@ public class RestResourceMetadata {
 
   public RestResourceMetadata()
   {}
-  
+
   public RestResourceMetadata(RestResourceMetadata other)
   {
     resourceType = other.getResourceType();
@@ -33,7 +36,7 @@ public class RestResourceMetadata {
     lastUpdated = other.getLastUpdated();
     version = other.getVersion();
   }
-  
+
   public RestResourceMetadata(String resourceType, Instant created, Instant lastUpdated, String version)
   {
     this.resourceType = resourceType;
