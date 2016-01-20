@@ -1,7 +1,12 @@
 package edu.psu.rest;
 
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.time.Instant;
+import java.util.Base64;
 
+import javax.ws.rs.core.EntityTag;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -74,6 +79,17 @@ public class RestResourceMetadata {
 
   public void setVersion(String version) {
     this.version = version;
+  }
+  
+  public static EntityTag hash(Object object) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+    return hash(object.toString());
+  }
+  
+  public static EntityTag hash(String input) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+    MessageDigest digest = MessageDigest.getInstance("SHA-256");
+    digest.update(input.getBytes("UTF-8"));
+    byte[] hash = digest.digest();
+    return new EntityTag(Base64.getEncoder().encodeToString(hash));
   }
 
 }
