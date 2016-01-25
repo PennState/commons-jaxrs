@@ -42,6 +42,7 @@ public class GenderTest
   @Test
   public void testFromAbbreviationNull()
   {
+    @SuppressWarnings("deprecation")
     Gender p = Gender.fromShortString(null);
     assertNull(p);
   }
@@ -196,7 +197,7 @@ public class GenderTest
     assertEquals(e, genderIn); 
   }
   
-  @SuppressWarnings("unused")
+  @SuppressWarnings({ "unused", "deprecation" })
   private Object[] getShortStrings() {
     List<Object> parameterSet = new ArrayList<Object>();
     
@@ -219,6 +220,7 @@ public class GenderTest
   @Parameters(method = "getShortStrings")
   public void testShortStringValid(String testName, Gender genderIn, String value)
   {
+    @SuppressWarnings("deprecation")
     Gender e = Gender.fromShortString(value);
     assertEquals(e, genderIn); 
   }
