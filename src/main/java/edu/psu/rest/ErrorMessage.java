@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -21,12 +22,12 @@ public class ErrorMessage
   @XmlJavaTypeAdapter(XmlStatusAdapter.class)
   private Status status_;
   
-  @XmlElementWrapper(name="error-message-list")
-  //@XmlElement(name="error-message")
+  @XmlElementWrapper(name="errorMessageList")
+  @XmlElement(name="error-message")
   List<String> errorMessages_ = new ArrayList<>();
   
-  @XmlElementWrapper(name="reference-list", nillable = true)
-  //@XmlElement(name = "link", nillable = true)
+  @XmlElementWrapper(name="referenceList", nillable = true)
+  @XmlElement(name = "link", nillable = true)
   List<String> externalLinks_ = null;
   
   public ErrorMessage()
@@ -87,6 +88,11 @@ public class ErrorMessage
   public List<String> getExternalLinkList()
   {
     return externalLinks_;
+  }
+  
+  public Response toResponse()
+  {
+    return Response.status(status_).entity(this).build();
   }
   
   @Override

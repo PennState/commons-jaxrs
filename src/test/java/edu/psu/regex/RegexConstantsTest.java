@@ -16,7 +16,7 @@ public class RegexConstantsTest
   @Test
   public void testGoodCurrencyWithCents()
   {
-    if (!GOOD_CURRENCY_VALUE_WITH_CENTS.matches(RegexConstants.CURRENCY_REGEX))
+    if (!GOOD_CURRENCY_VALUE_WITH_CENTS.matches(RegexConstants.US_CURRENCY_REGEX))
     {
       fail(GOOD_CURRENCY_VALUE_WITH_CENTS + " failed match");
     }
@@ -25,7 +25,7 @@ public class RegexConstantsTest
   @Test
   public void testGoodCurrencyWithNoCents()
   {
-    if (!GOOD_CURRENCY_VALUE_NO_CENTS.matches(RegexConstants.CURRENCY_REGEX))
+    if (!GOOD_CURRENCY_VALUE_NO_CENTS.matches(RegexConstants.US_CURRENCY_REGEX))
     {
       fail(GOOD_CURRENCY_VALUE_NO_CENTS + " failed match");
     }
@@ -34,7 +34,7 @@ public class RegexConstantsTest
   @Test
   public void testGoodCurrency()
   {
-    if (!GOOD_CURRENCY_VALUE_COMMA_SEPARATED.matches(RegexConstants.CURRENCY_REGEX))
+    if (!GOOD_CURRENCY_VALUE_COMMA_SEPARATED.matches(RegexConstants.US_CURRENCY_REGEX))
     {
       fail(GOOD_CURRENCY_VALUE_COMMA_SEPARATED + " failed match");
     }
@@ -43,7 +43,7 @@ public class RegexConstantsTest
   @Test
   public void testBadCurrencyPeriodOnly()
   {
-    if (BAD_CURRENCY_PERIOD_ONLY.matches(RegexConstants.CURRENCY_REGEX))
+    if (BAD_CURRENCY_PERIOD_ONLY.matches(RegexConstants.US_CURRENCY_REGEX))
     {
       fail(BAD_CURRENCY_PERIOD_ONLY + " should not match");
     }
@@ -52,7 +52,7 @@ public class RegexConstantsTest
   @Test
   public void testBadCurrencyEmptyString()
   {
-    if ("".matches(RegexConstants.CURRENCY_REGEX))
+    if ("".matches(RegexConstants.US_CURRENCY_REGEX))
     {
       fail("Empty string should not match");
     }
@@ -61,7 +61,7 @@ public class RegexConstantsTest
   @Test
   public void testBadMultiplePeriods()
   {
-    if (BAD_CURRENCY_MULTIPLE_PERIODS.matches(RegexConstants.CURRENCY_REGEX))
+    if (BAD_CURRENCY_MULTIPLE_PERIODS.matches(RegexConstants.US_CURRENCY_REGEX))
     {
       fail(BAD_CURRENCY_MULTIPLE_PERIODS + " should not match");
     }
