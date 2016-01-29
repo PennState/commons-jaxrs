@@ -1,22 +1,31 @@
 package edu.psu.rest;
 
 import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.time.Instant;
 import java.util.Base64;
 
 import javax.ws.rs.core.EntityTag;
+import javax.ws.rs.core.UriInfo;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import edu.psu.rest.enumerations.RelationshipType;
+
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
 public class RestResourceMetadata {
-
+  
+  private static final Logger LOG = LoggerFactory.getLogger(RestResourceMetadata.class);
+  
   @XmlElement(nillable=true)
   private String resourceType;
 
@@ -90,6 +99,37 @@ public class RestResourceMetadata {
     digest.update(input.getBytes("UTF-8"));
     byte[] hash = digest.digest();
     return new EntityTag(Base64.getEncoder().encodeToString(hash));
+  }
+  
+  public static RestResourceMetadata createMetaData(EntityTag etag, String type)
+  {
+    RestResourceMetadata meta = new RestResourceMetadata();
+    
+    meta.setVersion(etag.toString());
+    meta.setCreated(Instant.now());
+    meta.setResourceType(type);
+    
+    return meta;
+  }
+  
+  public static AtomLink createSelfLink(UriInfo uriInfo)
+  {
+    String url = null;
+    
+    try
+    {
+      url = UriUtilities.urlAsString(uriInfo, true);
+    }
+    catch(MalformedURLException mue)
+    {
+      LOG.info("Failed to convert url " + mue.getLocalizedMessage());
+    }
+    
+    AtomLink self = new AtomLink();
+    self.setRelation(RelationshipType.SELF.toString());
+    self.setHyperlink(url);
+    self.setMimeType(Constants.PSU_CONTENT_TYPE_V1);
+    return self;
   }
 
 }
