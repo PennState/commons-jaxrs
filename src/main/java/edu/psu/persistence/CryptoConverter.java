@@ -91,6 +91,9 @@ public class CryptoConverter implements AttributeConverter<String, String>
       int calculatedSize = BLOCK_SIZE * blocks;
       int finalLength = calculatedSize  - value.length();
       
+      // TODO - should finalLength be calculatedSize?  The padding routine's
+      // example adds 15 spaces to the 5 character string when the length
+      // is specified as 20.
       String paddedValue = StringUtils.padRight(value, finalLength);
       
       encryptedValue = Base64.getEncoder().encodeToString((c.doFinal(paddedValue.getBytes())));
@@ -148,6 +151,11 @@ public class CryptoConverter implements AttributeConverter<String, String>
       c = Cipher.getInstance(ALGORITHM);
       c.init(Cipher.DECRYPT_MODE, KEY);
       decrypted = new String(c.doFinal(Base64.getDecoder().decode(dbData)));
+      
+      // TODO - the decrypted string needs the padding (if any) that was added
+      // during encryption to be removed here.  If a string already ends with
+      // spaces, how do we know which are padding and which are part of the
+      // original string?
     }
     catch (NoSuchAlgorithmException e)
     {
