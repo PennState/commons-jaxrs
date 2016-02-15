@@ -83,7 +83,7 @@ public class CryptoConverter implements AttributeConverter<String, String>
       c = Cipher.getInstance(ALGORITHM, "SunJCE");
       c.init(Cipher.ENCRYPT_MODE, KEY);
       
-      int blocks = (value.length() / BLOCK_SIZE) + 1;
+      int blocks = (int) Math.ceil(value.length() / BLOCK_SIZE);
 
       int calculatedSize = BLOCK_SIZE * blocks;
       int finalLength = calculatedSize  - value.length();
