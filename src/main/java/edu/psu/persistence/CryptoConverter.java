@@ -22,6 +22,15 @@ import javax.persistence.Converter;
 
 import edu.psu.util.string.StringUtils;
 
+/**
+ * Provides a converter to encrypt JPA fields as they're being stored into the
+ * backend persistence.  While many databases have the ability to encrypt fields
+ * or tables, using a JPA converter has the added benefit of keeping the encryption
+ * key off the database server (assuming the application server is on a different
+ * host).
+ * 
+ * @author Shawn Smith &lt;ses44@psu.edu&gt;
+ */
 @Converter
 public class CryptoConverter implements AttributeConverter<String, String>
 {
@@ -31,6 +40,13 @@ public class CryptoConverter implements AttributeConverter<String, String>
   
   private byte [] baseKey = null;
 
+  /**
+   * Creates an instance of a CryptoConverter, reading the key from the JBOSS
+   * (or Wildfly) server's configuration directory.
+   * 
+   * @throws IOException - when the file is not present or when the application
+   * server has insufficient privileges to read the key data.
+   */
   public CryptoConverter() throws IOException
   {
     Path path = Paths.get(System.getProperty("jboss.server.config.dir"), "app_key");
@@ -50,6 +66,12 @@ public class CryptoConverter implements AttributeConverter<String, String>
     }
   }
   
+  /**
+   * Encrypts the passed string value for storage in the database.
+   * 
+   * @param value a plain-text string that should be stored in an encrypted state.
+   * @return the encrypted version of the value.
+   */
   @Override
   public String convertToDatabaseColumn(String value)
   {
@@ -104,6 +126,13 @@ public class CryptoConverter implements AttributeConverter<String, String>
     return encryptedValue;
   }
 
+  /**
+   * Decrypts an encrypted value stored in the database, returning it to be
+   * placed into a JPA entity's field.
+   * 
+   * @param dbData encrypted string data stored in the database.
+   * @return a plain-text string that will be placed in the JPA entity.
+   */
   @Override
   public String convertToEntityAttribute(String dbData)
   {
