@@ -25,7 +25,7 @@ import edu.psu.util.string.StringUtils;
 @Converter
 public class CryptoConverter implements AttributeConverter<String, String>
 {
-  private static final String ALGORITHM = "AES/CBC/NoPadding";
+  private static final String ALGORITHM = "AES/CBC/PKCS5Padding";
   private static final int BLOCK_SIZE = 16;
   private static Key KEY = null;
   
