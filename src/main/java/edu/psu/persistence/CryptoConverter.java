@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
@@ -16,6 +17,7 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
+import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
@@ -35,8 +37,7 @@ import edu.psu.util.string.StringUtils;
 public class CryptoConverter implements AttributeConverter<String, String>
 {
   private static final String ALGORITHM = "AES/CBC/PKCS5Padding";
-  private static final int BLOCK_SIZE = 16;
-  private static Key KEY = null;
+  private int blockSize = -1;
   
   private byte [] baseKey = null;
 
@@ -57,13 +58,26 @@ public class CryptoConverter implements AttributeConverter<String, String>
        if (hasPassword.isPresent())
        {
          baseKey = hasPassword.get().getBytes("UTF-8");
-         KEY = new SecretKeySpec(baseKey, "AES");
+         blockSize = baseKey.length;
+         //KEY = new SecretKeySpec(baseKey, "AES");
        }
        else
        {
          throw new IllegalStateException("No ecryption key can be found in " + System.getProperty("jboss.server.config.dir") + "/app_key");
        }
     }
+  }
+  
+  /**
+   * Creates an instance of the CryptoConverter using the passed in value as a key
+   * 
+   * @param The key value to be used
+   */
+  public CryptoConverter(byte [] key)
+  {
+    baseKey = key;
+    blockSize = key.length;
+    //KEY = new SecretKeySpec(baseKey, "AES");
   }
   
   /**
@@ -75,26 +89,29 @@ public class CryptoConverter implements AttributeConverter<String, String>
   @Override
   public String convertToDatabaseColumn(String value)
   {
+    if (value == null || value.isEmpty())
+    {
+      return value;
+    }
+    
+    Key KEY = new SecretKeySpec(baseKey, "AES");
     // do some encryption
     String encryptedValue = "";
     Cipher c;
     try
     {
+      IvParameterSpec ivspec = new IvParameterSpec(createInitializationVector());
       c = Cipher.getInstance(ALGORITHM, "SunJCE");
-      c.init(Cipher.ENCRYPT_MODE, KEY);
+      c.init(Cipher.ENCRYPT_MODE, KEY, ivspec);
       
-      int blocks = value.length() / BLOCK_SIZE;
-      if(value.length() % BLOCK_SIZE != 0) {
+      int blocks = value.length() / blockSize;
+      if(value.length() % blockSize != 0) {
         blocks += 1;
       }
 
-      int calculatedSize = BLOCK_SIZE * blocks;
-      int finalLength = calculatedSize  - value.length();
+      int calculatedSize = blockSize * blocks;
       
-      // TODO - should finalLength be calculatedSize?  The padding routine's
-      // example adds 15 spaces to the 5 character string when the length
-      // is specified as 20.
-      String paddedValue = StringUtils.padRight(value, finalLength);
+      String paddedValue = StringUtils.padRight(value, calculatedSize);
       
       encryptedValue = Base64.getEncoder().encodeToString((c.doFinal(paddedValue.getBytes())));
     }
@@ -128,6 +145,11 @@ public class CryptoConverter implements AttributeConverter<String, String>
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
+    catch (InvalidAlgorithmParameterException e)
+    {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
 
     return encryptedValue;
   }
@@ -142,6 +164,8 @@ public class CryptoConverter implements AttributeConverter<String, String>
   @Override
   public String convertToEntityAttribute(String dbData)
   {
+    Key KEY = new SecretKeySpec(baseKey, "AES");
+    
     // do some decryption
     String decrypted = "";
 
@@ -149,13 +173,11 @@ public class CryptoConverter implements AttributeConverter<String, String>
     try
     {
       c = Cipher.getInstance(ALGORITHM);
-      c.init(Cipher.DECRYPT_MODE, KEY);
-      decrypted = new String(c.doFinal(Base64.getDecoder().decode(dbData)));
       
-      // TODO - the decrypted string needs the padding (if any) that was added
-      // during encryption to be removed here.  If a string already ends with
-      // spaces, how do we know which are padding and which are part of the
-      // original string?
+      IvParameterSpec ivspec = new IvParameterSpec(createInitializationVector());
+      c.init(Cipher.DECRYPT_MODE, KEY, ivspec);
+      
+      decrypted = new String(c.doFinal(Base64.getDecoder().decode(dbData)));
     }
     catch (NoSuchAlgorithmException e)
     {
@@ -182,7 +204,24 @@ public class CryptoConverter implements AttributeConverter<String, String>
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
+    catch (InvalidAlgorithmParameterException e)
+    {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
 
     return decrypted.trim();
+  }
+  
+  byte [] createInitializationVector()
+  {
+    byte [] iv = new byte[16];
+    
+    for (Integer i = 0; i < iv.length; ++i)
+    {
+      iv[i] = i.byteValue();
+    }
+    
+    return iv;
   }
 }
