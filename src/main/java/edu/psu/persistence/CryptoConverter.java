@@ -71,7 +71,7 @@ public class CryptoConverter implements AttributeConverter<String, String>
   /**
    * Creates an instance of the CryptoConverter using the passed in value as a key
    * 
-   * @param The key value to be used
+   * @param key value to be used
    */
   public CryptoConverter(byte [] key)
   {
