@@ -9,6 +9,9 @@ public class BooleanYNAdapter extends XmlAdapter<String, Boolean> {
 
   @Override
   public Boolean unmarshal(String v) throws Exception {
+    if (v == null) {
+      return null;
+    }
     if (YES.equalsIgnoreCase(v)) {
       return true;
     }
@@ -18,7 +21,7 @@ public class BooleanYNAdapter extends XmlAdapter<String, Boolean> {
   @Override
   public String marshal(Boolean v) throws Exception {
     if (v == null) {
-      return NO;
+      return null;
     }
     if (v == true) {
       return YES;
