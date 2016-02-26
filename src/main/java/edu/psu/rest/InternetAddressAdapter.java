@@ -10,25 +10,28 @@ public class InternetAddressAdapter extends XmlAdapter<String, InternetAddress> 
    * * Java => XML * Given the unmappable Java object, return the desired XML
    * representation.
    */
-  public String marshal(InternetAddress dbData) throws Exception {
-    if (dbData == null) {
+  public String marshal(InternetAddress email) throws Exception {
+    if (email == null) {
       return null;
     }
     
-    return dbData.getAddress();
+    return email.toString();
   }
 
   /*
    * * XML => Java * Given an XML string, use it to build an instance of the
    * unmappable class.
    */
-  public InternetAddress unmarshal(String attribute) throws Exception {
-    if (StringUtils.isEmpty(attribute)) {
+  public InternetAddress unmarshal(String email) throws Exception {
+    if (StringUtils.isEmpty(email)) {
       return null;
     }
     
-    InternetAddress ia = new InternetAddress();
-    ia.setAddress(attribute);
-    return ia;
+    InternetAddress[] internetAddresses = InternetAddress.parse(email);
+    if (internetAddresses.length == 1) {
+      return internetAddresses[0];
+    } else {
+      return null;
+    }
   }
 }
