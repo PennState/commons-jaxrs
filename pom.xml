@@ -19,6 +19,7 @@
 	<properties>
 		<java.compiler.source>1.8</java.compiler.source>
 		<java.compiler.target>1.8</java.compiler.target>
+		<slf4j.version>1.7.12</slf4j.version>
 	</properties>
 
 	<dependencies>
@@ -48,11 +49,6 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>1.6.6</version>
-		</dependency>
-		<dependency>
 			<groupId>bouncycastle</groupId>
 			<artifactId>bcprov-jdk16</artifactId>
 			<version>140</version>
@@ -65,7 +61,7 @@
 		<dependency>
 			<groupId>org.jboss.resteasy</groupId>
 			<artifactId>resteasy-jaxrs</artifactId>
-			<version>3.0.1.Final</version>
+			<version>3.0.11.Final</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -102,7 +98,21 @@
 			<artifactId>lombok</artifactId>
 			<version>1.14.8</version>
 		</dependency>
-
+        <dependency>
+          <groupId>commons-net</groupId>
+          <artifactId>commons-net</artifactId>
+          <version>3.4</version>
+        </dependency>
+        <dependency>
+        	<groupId>org.slf4j</groupId>
+        	<artifactId>slf4j-api</artifactId>
+        	<version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+        	<groupId>org.slf4j</groupId>
+        	<artifactId>slf4j-simple</artifactId>
+        	<version>${slf4j.version}</version>
+        </dependency>
 	</dependencies>
 
 	<reporting>

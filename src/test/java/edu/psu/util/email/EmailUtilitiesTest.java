@@ -6,6 +6,7 @@ import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -43,5 +44,22 @@ public class EmailUtilitiesTest
     {
       fail("Didn't expect and Messaging Exception");
     }
+  }
+  
+  @Test
+  public void testUserExistsValidUser() 
+  {
+    boolean success = false;
+    
+    try
+    {
+      success = EmailUtilities.smtpUserExists("ses44");
+    }
+    catch(java.lang.NullPointerException npe)
+    {
+      //This is what we expect
+    }
+    
+    Assert.assertTrue(success);
   }
 }
