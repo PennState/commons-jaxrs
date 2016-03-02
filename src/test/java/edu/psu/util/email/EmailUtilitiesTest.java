@@ -2,6 +2,8 @@ package edu.psu.util.email;
 
 import static org.junit.Assert.fail;
 
+import java.io.IOException;
+
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 
@@ -9,6 +11,8 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import edu.psu.util.email.exception.SmtpConnectionFailedException;
 
 public class EmailUtilitiesTest 
 {
@@ -58,6 +62,16 @@ public class EmailUtilitiesTest
     catch(java.lang.NullPointerException npe)
     {
       //This is what we expect
+    }
+    catch (IOException e)
+    {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+    catch (SmtpConnectionFailedException e)
+    {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
     }
     
     Assert.assertTrue(success);
