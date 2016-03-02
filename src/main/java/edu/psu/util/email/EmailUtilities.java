@@ -1,7 +1,6 @@
 package edu.psu.util.email;
 
 import java.io.IOException;
-import java.net.SocketException;
 import java.util.Properties;
 
 import javax.mail.Message;
@@ -17,12 +16,15 @@ import org.apache.commons.net.smtp.SMTPReply;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import edu.psu.util.email.exception.SmtpConnectionFailedException;
+
 public final class EmailUtilities
 {
   private static final Logger LOGGER = LoggerFactory.getLogger(EmailUtilities.class);
-  
+
   private EmailUtilities()
-  {}
+  {
+  }
 
   static final String SMTP_MAIL_HOST = "smtp.psu.edu";
   static final String EMAIL_HOST = "email.psu.edu";
@@ -53,61 +55,35 @@ public final class EmailUtilities
     Transport.send(message);
   }
 
-  public static boolean smtpUserExists(String userid)
+  public static boolean smtpUserExists(String userid) throws IOException, SmtpConnectionFailedException
   {
     SMTPClient client = new SMTPClient();
 
-    try
-    {
-      LOGGER.info("Attempting to connect");
-      client.connect(EMAIL_HOST);
-    }
-    catch (SocketException e)
-    {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
-    catch (IOException e)
-    {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
+    LOGGER.info("Attempting to connect");
+    client.connect(EMAIL_HOST);
+
     LOGGER.info("Connect status reploy string: " + client.getReplyString());
 
     // After connection attempt, you should check the reply code to verify
     // success.
     int reply = client.getReplyCode();
     LOGGER.info("Reply code: " + reply);
-     
+
     if (!SMTPReply.isPositiveCompletion(reply))
     {
       LOGGER.error("SMTP server refused connection.");
 
-      try
-      {
-        client.disconnect();
-      }
-      catch (IOException e)
-      {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-      }
-      return false;
+      client.disconnect();
+
+      throw new SmtpConnectionFailedException("Failed to connect " + client.getReplyString());
     }
-    
+
     int verified = -1;
     LOGGER.info("Post positive connection, going to run vrfy");
-    try
-    {
-      verified = client.vrfy(userid + MAIL_POSTFIX);
-      LOGGER.info("vrfy results = " + verified);
-    }
-    catch (IOException e)
-    {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
-    
+
+    verified = client.vrfy(userid + MAIL_POSTFIX);
+    LOGGER.info("vrfy results = " + verified);
+
     return (verified == 250);
   }
 }
