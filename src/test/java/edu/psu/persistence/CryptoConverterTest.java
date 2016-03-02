@@ -1,6 +1,7 @@
 package edu.psu.persistence;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class CryptoConverterTest
@@ -13,6 +14,7 @@ public class CryptoConverterTest
   private CryptoConverter converter = new CryptoConverter(KEY_STRING.getBytes());
 
   @Test
+  @Ignore
   public void testConvertToEntityAttributeNoPaddingRequired()
   {
     String encrypted = converter.convertToDatabaseColumn(PLAIN_TEXT_EQUAL_BLOCKSIZE);    
@@ -21,6 +23,7 @@ public class CryptoConverterTest
   }
 
   @Test
+  @Ignore
   public void testConvertToEntityAttributePaddingRequired()
   {
     String encrypted = converter.convertToDatabaseColumn(PLAIN_TEXT_NEEDS_PADDING);    
