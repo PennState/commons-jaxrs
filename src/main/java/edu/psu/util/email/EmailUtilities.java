@@ -59,19 +59,19 @@ public final class EmailUtilities
   {
     SMTPClient client = new SMTPClient();
 
-    LOGGER.info("Attempting to connect");
+    LOGGER.debug("Attempting to connect");
     client.connect(EMAIL_HOST);
 
-    LOGGER.info("Connect status reploy string: " + client.getReplyString());
+    LOGGER.debug("Connect status reply string: " + client.getReplyString());
 
     // After connection attempt, you should check the reply code to verify
     // success.
     int reply = client.getReplyCode();
-    LOGGER.info("Reply code: " + reply);
+    LOGGER.debug("Reply code: " + reply);
 
     if (!SMTPReply.isPositiveCompletion(reply))
     {
-      LOGGER.error("SMTP server refused connection.");
+      LOGGER.error("SMTP server refused connection.  " + client.getReplyString());
 
       client.disconnect();
 
@@ -79,10 +79,10 @@ public final class EmailUtilities
     }
 
     int verified = -1;
-    LOGGER.info("Post positive connection, going to run vrfy");
+    LOGGER.debug("Post positive connection, going to run vrfy");
 
     verified = client.vrfy(userid + MAIL_POSTFIX);
-    LOGGER.info("vrfy results = " + verified);
+    LOGGER.debug("vrfy results = " + verified);
 
     return (verified == 250);
   }
