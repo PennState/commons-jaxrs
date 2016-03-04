@@ -1,7 +1,6 @@
 package edu.psu.persistence;
 
 import java.io.IOException;
-import java.lang.annotation.Annotation;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -39,9 +38,7 @@ public class CryptoConverter implements AttributeConverter<String, String>
 {
   private static final String ALGORITHM = "AES/CBC/PKCS5Padding";
   private int blockSize = -1;
-  
-  private static String DEFAULT_KEY_FILE = "app_key";
-  
+    
   private byte [] baseKey = null;
 
   /**
@@ -53,21 +50,7 @@ public class CryptoConverter implements AttributeConverter<String, String>
    */
   public CryptoConverter() throws IOException
   {
-    Class<CryptoConverter> aClass = CryptoConverter.class;
-    Annotation[] annotations = aClass.getAnnotations();
-
-    String keyFile = DEFAULT_KEY_FILE;
-    for(Annotation annotation : annotations)
-    {
-      if(annotation instanceof KeyFile)
-      {
-        KeyFile keyFileAnnotation = (KeyFile) annotation;
-        keyFile = keyFileAnnotation.file();
-        System.out.println("file: " + keyFileAnnotation.file());
-      }
-    }
-    
-    Path path = Paths.get(System.getProperty("jboss.server.config.dir"), "/keys/", keyFile);
+    Path path = Paths.get(System.getProperty("jboss.server.config.dir"), "/keys/app_key");
     //The stream hence file will also be closed here
     try(Stream<String> lines = Files.lines(path))
     {
@@ -76,7 +59,6 @@ public class CryptoConverter implements AttributeConverter<String, String>
        {
          baseKey = hasPassword.get().getBytes("UTF-8");
          blockSize = baseKey.length;
-         //KEY = new SecretKeySpec(baseKey, "AES");
        }
        else
        {
@@ -132,40 +114,10 @@ public class CryptoConverter implements AttributeConverter<String, String>
       
       encryptedValue = Base64.getEncoder().encodeToString((c.doFinal(paddedValue.getBytes())));
     }
-    catch (NoSuchAlgorithmException e)
+    catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException |
+           BadPaddingException | NoSuchProviderException | InvalidAlgorithmParameterException e)
     {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
-    catch (NoSuchPaddingException e)
-    {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
-    catch (InvalidKeyException e)
-    {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
-    catch (IllegalBlockSizeException e)
-    {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
-    catch (BadPaddingException e)
-    {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
-    catch (NoSuchProviderException e)
-    {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
-    catch (InvalidAlgorithmParameterException e)
-    {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
+      throw new UnableToEncryptColumnException(e);
     }
 
     return encryptedValue;
@@ -196,35 +148,10 @@ public class CryptoConverter implements AttributeConverter<String, String>
       
       decrypted = new String(c.doFinal(Base64.getDecoder().decode(dbData)));
     }
-    catch (NoSuchAlgorithmException e)
+    catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException | 
+           BadPaddingException | InvalidAlgorithmParameterException e)
     {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
-    catch (NoSuchPaddingException e)
-    {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
-    catch (InvalidKeyException e)
-    {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
-    catch (IllegalBlockSizeException e)
-    {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
-    catch (BadPaddingException e)
-    {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
-    catch (InvalidAlgorithmParameterException e)
-    {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
+      throw new UnableToDecryptColumnException(e);
     }
 
     return decrypted.trim();
