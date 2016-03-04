@@ -1,6 +1,7 @@
 package edu.psu.persistence;
 
 import java.io.IOException;
+import java.lang.annotation.Annotation;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -39,6 +40,8 @@ public class CryptoConverter implements AttributeConverter<String, String>
   private static final String ALGORITHM = "AES/CBC/PKCS5Padding";
   private int blockSize = -1;
   
+  private static String DEFAULT_KEY_FILE = "app_key";
+  
   private byte [] baseKey = null;
 
   /**
@@ -50,7 +53,21 @@ public class CryptoConverter implements AttributeConverter<String, String>
    */
   public CryptoConverter() throws IOException
   {
-    Path path = Paths.get(System.getProperty("jboss.server.config.dir"), "app_key");
+    Class<CryptoConverter> aClass = CryptoConverter.class;
+    Annotation[] annotations = aClass.getAnnotations();
+
+    String keyFile = DEFAULT_KEY_FILE;
+    for(Annotation annotation : annotations)
+    {
+      if(annotation instanceof KeyFile)
+      {
+        KeyFile keyFileAnnotation = (KeyFile) annotation;
+        keyFile = keyFileAnnotation.file();
+        System.out.println("file: " + keyFileAnnotation.file());
+      }
+    }
+    
+    Path path = Paths.get(System.getProperty("jboss.server.config.dir"), "/keys/", keyFile);
     //The stream hence file will also be closed here
     try(Stream<String> lines = Files.lines(path))
     {
