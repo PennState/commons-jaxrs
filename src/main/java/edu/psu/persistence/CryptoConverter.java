@@ -62,7 +62,7 @@ public class CryptoConverter implements AttributeConverter<String, String>
        }
        else
        {
-         throw new IllegalStateException("No ecryption key can be found in " + System.getProperty("jboss.server.config.dir") + "/app_key");
+         throw new IllegalStateException("No ecryption key can be found in " + System.getProperty("jboss.server.config.dir") + "/keys/app_key");
        }
     }
   }
