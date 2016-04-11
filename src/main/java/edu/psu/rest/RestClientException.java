@@ -36,4 +36,16 @@ public class RestClientException extends Exception
   {
     return errorMessage_;
   }
+  
+  @Override
+  public String getMessage(){
+    String message = "Rest Client Exception: Status Code: " + statusCode_ + " ";
+    if(errorMessage_ != null){
+      message += "Error Messages: " + errorMessage_.getErrorMessageList();
+    }
+    
+    return message;
+    
+  }
+  
 }
