@@ -2,18 +2,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<parent>
-		<groupId>edu.psu.ses</groupId>
-		<artifactId>ses</artifactId>
-		<version>1</version>
-	</parent>
-
-	<groupId>edu.psu.libraries</groupId>
-	<artifactId>commons-psu</artifactId>
-	<name>Common Libraries - Java</name>
+	<groupId>edu.psu.swe.commons</groupId>
+	<artifactId>commons-jaxrs</artifactId>
+	<name>Common JAXRS Libraries</name>
 	<version>1.9.7</version>
 	<packaging>jar</packaging>
-	<url>${project.parent}/libraries/commonlibjava</url>
 
 	<properties>
 		<java.compiler.source>1.8</java.compiler.source>
@@ -174,8 +167,9 @@
 	</build>
 
 	<scm>
-		<connection>scm:git:ssh://git@git.psu.edu:5892/ais-swe/commons-psu.git</connection>
-		<developerConnection>scm:git:ssh://git@git.psu.edu:5892/ais-swe/commons-psu.git</developerConnection>
+		<connection>scm:git:ssh://git@github.com:PennState/commons-jaxrs.git</connection>
+		<developerConnection>scm:git:ssh://git@github.com:PennState/commons-jaxrs.git</developerConnection>
+                <url>https://github.com/PennState/commons-jaxrs</url>
 	</scm>
 
 </project>
