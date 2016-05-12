@@ -18,10 +18,10 @@ package edu.psu.swe.commons.jaxrs.common;
  */
 
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+//import io.swagger.annotations.Api;
+//import io.swagger.annotations.ApiOperation;
+//import io.swagger.annotations.ApiResponse;
+//import io.swagger.annotations.ApiResponses;
 
 import java.io.IOException;
 import java.util.jar.Manifest;
@@ -38,7 +38,7 @@ import org.slf4j.LoggerFactory;
 import edu.psu.util.ManifestUtil;
 
 @Path("version")
-@Api(value = "version")
+//@Api(value = "version")
 public class VersionResource {
 
 	private static final Logger LOG = LoggerFactory.getLogger(VersionResource.class);
@@ -56,10 +56,10 @@ public class VersionResource {
 
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	@ApiOperation(value = "Get Project Version Information", response = Version.class)
-	@ApiResponses(value = { @ApiResponse(code = 400, message = "Bad Request"),
-			@ApiResponse(code = 404, message = "Version information was not found"),
-			@ApiResponse(code = 503, message = "Service unavailable") })
+//	@ApiOperation(value = "Get Project Version Information", response = Version.class)
+//	@ApiResponses(value = { @ApiResponse(code = 400, message = "Bad Request"),
+//			@ApiResponse(code = 404, message = "Version information was not found"),
+//			@ApiResponse(code = 503, message = "Service unavailable") })
 	public Version getVersion() throws IOException {
 		if (clazz == null) {
 			LOG.warn(
