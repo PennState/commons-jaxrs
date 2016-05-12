@@ -21,8 +21,6 @@ package edu.psu.swe.commons.jaxrs;
 import javax.mail.internet.InternetAddress;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
-import org.apache.commons.lang3.StringUtils;
-
 public class InternetAddressAdapter extends XmlAdapter<String, InternetAddress> {
   /*
    * * Java => XML * Given the unmappable Java object, return the desired XML
@@ -41,7 +39,7 @@ public class InternetAddressAdapter extends XmlAdapter<String, InternetAddress> 
    * unmappable class.
    */
   public InternetAddress unmarshal(String email) throws Exception {
-    if (StringUtils.isEmpty(email)) {
+    if (email == null || email.isEmpty()) {
       return null;
     }
     
