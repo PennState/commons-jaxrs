@@ -6,12 +6,10 @@ import java.util.Date;
 import java.util.jar.Attributes;
 import java.util.jar.Manifest;
 
-import javax.ws.rs.NotFoundException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import edu.psu.rest.common.Version;
+import edu.psu.swe.commons.jaxrs.common.Version;
 
 public class ManifestUtil {
 

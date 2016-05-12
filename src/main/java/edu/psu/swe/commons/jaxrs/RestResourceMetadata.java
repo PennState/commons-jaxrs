@@ -1,4 +1,4 @@
-package edu.psu.rest;
+package edu.psu.swe.commons.jaxrs;
 
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
@@ -18,7 +18,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import edu.psu.rest.enumerations.RelationshipType;
+import edu.psu.swe.commons.jaxrs.enumerations.RelationshipType;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)

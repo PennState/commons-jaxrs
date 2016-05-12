@@ -1,4 +1,4 @@
-package edu.psu.rest.common;
+package edu.psu.swe.commons.jaxrs.common;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

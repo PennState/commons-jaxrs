@@ -1,4 +1,4 @@
-package edu.psu.rest.common;
+package edu.psu.swe.commons.jaxrs.common;
 
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.client.Client;

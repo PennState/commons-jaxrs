@@ -1,4 +1,4 @@
-package edu.psu.rest.hateoas.interceptor;
+package edu.psu.swe.commons.jaxrs.hateoas.interceptor;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;
@@ -17,11 +17,11 @@ import javax.ws.rs.ext.WriterInterceptorContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import edu.psu.rest.AtomLink;
-import edu.psu.rest.hateoas.annotations.AddHateoasLinks;
-import edu.psu.rest.hateoas.annotations.Link;
-import edu.psu.rest.hateoas.annotations.Links;
-import edu.psu.rest.hateoas.model.HateoasModel;
+import edu.psu.swe.commons.jaxrs.AtomLink;
+import edu.psu.swe.commons.jaxrs.hateoas.annotations.AddHateoasLinks;
+import edu.psu.swe.commons.jaxrs.hateoas.annotations.Link;
+import edu.psu.swe.commons.jaxrs.hateoas.annotations.Links;
+import edu.psu.swe.commons.jaxrs.hateoas.model.HateoasModel;
 
 /**
  * This class intercepts outgoing JAX-RS responses and looks for Links annotations on the class to add hateos links.

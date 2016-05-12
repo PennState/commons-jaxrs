@@ -1,4 +1,4 @@
-package edu.psu.rest;
+package edu.psu.swe.commons.jaxrs;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 

@@ -1,11 +1,11 @@
-package edu.psu.rest.hateoas.model;
+package edu.psu.swe.commons.jaxrs.hateoas.model;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlElement;
 
-import edu.psu.rest.AtomLink;
+import edu.psu.swe.commons.jaxrs.AtomLink;
 
 public class HateoasModel {
 	private List<AtomLink> links_ = new ArrayList<AtomLink>();

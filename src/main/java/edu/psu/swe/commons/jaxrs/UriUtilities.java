@@ -1,4 +1,4 @@
-package edu.psu.rest;
+package edu.psu.swe.commons.jaxrs;
 
 import java.net.MalformedURLException;
 import java.net.URI;

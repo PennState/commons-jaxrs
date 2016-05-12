@@ -1,4 +1,4 @@
-package edu.psu.rest.hateoas.annotations;
+package edu.psu.swe.commons.jaxrs.hateoas.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Repeatable;

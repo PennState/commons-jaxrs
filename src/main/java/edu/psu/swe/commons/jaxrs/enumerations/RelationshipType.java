@@ -1,4 +1,4 @@
-package edu.psu.rest.enumerations;
+package edu.psu.swe.commons.jaxrs.enumerations;
 
 public enum RelationshipType
 {
