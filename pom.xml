@@ -30,7 +30,7 @@
       <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
     </license>
   </licenses>
-  
+
   <developers>
     <developer>
       <id>ussmith</id>
@@ -87,6 +87,12 @@
       <organizationUrl>https://www.psu.edu</organizationUrl>
     </developer>
   </developers>
+
+  <scm>
+    <connection>scm:git:ssh://git@github.com:PennState/commons-jaxrs.git</connection>
+    <developerConnection>scm:git:ssh://git@github.com:PennState/commons-jaxrs.git</developerConnection>
+    <url>https://github.com/PennState/commons-jaxrs</url>
+  </scm>
 
   <dependencies>
     <dependency>
@@ -221,6 +227,30 @@
         <artifactId>apache-rat-plugin</artifactId>
         <version>0.11</version>
       </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>attach-javadocs</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
     <pluginManagement>
       <plugins>
@@ -239,10 +269,36 @@
     </pluginManagement>
   </build>
 
-  <scm>
-    <connection>scm:git:ssh://git@github.com:PennState/commons-jaxrs.git</connection>
-    <developerConnection>scm:git:ssh://git@github.com:PennState/commons-jaxrs.git</developerConnection>
-    <url>https://github.com/PennState/commons-jaxrs</url>
-  </scm>
+  <profiles>
+    <profile>
+      <id>sign-artifacts</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-jarsigner-plugin</artifactId>
+            <version>1.4</version>
+            <executions>
+              <execution>
+                <id>sign</id>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+              </execution>
+            </executions>
+            <configuration>
+              <keystore>/var/lib/jenkins/.keystore</keystore>
+              <alias>psu-ais-jenkins-key</alias>
+              <storepass>{HZYMFf0JPaYHKCLFoYrlKwLhEHmSbDlMomDYg6qY16g=}</storepass>
+              <keypass>{+s3b9g/rTTcHR7rHo2HL0pi6bozhxwdy2Z4F5Fud8UM=}</keypass>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 
 </project>
