@@ -289,22 +289,17 @@
         <plugins>
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-jarsigner-plugin</artifactId>
-            <version>1.4</version>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <version>1.5</version>
             <executions>
               <execution>
-                <id>sign</id>
+                <id>sign-artifacts</id>
+                <phase>verify</phase>
                 <goals>
                   <goal>sign</goal>
                 </goals>
               </execution>
             </executions>
-            <configuration>
-              <keystore>/var/lib/jenkins/.keystore</keystore>
-              <alias>psu-ais-jenkins-key</alias>
-              <storepass>{HZYMFf0JPaYHKCLFoYrlKwLhEHmSbDlMomDYg6qY16g=}</storepass>
-              <keypass>{+s3b9g/rTTcHR7rHo2HL0pi6bozhxwdy2Z4F5Fud8UM=}</keypass>
-            </configuration>
           </plugin>
         </plugins>
       </build>
