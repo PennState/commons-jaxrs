@@ -17,34 +17,37 @@ package edu.psu.swe.commons.jaxrs.adapters;
  * under the License.
  */
 
-
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 public class Boolean01Adapter extends XmlAdapter<String, Boolean> {
-  
+
   private static final String YES = "1";
   private static final String NO = "0";
 
   @Override
   public Boolean unmarshal(String v) throws Exception {
-    if (v == null) {
-      return null;
+    Boolean output = null;
+    if (v != null) {
+      if (YES.equalsIgnoreCase(v)) {
+        output = true;
+      } else {
+        output = false;
+      }
     }
-    if (YES.equalsIgnoreCase(v)) {
-      return true;
-    }
-    return false;
+    return output;
   }
 
   @Override
   public String marshal(Boolean v) throws Exception {
-    if (v == null) {
-      return null;
+    String output = null;
+    if (v != null) {
+      if (v) {
+        output = YES;
+      } else {
+        output = NO;
+      }
     }
-    if (v == true) {
-      return YES;
-    }
-    return NO;
+    return output;
   }
 
 }
