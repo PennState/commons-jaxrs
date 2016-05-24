@@ -24,7 +24,7 @@ import java.util.Optional;
 
 public class LocalDateTimeParamWrapper {
 
-  private static DateTimeFormatter FORMATTER = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
+  private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
 
   private LocalDateTime localDateTime;
 

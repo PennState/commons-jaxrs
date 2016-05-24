@@ -24,7 +24,7 @@ import java.util.Optional;
 
 public class InstantParamWrapper {
 
-  private static DateTimeFormatter FORMATTER = DateTimeFormatter.ISO_INSTANT;
+  private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ISO_INSTANT;
 
   private Instant instant;
 

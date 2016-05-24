@@ -34,56 +34,56 @@ public class HateoasMessage<T> {
   
   @XmlElement(name="status")
   @XmlJavaTypeAdapter(XmlStatusAdapter.class)
-  private Status status_;
+  private Status status;
   
   @XmlElement(name = "value")
-  private T value_;
+  private T value;
   
   @XmlElementWrapper(name = "reference-list")
-  private List<AtomLink> references_;
+  private List<AtomLink> references;
   
   public HateoasMessage() {
     // Required no-argument constructor
   }
   
   public HateoasMessage(Status status) {
-    status_ = status;
+    this.status = status;
   }
   
   public HateoasMessage(Status status, T value) {
-    status_ = status;
-    value_ = value;
+    this.status = status;
+    this.value = value;
   }
 
   public Status getStatus() {
-    return status_;
+    return status;
   }
 
   public void setStatus(Status status) {
-    status_ = status;
+    this.status = status;
   }
 
   public T getValue() {
-    return value_;
+    return value;
   }
 
   public void setValue(T value) {
-    value_ = value;
+    this.value = value;
   }
 
   public List<AtomLink> getReferences() {
-    return references_;
+    return references;
   }
 
   public void setReferences(List<AtomLink> references) {
-    references_ = references;
+    this.references = references;
   }
   
   public void addReference(AtomLink reference) {
-    if(references_ == null) {
-      references_ = new ArrayList<AtomLink>();
+    if(references == null) {
+      references = new ArrayList<AtomLink>();
     }
-    references_.add(reference);
+    references.add(reference);
   }
 
 }
