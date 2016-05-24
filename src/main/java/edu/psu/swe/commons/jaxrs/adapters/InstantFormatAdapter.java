@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 public class InstantFormatAdapter extends XmlAdapter<String, Instant>
 {
-  private static DateTimeFormatter FORMATTER = DateTimeFormatter.ISO_INSTANT;
+  private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ISO_INSTANT;
   
   @Override
   public String marshal(Instant value) throws Exception
