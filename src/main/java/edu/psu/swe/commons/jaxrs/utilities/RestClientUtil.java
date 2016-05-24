@@ -22,7 +22,7 @@ import javax.ws.rs.core.Response;
 
 import edu.psu.swe.commons.jaxrs.exceptions.RestClientException;
 
-public class RestClientUtil {
+public final class RestClientUtil {
 
   private RestClientUtil() {
     
