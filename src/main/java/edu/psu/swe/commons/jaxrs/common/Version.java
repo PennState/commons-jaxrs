@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-import edu.psu.swe.commons.jaxrs.Iso8601DateTimeFormatAdapter;
+import edu.psu.swe.commons.jaxrs.adapters.Iso8601DateTimeFormatAdapter;
 
 @XmlRootElement(name="version-info")
 @XmlAccessorType(XmlAccessType.NONE)

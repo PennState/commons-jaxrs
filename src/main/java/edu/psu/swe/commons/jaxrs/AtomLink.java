@@ -30,6 +30,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import edu.psu.swe.commons.jaxrs.enumerations.RelationshipType;
+import edu.psu.swe.commons.jaxrs.utilities.UriUtilities;
 import lombok.Data;
 
 /**

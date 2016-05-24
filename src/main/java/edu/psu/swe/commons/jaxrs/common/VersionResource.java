@@ -35,7 +35,7 @@ import javax.ws.rs.core.MediaType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import edu.psu.util.ManifestUtil;
+import edu.psu.swe.commons.jaxrs.utilities.ManifestUtil;
 
 @Path("version")
 //@Api(value = "version")

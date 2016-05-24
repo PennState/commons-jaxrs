@@ -27,6 +27,8 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+import edu.psu.swe.commons.jaxrs.adapters.XmlStatusAdapter;
+
 @XmlRootElement(name = "hateoas-message")
 public class HateoasMessage<T> {
   

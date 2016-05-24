@@ -75,6 +75,20 @@ public class Constants
   public static final String HTTP_CODE_511 = "Network Authentication Required";
   public static final String HTTP_CODE_598 = "Network read timeout error";
   public static final String HTTP_CODE_599 = "Network connect timeout error";
+  
+  //
+  // Date and time formatter strings
+  //
+  
+  public static final String ISO_8601_DATE_FORMAT = "yyyy-MM-dd";
+  public static final String ISO_8601_DATE_TIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SS";
+
+  //e.g. format 20140723
+  public static final String WAREHOUSE_DATE_FORMAT = "yyyyMMdd";
+
+  //e.g. format 06/30/2006
+  public static final String ADABASE_DATE_FORMAT = "MM/dd/yyyy";
+
    
   private Constants()
   {}

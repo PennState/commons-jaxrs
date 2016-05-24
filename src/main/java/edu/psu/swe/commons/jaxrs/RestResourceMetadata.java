@@ -36,7 +36,9 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import edu.psu.swe.commons.jaxrs.adapters.InstantFormatAdapter;
 import edu.psu.swe.commons.jaxrs.enumerations.RelationshipType;
+import edu.psu.swe.commons.jaxrs.utilities.UriUtilities;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
