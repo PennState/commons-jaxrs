@@ -38,7 +38,7 @@ import org.slf4j.LoggerFactory;
 
 import edu.psu.swe.commons.jaxrs.adapters.InstantFormatAdapter;
 import edu.psu.swe.commons.jaxrs.enumerations.RelationshipType;
-import edu.psu.swe.commons.jaxrs.utilities.UriUtilities;
+import edu.psu.swe.commons.jaxrs.utilities.UriUtil;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
@@ -138,7 +138,7 @@ public class RestResourceMetadata {
     
     try
     {
-      url = UriUtilities.urlAsString(uriInfo, true);
+      url = UriUtil.urlAsString(uriInfo, true);
     }
     catch(MalformedURLException mue)
     {

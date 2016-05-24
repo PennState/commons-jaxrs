@@ -30,7 +30,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import edu.psu.swe.commons.jaxrs.enumerations.RelationshipType;
-import edu.psu.swe.commons.jaxrs.utilities.UriUtilities;
+import edu.psu.swe.commons.jaxrs.utilities.UriUtil;
 import lombok.Data;
 
 /**
@@ -80,7 +80,7 @@ public class AtomLink {
 
     try
     {
-      url = UriUtilities.urlAsString(uriInfo, true);
+      url = UriUtil.urlAsString(uriInfo, true);
     }
     catch(MalformedURLException mue)
     {
