@@ -17,7 +17,6 @@ package edu.psu.swe.commons.jaxrs.common;
  * under the License.
  */
 
-
 import java.util.Date;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -27,142 +26,55 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import edu.psu.swe.commons.jaxrs.adapters.Iso8601DateTimeFormatAdapter;
+import lombok.Data;
 
-@XmlRootElement(name="version-info")
+@XmlRootElement(name = "version-info")
 @XmlAccessorType(XmlAccessType.NONE)
+@Data
 public class Version {
 
-	@XmlElement(name="title")
-	private String title;
+  @XmlElement(name = "title")
+  private String title;
 
-	@XmlElement(name="vendor")
-	private String vendor;
-	
-	@XmlElement(name="vendor-id")
-	private String vendorId;
-	
-	@XmlElement(name="version")
-	private String version;
-	
-	@XmlElement(name="scm-commit-id")
-	private String scmCommitId;
-	
-	@XmlElement(name="scm-branch")
-	private String scmBranch;
-	
-	@XmlElement(name="jenkins-build-id")
-	private String jenkinsBuildId;
-	
-	@XmlElement(name="built-by")
-	private String builtBy;
-	
-	@XmlElement(name="build-date")
-	@XmlJavaTypeAdapter(Iso8601DateTimeFormatAdapter.class)
-	private Date buildDate;
-	
-	@XmlElement(name="build-jdk")
-	private String buildJdk;
-	
-	@XmlElement(name="logging-profile")
-	private String loggingProfile;
+  @XmlElement(name = "vendor")
+  private String vendor;
 
-	public String getTitle() {
-		return title;
-	}
+  @XmlElement(name = "vendor-id")
+  private String vendorId;
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+  @XmlElement(name = "version")
+  private String version;
 
-	public String getVendor() {
-		return vendor;
-	}
+  @XmlElement(name = "scm-commit-id")
+  private String scmCommitId;
 
-	public void setVendor(String vendor) {
-		this.vendor = vendor;
-	}
+  @XmlElement(name = "scm-branch")
+  private String scmBranch;
 
-	public String getVendorId() {
-		return vendorId;
-	}
+  @XmlElement(name = "jenkins-build-id")
+  private String jenkinsBuildId;
 
-	public void setVendorId(String vendorId) {
-		this.vendorId = vendorId;
-	}
+  @XmlElement(name = "built-by")
+  private String builtBy;
 
-	public String getVersion() {
-		return version;
-	}
+  @XmlElement(name = "build-date")
+  @XmlJavaTypeAdapter(Iso8601DateTimeFormatAdapter.class)
+  private Date buildDate;
 
-	public void setVersion(String version) {
-		this.version = version;
-	}
+  @XmlElement(name = "build-jdk")
+  private String buildJdk;
 
-	public String getScmCommitId() {
-		return scmCommitId;
-	}
+  @XmlElement(name = "logging-profile")
+  private String loggingProfile;
 
-	public void setScmCommitId(String scmCommitId) {
-		this.scmCommitId = scmCommitId;
-	}
+  @Override
+  public String toString() {
+    return "Version [title=" + title + ", vendor=" + vendor + ", vendorId="
+        + vendorId + ", version=" + version + ", scmCommitId="
+        + scmCommitId + ", scmBranch=" + scmBranch
+        + ", jenkinsBuildId=" + jenkinsBuildId + ", builtBy=" + builtBy
+        + ", buildJdk=" + buildJdk + ", loggingProfile="
+        + loggingProfile + "]";
+  }
 
-	public String getScmBranch() {
-		return scmBranch;
-	}
-
-	public void setScmBranch(String scmBranch) {
-		this.scmBranch = scmBranch;
-	}
-
-	public String getJenkinsBuildId() {
-		return jenkinsBuildId;
-	}
-
-	public void setJenkinsBuildId(String jenkinsBuildId) {
-		this.jenkinsBuildId = jenkinsBuildId;
-	}
-
-	public String getBuiltBy() {
-		return builtBy;
-	}
-
-	public void setBuiltBy(String builtBy) {
-		this.builtBy = builtBy;
-	}
-
-	public Date getBuildDate() {
-		return buildDate;
-	}
-
-	public void setBuildDate(Date buildDate) {
-		this.buildDate = buildDate;
-	}
-
-	public String getBuildJdk() {
-		return buildJdk;
-	}
-
-	public void setBuildJdk(String buildJdk) {
-		this.buildJdk = buildJdk;
-	}
-
-	public String getLoggingProfile() {
-		return loggingProfile;
-	}
-
-	public void setLoggingProfile(String loggingProfile) {
-		this.loggingProfile = loggingProfile;
-	}
-
-	@Override
-	public String toString() {
-		return "Version [title=" + title + ", vendor=" + vendor + ", vendorId="
-				+ vendorId + ", version=" + version + ", scmCommitId="
-				+ scmCommitId + ", scmBranch=" + scmBranch
-				+ ", jenkinsBuildId=" + jenkinsBuildId + ", builtBy=" + builtBy
-				+ ", buildJdk=" + buildJdk + ", loggingProfile="
-				+ loggingProfile + "]";
-	}
-
-	
 }
