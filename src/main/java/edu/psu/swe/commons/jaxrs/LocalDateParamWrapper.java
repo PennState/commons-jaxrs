@@ -40,7 +40,7 @@ public class LocalDateParamWrapper {
   
   @Override
   public String toString() {
-    return localDate != null ? FORMATTER.format(localDate) : null;
+    return localDate != null ? FORMATTER.format(localDate) : "";
   }
 
   public Optional<LocalDate> getLocalDate() {

@@ -40,7 +40,7 @@ public class InstantParamWrapper {
 
   @Override
   public String toString() {
-    return getInstant() != null ? FORMATTER.format(instant) : null;
+    return getInstant() != null ? FORMATTER.format(instant) : "";
   }
 
   public Optional<Instant> getInstant() {
