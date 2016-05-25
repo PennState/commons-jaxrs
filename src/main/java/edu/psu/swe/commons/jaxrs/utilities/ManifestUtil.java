@@ -37,6 +37,7 @@ public final class ManifestUtil {
 
   public static Manifest locateManifest(Class<? extends Object> clazz)
       throws IOException {
+    
     String className = clazz.getSimpleName() + ".class";
     String fullClassName = clazz.getName().replace('.', '/') + ".class";
     String classPath = clazz.getResource(className).toString();
@@ -68,9 +69,8 @@ public final class ManifestUtil {
     version.setJenkinsBuildId(attributes.getValue("Build-Number"));
     version.setBuildJdk(attributes.getValue("Build-Jdk"));
     String buildDate = attributes.getValue("Build-Date");
-    if (buildDate != null && buildDate.length() > 0) {
-      version.setBuildDate(buildDate != null ? new Date(Long
-          .valueOf(buildDate)) : null);
+    if (buildDate != null && !buildDate.isEmpty()) {
+      version.setBuildDate(new Date(Long.valueOf(buildDate)));
     } else {
       LOG.warn("unable to read build date from manifest");
       version.setBuildDate(new Date());
