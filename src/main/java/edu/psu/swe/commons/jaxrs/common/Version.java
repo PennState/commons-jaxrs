@@ -67,6 +67,14 @@ public class Version {
   @XmlElement(name = "logging-profile")
   private String loggingProfile;
 
+  public Date getBuildDate() {
+    return new Date(buildDate.getTime());
+  }
+
+  public void setBuildDate(Date buildDate) {
+    this.buildDate = new Date(buildDate.getTime());
+  }
+
   @Override
   public String toString() {
     return "Version [title=" + title + ", vendor=" + vendor + ", vendorId="
