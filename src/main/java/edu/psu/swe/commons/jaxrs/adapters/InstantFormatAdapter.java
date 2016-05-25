@@ -1,4 +1,4 @@
-package edu.psu.swe.commons.jaxrs;
+package edu.psu.swe.commons.jaxrs.adapters;
 
 /*
  * The Pennsylvania State University © 2016
@@ -20,31 +20,28 @@ package edu.psu.swe.commons.jaxrs;
 
 import java.time.Instant;
 import java.time.format.DateTimeFormatter;
-import java.util.Optional;
 
-public class InstantParamWrapper {
+import javax.xml.bind.annotation.adapters.XmlAdapter;
 
+public class InstantFormatAdapter extends XmlAdapter<String, Instant>
+{
   private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ISO_INSTANT;
-
-  private Instant instant;
-
-  public InstantParamWrapper(String s) {
-    if (s != null) {
-      instant = Instant.parse(s);
-    }
-  }
   
-  public InstantParamWrapper(Instant instant) {
-    this.instant = instant;
+  @Override
+  public String marshal(Instant value) throws Exception
+  {
+	  if (value == null) {
+		  return null;
+	  }
+    return FORMATTER.format(value);
   }
 
   @Override
-  public String toString() {
-    return getInstant() != null ? FORMATTER.format(instant) : "";
+  public Instant unmarshal(String s) throws Exception
+  {
+	  if (s == null || s.trim().isEmpty()) {
+		  return null;
+	  }
+    return Instant.parse(s);
   }
-
-  public Optional<Instant> getInstant() {
-    return Optional.ofNullable(instant);
-  }
-
 }

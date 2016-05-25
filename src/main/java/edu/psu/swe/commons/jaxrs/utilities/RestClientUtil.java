@@ -1,4 +1,4 @@
-package edu.psu.swe.commons.jaxrs.hateoas.annotations;
+package edu.psu.swe.commons.jaxrs.utilities;
 
 /*
  * The Pennsylvania State University © 2016
@@ -18,16 +18,24 @@ package edu.psu.swe.commons.jaxrs.hateoas.annotations;
  */
 
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.Target;
+import javax.ws.rs.core.Response;
 
-import javax.ws.rs.NameBinding;
-import java.lang.annotation.RetentionPolicy;
+import edu.psu.swe.commons.jaxrs.exceptions.RestClientException;
 
-@NameBinding
-@Target({ElementType.TYPE,ElementType.METHOD})
-@Retention(RetentionPolicy.RUNTIME)
-public @interface AddHateoasLinks {
+public final class RestClientUtil {
 
+  private RestClientUtil() {
+    
+  }
+  
+  public static void checkForSuccess(Response response) throws RestClientException {
+    Response.Status.Family responseFamily = response.getStatusInfo().getFamily();
+    
+    if (responseFamily.equals(Response.Status.Family.CLIENT_ERROR)||
+        responseFamily.equals(Response.Status.Family.SERVER_ERROR))
+    {
+      throw new RestClientException(response);
+    }
+  }
+  
 }

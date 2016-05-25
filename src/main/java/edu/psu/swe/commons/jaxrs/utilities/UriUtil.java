@@ -1,4 +1,4 @@
-package edu.psu.swe.commons.jaxrs.hateoas.annotations;
+package edu.psu.swe.commons.jaxrs.utilities;
 
 /*
  * The Pennsylvania State University © 2016
@@ -17,17 +17,26 @@ package edu.psu.swe.commons.jaxrs.hateoas.annotations;
  * under the License.
  */
 
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URL;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.Target;
+import javax.ws.rs.core.UriBuilder;
+import javax.ws.rs.core.UriInfo;
 
-import javax.ws.rs.NameBinding;
-import java.lang.annotation.RetentionPolicy;
+public final class UriUtil {
 
-@NameBinding
-@Target({ElementType.TYPE,ElementType.METHOD})
-@Retention(RetentionPolicy.RUNTIME)
-public @interface AddHateoasLinks {
+  private UriUtil() {
+  }
 
+  public static String urlAsString(UriInfo uriInfo, boolean secured) throws MalformedURLException {
+    UriBuilder builder = uriInfo.getAbsolutePathBuilder();
+    URI uri = builder.build();
+    URL url;
+
+    url = uri.toURL();
+    url = new URL("https", url.getHost(), url.getPort(), url.getFile());
+
+    return url.toString();
+  }
 }

@@ -1,4 +1,4 @@
-package edu.psu.swe.commons.jaxrs;
+package edu.psu.swe.commons.jaxrs.adapters;
 
 /*
  * The Pennsylvania State University © 2016
@@ -20,30 +20,26 @@ package edu.psu.swe.commons.jaxrs;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Optional;
 
-public class LocalDateTimeParamWrapper {
+import javax.xml.bind.annotation.adapters.XmlAdapter;
 
-  private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
-
-  private LocalDateTime localDateTime;
-
-  public LocalDateTimeParamWrapper(String s) {
-    if (s != null) {
-      localDateTime = LocalDateTime.parse(s);
-    }
-  }
-
-  public LocalDateTimeParamWrapper(LocalDateTime localDateTime) {
-    this.localDateTime = localDateTime;
-  }
+public class LocalDateTimeAdapter extends XmlAdapter<String, LocalDateTime> {
   
-  @Override
-  public String toString() {
-    return localDateTime != null ? FORMATTER.format(localDateTime) : "";
-  }
+  private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ISO_DATE_TIME;
 
-  public Optional<LocalDateTime> getLocalDateTime() {
-    return Optional.ofNullable(localDateTime);
-  }
+	@Override
+	public LocalDateTime unmarshal(String v) throws Exception {
+		if (v == null) {
+			return null;
+		}
+		return LocalDateTime.parse(v, FORMATTER);
+	}
+
+	@Override
+	public String marshal(LocalDateTime v) throws Exception {
+		if (v == null) {
+		  return null;
+		}
+		return FORMATTER.format(v);
+	}
 }

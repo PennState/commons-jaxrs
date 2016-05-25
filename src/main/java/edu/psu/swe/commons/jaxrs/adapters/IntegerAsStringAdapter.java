@@ -1,4 +1,4 @@
-package edu.psu.swe.commons.jaxrs;
+package edu.psu.swe.commons.jaxrs.adapters;
 
 /*
  * The Pennsylvania State University © 2016
@@ -18,33 +18,33 @@ package edu.psu.swe.commons.jaxrs;
  */
 
 
-import java.time.Instant;
-import java.time.format.DateTimeFormatter;
-import java.util.Optional;
+import javax.xml.bind.annotation.adapters.XmlAdapter;
 
-public class InstantParamWrapper {
+/**
+ * This class is intended to provide an adaptor to convert Java Integers's into Strings
+ *  in JAXB produced documents.
+ * 
+ * @author crh5255
+ *
+ */
 
-  private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ISO_INSTANT;
+public class IntegerAsStringAdapter extends XmlAdapter<String, Integer> {
 
-  private Instant instant;
-
-  public InstantParamWrapper(String s) {
-    if (s != null) {
-      instant = Instant.parse(s);
+  @Override
+  public String marshal(Integer integer) {
+    if (integer == null) {
+      return null;
     }
-  }
-  
-  public InstantParamWrapper(Instant instant) {
-    this.instant = instant;
+
+    return integer.toString();
   }
 
   @Override
-  public String toString() {
-    return getInstant() != null ? FORMATTER.format(instant) : "";
-  }
+  public Integer unmarshal(String integer) throws Exception {
+    if (integer == null || integer.isEmpty()) {
+      return null;
+    }
 
-  public Optional<Instant> getInstant() {
-    return Optional.ofNullable(instant);
+    return Integer.parseInt(integer);
   }
-
 }

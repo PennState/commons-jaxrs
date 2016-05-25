@@ -1,4 +1,4 @@
-package edu.psu.swe.commons.jaxrs.hateoas.annotations;
+package edu.psu.swe.commons.jaxrs.adapters;
 
 /*
  * The Pennsylvania State University © 2016
@@ -18,16 +18,25 @@ package edu.psu.swe.commons.jaxrs.hateoas.annotations;
  */
 
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.Target;
+import java.math.BigDecimal;
 
-import javax.ws.rs.NameBinding;
-import java.lang.annotation.RetentionPolicy;
+import javax.xml.bind.annotation.adapters.XmlAdapter;
 
-@NameBinding
-@Target({ElementType.TYPE,ElementType.METHOD})
-@Retention(RetentionPolicy.RUNTIME)
-public @interface AddHateoasLinks {
+public class BigDecimalFormatAdapter extends XmlAdapter<String, BigDecimal>
+{
+  @Override
+  public String marshal(BigDecimal value) throws Exception
+  {
+    if (value != null)
+    {
+      return value.toString();
+    }
+    return null;
+  }
 
+  @Override
+  public BigDecimal unmarshal(String s) throws Exception
+  {
+    return new BigDecimal(s);
+  }
 }

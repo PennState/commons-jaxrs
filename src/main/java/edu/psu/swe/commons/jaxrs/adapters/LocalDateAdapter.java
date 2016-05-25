@@ -1,4 +1,4 @@
-package edu.psu.swe.commons.jaxrs.hateoas.annotations;
+package edu.psu.swe.commons.jaxrs.adapters;
 
 /*
  * The Pennsylvania State University © 2016
@@ -18,16 +18,30 @@ package edu.psu.swe.commons.jaxrs.hateoas.annotations;
  */
 
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.Target;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
-import javax.ws.rs.NameBinding;
-import java.lang.annotation.RetentionPolicy;
+import javax.xml.bind.annotation.adapters.XmlAdapter;
 
-@NameBinding
-@Target({ElementType.TYPE,ElementType.METHOD})
-@Retention(RetentionPolicy.RUNTIME)
-public @interface AddHateoasLinks {
+public class LocalDateAdapter extends XmlAdapter<String, LocalDate> {
+  
+  private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ISO_DATE;
+
+	@Override
+	public LocalDate unmarshal(String v) throws Exception {
+		if (v == null) {
+			return null;
+		}
+		return LocalDate.parse(v, FORMATTER);
+	}
+
+	@Override
+	public String marshal(LocalDate v) throws Exception {
+		if (v == null) {
+		  return null;
+		}
+		return FORMATTER.format(v);
+	}
+	
 
 }

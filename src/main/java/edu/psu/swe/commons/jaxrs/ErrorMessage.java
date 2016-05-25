@@ -1,4 +1,22 @@
-package edu.psu.rest;
+package edu.psu.swe.commons.jaxrs;
+
+/*
+ * The Pennsylvania State University © 2016
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -14,85 +32,87 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+import edu.psu.swe.commons.jaxrs.adapters.XmlStatusAdapter;
+
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
 public class ErrorMessage
 {
   @XmlElement(name="status")
   @XmlJavaTypeAdapter(XmlStatusAdapter.class)
-  private Status status_;
+  private Status status;
   
   @XmlElementWrapper(name="errorMessageList")
   @XmlElement(name="error-message")
-  List<String> errorMessages_ = new ArrayList<>();
+  List<String> errorMessages = new ArrayList<>();
   
   @XmlElementWrapper(name="referenceList", nillable = true)
   @XmlElement(name = "link", nillable = true)
-  List<String> externalLinks_ = null;
+  List<String> externalLinks = null;
   
   public ErrorMessage()
   {}
   
   public ErrorMessage(Status status)
   {
-    status_ = status;
+    this.status = status;
   }
    
   public void setStatus(Status status)
   {
-    status_ = status;
+    this.status = status;
   }
   
   public Status getStatus()
   {
-    return status_;
+    return status;
   }
   
   public void setErrorMessageList(List<String> messageList)
   {
     if (messageList == null)
     {
-      errorMessages_.clear();
+      errorMessages.clear();
     }
     else
     {
-      errorMessages_ = messageList;
+      errorMessages = messageList;
     }
   }
   
   public void addErrorMessage(String message)
   {
-    errorMessages_.add(message);
+    errorMessages.add(message);
   }
   
   public List<String> getErrorMessageList()
   {
-    return Collections.unmodifiableList(errorMessages_);
+    return Collections.unmodifiableList(errorMessages);
   }
   
   public void setExternalLinkList(List<String> linkList)
   {
-    externalLinks_ = linkList;
+    externalLinks = linkList;
   }
   
   public void addExtenalLink(URL link)
   {
-    if (externalLinks_ == null)
+    if (externalLinks == null)
     {
-      externalLinks_  = new ArrayList<>();
+      externalLinks  = new ArrayList<>();
     }
     
-    externalLinks_.add(link.toString());
+    externalLinks.add(link.toString());
   }
   
   public List<String> getExternalLinkList()
   {
-    return externalLinks_;
+    return externalLinks;
   }
   
   public Response toResponse()
   {
-    return Response.status(status_).entity(this).build();
+    return Response.status(status).entity(this).build();
   }
   
   @Override
@@ -100,24 +120,24 @@ public class ErrorMessage
   {
     StringBuilder sb = new StringBuilder();
     sb.append("Status = ");
-    sb.append(status_.getStatusCode());
+    sb.append(status.getStatusCode());
     sb.append("\n");
     
-    if (errorMessages_ != null)
+    if (errorMessages != null)
     {
       sb.append("Error Messages");
       sb.append("\n");
-      for (String s : errorMessages_)
+      for (String s : errorMessages)
       {
         sb.append(s);
         sb.append("\n");
       }
     }
     
-    if (externalLinks_ != null)
+    if (externalLinks != null)
     {
       sb.append("External Links");
-      for (String s : externalLinks_)
+      for (String s : externalLinks)
       {
         sb.append(s);
         sb.append("\n");

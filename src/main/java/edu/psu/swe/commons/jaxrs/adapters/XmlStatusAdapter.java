@@ -1,4 +1,4 @@
-package edu.psu.swe.commons.jaxrs.hateoas.annotations;
+package edu.psu.swe.commons.jaxrs.adapters;
 
 /*
  * The Pennsylvania State University © 2016
@@ -18,16 +18,22 @@ package edu.psu.swe.commons.jaxrs.hateoas.annotations;
  */
 
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.Target;
+import javax.ws.rs.core.Response.Status;
+import javax.xml.bind.annotation.adapters.XmlAdapter;
 
-import javax.ws.rs.NameBinding;
-import java.lang.annotation.RetentionPolicy;
+public final class XmlStatusAdapter extends XmlAdapter<JaxRsStatusAdapterType, Status>
+{
 
-@NameBinding
-@Target({ElementType.TYPE,ElementType.METHOD})
-@Retention(RetentionPolicy.RUNTIME)
-public @interface AddHateoasLinks {
+  @Override
+  public JaxRsStatusAdapterType marshal(Status status) throws Exception
+  {
+    return new JaxRsStatusAdapterType(status);
+  }
+
+  @Override
+  public Status unmarshal(JaxRsStatusAdapterType adapterType) throws Exception
+  {
+    return Status.fromStatusCode(adapterType.getCode());
+  }
 
 }

@@ -1,6 +1,24 @@
-package edu.psu.rest;
+package edu.psu.swe.commons.jaxrs;
 
-public class Constants
+/*
+ * The Pennsylvania State University © 2016
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+
+
+public final class Constants
 {
   public static final String PSU_CONTENT_TYPE_V1 = "application/edu-psu-swe-v1+json";
 
@@ -57,6 +75,20 @@ public class Constants
   public static final String HTTP_CODE_511 = "Network Authentication Required";
   public static final String HTTP_CODE_598 = "Network read timeout error";
   public static final String HTTP_CODE_599 = "Network connect timeout error";
+  
+  //
+  // Date and time formatter strings
+  //
+  
+  public static final String ISO_8601_DATE_FORMAT = "yyyy-MM-dd";
+  public static final String ISO_8601_DATE_TIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SS";
+
+  //e.g. format 20140723
+  public static final String WAREHOUSE_DATE_FORMAT = "yyyyMMdd";
+
+  //e.g. format 06/30/2006
+  public static final String ADABASE_DATE_FORMAT = "MM/dd/yyyy";
+
    
   private Constants()
   {}
