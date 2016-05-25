@@ -17,7 +17,6 @@ package edu.psu.swe.commons.jaxrs;
  * under the License.
  */
 
-
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.security.MessageDigest;
@@ -43,41 +42,40 @@ import edu.psu.swe.commons.jaxrs.utilities.UriUtil;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
 public class RestResourceMetadata {
-  
+
   private static final Logger LOG = LoggerFactory.getLogger(RestResourceMetadata.class);
-  
-  @XmlElement(nillable=true)
+
+  @XmlElement(nillable = true)
   private String resourceType;
 
-  @XmlElement(nillable=true)
+  @XmlElement(nillable = true)
   @XmlJavaTypeAdapter(InstantFormatAdapter.class)
   private Instant created;
 
-  @XmlElement(nillable=true)
+  @XmlElement(nillable = true)
   @XmlJavaTypeAdapter(InstantFormatAdapter.class)
   private Instant lastUpdated;
 
-  @XmlElement(nillable=true)
+  @XmlElement(nillable = true)
   private String version;
 
-  public RestResourceMetadata()
-  {}
+  public RestResourceMetadata() {
+  }
 
-  public RestResourceMetadata(RestResourceMetadata other)
-  {
+  public RestResourceMetadata(RestResourceMetadata other) {
     resourceType = other.getResourceType();
     created = other.getCreated();
     lastUpdated = other.getLastUpdated();
     version = other.getVersion();
   }
 
-  public RestResourceMetadata(String resourceType, Instant created, Instant lastUpdated, String version)
-  {
+  public RestResourceMetadata(String resourceType, Instant created, Instant lastUpdated, String version) {
     this.resourceType = resourceType;
     this.created = created;
     this.lastUpdated = lastUpdated;
     this.version = version;
   }
+
   public String getResourceType() {
     return resourceType;
   }
@@ -109,42 +107,40 @@ public class RestResourceMetadata {
   public void setVersion(String version) {
     this.version = version;
   }
-  
+
   public static EntityTag hash(Object object) throws NoSuchAlgorithmException, UnsupportedEncodingException {
     return hash(object.toString());
   }
-  
+
   public static EntityTag hash(String input) throws NoSuchAlgorithmException, UnsupportedEncodingException {
     MessageDigest digest = MessageDigest.getInstance("SHA-256");
     digest.update(input.getBytes("UTF-8"));
     byte[] hash = digest.digest();
     return new EntityTag(Base64.getEncoder().encodeToString(hash));
   }
-  
-  public static RestResourceMetadata createMetaData(EntityTag etag, String type)
-  {
+
+  public static RestResourceMetadata createMetaData(EntityTag etag, String type) {
     RestResourceMetadata meta = new RestResourceMetadata();
-    
-    meta.setVersion(etag.toString());
+
+    if (etag != null) {
+      meta.setVersion(etag.toString());
+    }
+
     meta.setCreated(Instant.now());
     meta.setResourceType(type);
-    
+
     return meta;
   }
-  
-  public static AtomLink createSelfLink(UriInfo uriInfo)
-  {
+
+  public static AtomLink createSelfLink(UriInfo uriInfo) {
     String url = null;
-    
-    try
-    {
+
+    try {
       url = UriUtil.urlAsString(uriInfo, true);
-    }
-    catch(MalformedURLException mue)
-    {
+    } catch (MalformedURLException mue) {
       LOG.info("Failed to convert url " + mue.getLocalizedMessage());
     }
-    
+
     AtomLink self = new AtomLink();
     self.setRelation(RelationshipType.SELF.toString());
     self.setHyperlink(url);
