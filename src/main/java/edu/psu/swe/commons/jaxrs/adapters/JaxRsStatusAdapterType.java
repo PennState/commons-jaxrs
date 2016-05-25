@@ -29,10 +29,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class JaxRsStatusAdapterType
 {
   @XmlElement(name="code")
-  private int code_;
+  private int code;
   
   @XmlElement(name="message")
-  private String message_;
+  private String message;
   
   public JaxRsStatusAdapterType() {
     // Required no-argument constructor for JAXB marshalling/unmarshalling
@@ -40,28 +40,28 @@ public class JaxRsStatusAdapterType
   
   public JaxRsStatusAdapterType(Status status)
   {
-    code_ = status.getStatusCode();
-    message_  = status.name();
+    code = status.getStatusCode();
+    message  = status.name();
   }
   
   public void setStatus(Status status)
   {
-    code_ = status.getStatusCode();
-    message_ = status.name();
+    code = status.getStatusCode();
+    message = status.name();
   }
   
   public Status getStatus()
   {
-    return Status.fromStatusCode(code_);
+    return Status.fromStatusCode(code);
   }
   
   public int getCode()
   {
-    return code_;
+    return code;
   }
   
   public String getMessage()
   {
-    return message_;
+    return message;
   }
 }

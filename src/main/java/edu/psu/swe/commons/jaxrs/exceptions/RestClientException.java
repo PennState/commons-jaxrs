@@ -17,55 +17,48 @@ package edu.psu.swe.commons.jaxrs.exceptions;
  * under the License.
  */
 
-
 import javax.ws.rs.ProcessingException;
 import javax.ws.rs.core.Response;
 
 import edu.psu.swe.commons.jaxrs.ErrorMessage;
 
-
-public class RestClientException extends Exception
-{
+public class RestClientException extends Exception {
   private static final long serialVersionUID = 7360783673606191576L;
 
-  private int statusCode_;
-  private ErrorMessage errorMessage_;
-  
-  public RestClientException(Response response)
-  {
-    statusCode_ = response.getStatus();
+  private int statusCode;
+  private ErrorMessage errorMessage;
+
+  public RestClientException(Response response) {
+    statusCode = response.getStatus();
     try {
-      errorMessage_ = response.readEntity(ErrorMessage.class);
+      errorMessage = response.readEntity(ErrorMessage.class);
     } catch (ProcessingException e) {
-      errorMessage_ = null;
+      errorMessage = null;
     }
   }
-  
-  public RestClientException(int statusCode, ErrorMessage errorMessage)
-  {
-    statusCode_ = statusCode;
-    errorMessage_ = errorMessage;
+
+  public RestClientException(int statusCode, ErrorMessage errorMessage) {
+    this.statusCode = statusCode;
+    this.errorMessage = errorMessage;
   }
-  
-  public int getStatusCode()
-  {
-    return statusCode_;
+
+  public int getStatusCode() {
+    return statusCode;
   }
-  
-  public ErrorMessage getErrorMessage()
-  {
-    return errorMessage_;
+
+  public ErrorMessage getErrorMessage() {
+    return errorMessage;
   }
-  
+
   @Override
-  public String getMessage(){
-    String message = "Rest Client Exception: Status Code: " + statusCode_ + " ";
-    if(errorMessage_ != null){
-      message += "Error Messages: " + errorMessage_.getErrorMessageList();
+  public String getMessage() {
+    String message = "Rest Client Exception: Status Code: " + statusCode + " ";
+    if (errorMessage != null) {
+      message += "Error Messages: " + errorMessage.getErrorMessageList();
     }
-    
+
     return message;
-    
+
   }
-  
+
 }

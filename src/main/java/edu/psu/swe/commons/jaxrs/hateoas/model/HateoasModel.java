@@ -17,7 +17,6 @@ package edu.psu.swe.commons.jaxrs.hateoas.model;
  * under the License.
  */
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,15 +25,20 @@ import javax.xml.bind.annotation.XmlElement;
 import edu.psu.swe.commons.jaxrs.AtomLink;
 
 public class HateoasModel {
-	private List<AtomLink> links_ = new ArrayList<AtomLink>();
 
-	@XmlElement(name="links")
-	public List<AtomLink> getLinks() {
-		return links_;
-	}
+  private List<AtomLink> links = new ArrayList<AtomLink>();
 
-	public void setLinks(List<AtomLink> links_) {
-		this.links_ = links_;
-	}
-	
+  public void addLink(AtomLink link) {
+    links.add(link);
+  }
+
+  @XmlElement(name = "links")
+  public List<AtomLink> getLinks() {
+    return links;
+  }
+
+  public void setLinks(List<AtomLink> links) {
+    this.links = links;
+  }
+
 }
