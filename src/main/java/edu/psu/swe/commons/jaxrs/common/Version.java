@@ -26,11 +26,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import edu.psu.swe.commons.jaxrs.adapters.Iso8601DateTimeFormatAdapter;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @XmlRootElement(name = "version-info")
 @XmlAccessorType(XmlAccessType.NONE)
-@Data
+@Getter
+@Setter
 public class Version {
 
   @XmlElement(name = "title")
