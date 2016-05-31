@@ -95,6 +95,9 @@ public class HateoasWriteInterceptor implements WriterInterceptor {
           this.addAtomLink(linkAnnotation, object);
         }
       }
+      else if(annotation instanceof Link){
+        this.addAtomLink((Link)annotation, object);
+      }
     }
   }
 
@@ -144,7 +147,7 @@ public class HateoasWriteInterceptor implements WriterInterceptor {
       }
     }
 
-    atomLink.setHyperlink(uriInfo.getBaseUri().getPath() + path);
+    atomLink.setHyperlink(uriInfo.getBaseUri() + path);
     instance.getLinks().add(atomLink);
   }
 
