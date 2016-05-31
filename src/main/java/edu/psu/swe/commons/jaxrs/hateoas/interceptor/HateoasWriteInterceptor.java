@@ -20,6 +20,7 @@ package edu.psu.swe.commons.jaxrs.hateoas.interceptor;
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import java.net.MalformedURLException;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -39,6 +40,7 @@ import edu.psu.swe.commons.jaxrs.hateoas.annotations.AddHateoasLinks;
 import edu.psu.swe.commons.jaxrs.hateoas.annotations.Link;
 import edu.psu.swe.commons.jaxrs.hateoas.annotations.Links;
 import edu.psu.swe.commons.jaxrs.hateoas.model.HateoasModel;
+import edu.psu.swe.commons.jaxrs.utilities.UriUtil;
 
 /**
  * This class intercepts outgoing JAX-RS responses and looks for Links
@@ -57,9 +59,18 @@ public class HateoasWriteInterceptor implements WriterInterceptor {
   public void aroundWriteTo(WriterInterceptorContext context) throws IOException, WebApplicationException {
     LOGGER.debug("Entered HatoesWriteInterceptor");
 
+    boolean secured = false;
+    List<Object> headerValues = context.getHeaders().get("X-Forwarded-Proto");
+    if(headerValues != null){
+      String protocol = (String) headerValues.get(0);
+      if(protocol != null && protocol.equals("https")){
+        secured = true;
+      }
+    }
+    
     // check if class extends HateosModel
     if (context.getEntity() instanceof HateoasModel) {
-      processLinkAnnotations(context.getEntity());
+      processLinkAnnotations(context.getEntity(), secured);
     }
     // if a list, need to check each object in the list
     else if (context.getEntity() instanceof List) {
@@ -67,7 +78,7 @@ public class HateoasWriteInterceptor implements WriterInterceptor {
 
       for (Object o : objects) {
         if (o instanceof HateoasModel) {
-          processLinkAnnotations(o);
+          processLinkAnnotations(o, secured);
         }
       }
     }
@@ -82,7 +93,7 @@ public class HateoasWriteInterceptor implements WriterInterceptor {
    * 
    * @param object
    */
-  private void processLinkAnnotations(Object object) {
+  private void processLinkAnnotations(Object object, boolean secured) {
     Annotation[] annotations = object.getClass().getAnnotations();
 
     // find Links annotation
@@ -92,11 +103,11 @@ public class HateoasWriteInterceptor implements WriterInterceptor {
         Links linksAnnotation = (Links) annotation;
 
         for (Link linkAnnotation : linksAnnotation.value()) {
-          this.addAtomLink(linkAnnotation, object);
+          this.addAtomLink(linkAnnotation, object, secured);
         }
       }
       else if(annotation instanceof Link){
-        this.addAtomLink((Link)annotation, object);
+        this.addAtomLink((Link)annotation, object, secured);
       }
     }
   }
@@ -107,7 +118,7 @@ public class HateoasWriteInterceptor implements WriterInterceptor {
    * @param linkAnnotation
    * @param object
    */
-  private void addAtomLink(Link linkAnnotation, Object object) {
+  private void addAtomLink(Link linkAnnotation, Object object, boolean secured) {
     HateoasModel instance = (HateoasModel) object;
 
     AtomLink atomLink = new AtomLink();
@@ -147,7 +158,16 @@ public class HateoasWriteInterceptor implements WriterInterceptor {
       }
     }
 
-    atomLink.setHyperlink(uriInfo.getBaseUri() + path);
+    if(secured){
+    	try {
+			atomLink.setHyperlink(UriUtil.urlAsString(uriInfo, true) + path);
+		} catch (MalformedURLException e) {
+			LOGGER.error("Error adding atom link", e);
+		}
+    }
+    else{
+    	atomLink.setHyperlink(uriInfo.getBaseUri() + path);
+    }
     instance.getLinks().add(atomLink);
   }
 
