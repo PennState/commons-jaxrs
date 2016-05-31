@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
@@ -55,22 +56,16 @@ public class HateoasWriteInterceptor implements WriterInterceptor {
   @Context
   private UriInfo uriInfo;
 
+  @Context 
+  private HttpServletRequest servletRequest;
+  
   @Override
   public void aroundWriteTo(WriterInterceptorContext context) throws IOException, WebApplicationException {
     LOGGER.debug("Entered HatoesWriteInterceptor");
-
-    boolean secured = false;
-    List<Object> headerValues = context.getHeaders().get("X-Forwarded-Proto");
-    if(headerValues != null){
-      String protocol = (String) headerValues.get(0);
-      if(protocol != null && protocol.equals("https")){
-        secured = true;
-      }
-    }
     
     // check if class extends HateosModel
     if (context.getEntity() instanceof HateoasModel) {
-      processLinkAnnotations(context.getEntity(), secured);
+      processLinkAnnotations(context.getEntity());
     }
     // if a list, need to check each object in the list
     else if (context.getEntity() instanceof List) {
@@ -78,7 +73,7 @@ public class HateoasWriteInterceptor implements WriterInterceptor {
 
       for (Object o : objects) {
         if (o instanceof HateoasModel) {
-          processLinkAnnotations(o, secured);
+          processLinkAnnotations(o);
         }
       }
     }
@@ -93,7 +88,7 @@ public class HateoasWriteInterceptor implements WriterInterceptor {
    * 
    * @param object
    */
-  private void processLinkAnnotations(Object object, boolean secured) {
+  private void processLinkAnnotations(Object object) {
     Annotation[] annotations = object.getClass().getAnnotations();
 
     // find Links annotation
@@ -103,11 +98,11 @@ public class HateoasWriteInterceptor implements WriterInterceptor {
         Links linksAnnotation = (Links) annotation;
 
         for (Link linkAnnotation : linksAnnotation.value()) {
-          this.addAtomLink(linkAnnotation, object, secured);
+          this.addAtomLink(linkAnnotation, object);
         }
       }
       else if(annotation instanceof Link){
-        this.addAtomLink((Link)annotation, object, secured);
+        this.addAtomLink((Link)annotation, object);
       }
     }
   }
@@ -118,7 +113,7 @@ public class HateoasWriteInterceptor implements WriterInterceptor {
    * @param linkAnnotation
    * @param object
    */
-  private void addAtomLink(Link linkAnnotation, Object object, boolean secured) {
+  private void addAtomLink(Link linkAnnotation, Object object) {
     HateoasModel instance = (HateoasModel) object;
 
     AtomLink atomLink = new AtomLink();
@@ -158,7 +153,7 @@ public class HateoasWriteInterceptor implements WriterInterceptor {
       }
     }
 
-    if(secured){
+    if(servletRequest.isSecure()){
     	try {
 			atomLink.setHyperlink(UriUtil.urlAsString(uriInfo, true) + path);
 		} catch (MalformedURLException e) {
