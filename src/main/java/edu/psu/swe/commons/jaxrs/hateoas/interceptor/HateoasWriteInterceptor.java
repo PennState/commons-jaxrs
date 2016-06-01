@@ -20,12 +20,10 @@ package edu.psu.swe.commons.jaxrs.hateoas.interceptor;
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
-import java.net.MalformedURLException;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
@@ -41,7 +39,6 @@ import edu.psu.swe.commons.jaxrs.hateoas.annotations.AddHateoasLinks;
 import edu.psu.swe.commons.jaxrs.hateoas.annotations.Link;
 import edu.psu.swe.commons.jaxrs.hateoas.annotations.Links;
 import edu.psu.swe.commons.jaxrs.hateoas.model.HateoasModel;
-import edu.psu.swe.commons.jaxrs.utilities.UriUtil;
 
 /**
  * This class intercepts outgoing JAX-RS responses and looks for Links
@@ -56,9 +53,6 @@ public class HateoasWriteInterceptor implements WriterInterceptor {
   @Context
   private UriInfo uriInfo;
 
-  @Context 
-  private HttpServletRequest servletRequest;
-  
   @Override
   public void aroundWriteTo(WriterInterceptorContext context) throws IOException, WebApplicationException {
     LOGGER.debug("Entered HatoesWriteInterceptor");
@@ -153,16 +147,8 @@ public class HateoasWriteInterceptor implements WriterInterceptor {
       }
     }
 
-    if(servletRequest.isSecure()){
-    	try {
-			atomLink.setHyperlink(UriUtil.urlAsString(uriInfo, true) + path);
-		} catch (MalformedURLException e) {
-			LOGGER.error("Error adding atom link", e);
-		}
-    }
-    else{
-    	atomLink.setHyperlink(uriInfo.getBaseUri() + path);
-    }
+    atomLink.setHyperlink(uriInfo.getBaseUri() + path);
+
     instance.getLinks().add(atomLink);
   }
 
