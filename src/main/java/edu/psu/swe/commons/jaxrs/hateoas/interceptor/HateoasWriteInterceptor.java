@@ -56,7 +56,7 @@ public class HateoasWriteInterceptor implements WriterInterceptor {
   @Override
   public void aroundWriteTo(WriterInterceptorContext context) throws IOException, WebApplicationException {
     LOGGER.debug("Entered HatoesWriteInterceptor");
-
+    
     // check if class extends HateosModel
     if (context.getEntity() instanceof HateoasModel) {
       processLinkAnnotations(context.getEntity());
@@ -94,6 +94,9 @@ public class HateoasWriteInterceptor implements WriterInterceptor {
         for (Link linkAnnotation : linksAnnotation.value()) {
           this.addAtomLink(linkAnnotation, object);
         }
+      }
+      else if(annotation instanceof Link){
+        this.addAtomLink((Link)annotation, object);
       }
     }
   }
@@ -144,7 +147,8 @@ public class HateoasWriteInterceptor implements WriterInterceptor {
       }
     }
 
-    atomLink.setHyperlink(uriInfo.getBaseUri().getPath() + path);
+    atomLink.setHyperlink(uriInfo.getBaseUri() + path);
+
     instance.getLinks().add(atomLink);
   }
 
