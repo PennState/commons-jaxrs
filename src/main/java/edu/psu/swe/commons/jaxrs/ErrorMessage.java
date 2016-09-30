@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -114,6 +115,16 @@ public class ErrorMessage
   {
     return Response.status(status).entity(this).build();
   }
+  
+  public Response toResponse(String mediaType)
+  {
+    return Response.status(status).entity(this).type(mediaType).build();
+  }  
+  
+  public Response toResponse(MediaType mediaType)
+  {
+    return Response.status(status).entity(this).type(mediaType).build();
+  }  
   
   @Override
   public String toString()
