@@ -1,4 +1,4 @@
-package edu.psu.swe.commons.jaxrs.objectmapper;
+package edu.psu.swe.commons.jaxrs.client;
 
 import javax.ws.rs.ext.ContextResolver;
 
@@ -10,11 +10,11 @@ import com.fasterxml.jackson.databind.introspect.JacksonAnnotationIntrospector;
 import com.fasterxml.jackson.module.jaxb.JaxbAnnotationIntrospector;
 import com.fasterxml.jackson.module.jaxb.JaxbAnnotationModule;
 
-public class ObjectMapperContextResolver implements ContextResolver<ObjectMapper> {
+public class ClientObjectMapperContextResolver implements ContextResolver<ObjectMapper> {
 
   private ObjectMapper objectMapper;
   
-  public ObjectMapperContextResolver() {
+  public ClientObjectMapperContextResolver() {
     objectMapper = new ObjectMapper();
 
     JaxbAnnotationModule jaxbAnnotationModule = new JaxbAnnotationModule();
