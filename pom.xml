@@ -14,7 +14,7 @@
   <name>Common JAXRS Libraries</name>
   <description>Common classes to make creating REST services more consistent.</description>
   <url>https://github.com/PennState/commons-jaxrs</url>
-  <version>1.12</version>
+  <version>1.13</version>
   <packaging>jar</packaging>
 
   <properties>
@@ -166,6 +166,16 @@
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-annotations</artifactId>
+      <version>2.4.2</version>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>2.4.2</version>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.module</groupId>
+      <artifactId>jackson-module-jaxb-annotations</artifactId>
       <version>2.4.2</version>
     </dependency>
     <dependency>
