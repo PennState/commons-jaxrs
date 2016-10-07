@@ -1,4 +1,4 @@
-package edu.psu.swe.commons.jaxrs.hateoas.annotations;
+package edu.psu.swe.commons.jaxrs.filter;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

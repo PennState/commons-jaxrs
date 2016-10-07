@@ -14,7 +14,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import edu.psu.swe.commons.jaxrs.RestResourceMetadata;
-import edu.psu.swe.commons.jaxrs.hateoas.annotations.AddEtagHeader;
 
 @Provider
 @AddEtagHeader
