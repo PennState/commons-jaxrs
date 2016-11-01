@@ -44,7 +44,7 @@ public class ErrorMessage
   private Status status;
   
   @XmlElementWrapper(name="errorMessageList")
-  @XmlElement(name="error-message")
+  @XmlElement(name="errorMessage")
   List<String> errorMessages = new ArrayList<>();
   
   @XmlElementWrapper(name="referenceList", nillable = true)
