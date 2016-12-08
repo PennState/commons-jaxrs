@@ -23,11 +23,14 @@ import java.util.function.Function;
 
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.ProcessingException;
+import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status.Family;
 
+import edu.psu.swe.commons.jaxrs.ErrorMessage;
 import edu.psu.swe.commons.jaxrs.exceptions.BackingStoreChangedException;
+import edu.psu.swe.commons.jaxrs.exceptions.BadUrlException;
 import edu.psu.swe.commons.jaxrs.exceptions.ConflictingDataException;
 import edu.psu.swe.commons.jaxrs.exceptions.RestClientException;
 import edu.psu.swe.commons.jaxrs.exceptions.RestServerException;
@@ -59,6 +62,18 @@ public final class RestClientUtil {
         throw new RestClientException(response);
       }
     }
+  }
+  
+  public static boolean checkForFourOhFour(WebTarget target, Response response) {
+    if (response.getStatus() == 404) {
+      try {
+        response.readEntity(ErrorMessage.class);
+        return true;
+      } catch (ProcessingException pe) {
+        throw new BadUrlException(target.getUri().toASCIIString() + " could not be found");
+      }
+    }
+    return false;
   }
 
   public static boolean isSuccessful(Response response) {
