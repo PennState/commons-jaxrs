@@ -4,7 +4,7 @@ import javax.ws.rs.core.Response;
 
 import edu.psu.swe.commons.jaxrs.ErrorMessage;
 
-public class RestServerException extends Exception {
+public class RestServerException extends RuntimeException {
   private static final long serialVersionUID = 7360783673606191576L;
   
   RestClientException rce;
