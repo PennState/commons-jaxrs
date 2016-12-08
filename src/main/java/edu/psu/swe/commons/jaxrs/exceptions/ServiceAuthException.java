@@ -4,16 +4,16 @@ import javax.ws.rs.core.Response;
 
 import edu.psu.swe.commons.jaxrs.ErrorMessage;
 
-public class ServiceForbiddenException extends Exception {
+public class ServiceAuthException extends Exception {
   private static final long serialVersionUID = 7360783673606191576L;
   
   RestClientException rce;
 
-  public ServiceForbiddenException(Response response) {
+  public ServiceAuthException(Response response) {
     rce = new RestClientException(response);
   }
 
-  public ServiceForbiddenException(int statusCode, ErrorMessage errorMessage) {
+  public ServiceAuthException(int statusCode, ErrorMessage errorMessage) {
     rce = new RestClientException(statusCode, errorMessage);
   }
 

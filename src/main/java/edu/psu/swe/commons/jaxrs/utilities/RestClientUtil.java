@@ -34,7 +34,7 @@ import edu.psu.swe.commons.jaxrs.exceptions.BadUrlException;
 import edu.psu.swe.commons.jaxrs.exceptions.ConflictingDataException;
 import edu.psu.swe.commons.jaxrs.exceptions.RestClientException;
 import edu.psu.swe.commons.jaxrs.exceptions.RestServerException;
-import edu.psu.swe.commons.jaxrs.exceptions.ServiceForbiddenException;
+import edu.psu.swe.commons.jaxrs.exceptions.ServiceAuthException;
 
 public final class RestClientUtil {
 
@@ -42,15 +42,13 @@ public final class RestClientUtil {
 
   }
 
-  public static void checkForSuccess(Response response) throws RestClientException, BackingStoreChangedException, ConflictingDataException, ServiceForbiddenException, RestServerException {
+  public static void checkForSuccess(Response response) throws RestClientException, BackingStoreChangedException, ConflictingDataException, ServiceAuthException, RestServerException {
     if (!isSuccessful(response)) {
       int status = response.getStatus();
       if (response.getStatusInfo().getFamily() == Family.SERVER_ERROR) {
         throw new RestServerException(response);
-      } else if (status == 400) {
-        throw new BadRequestException(response);
-      } else if (status == 403) {
-        throw new ServiceForbiddenException(response);
+      } else if (status == 401 || status == 403) {
+        throw new ServiceAuthException(response);
       } else if (status == 409) {
         throw new ConflictingDataException(response);
       } else if (status == 412) {
@@ -130,11 +128,11 @@ public final class RestClientUtil {
    * @throws IllegalStateException
    *           see {@link Response#readEntity(Class)}
    * @throws RestServerException 
-   * @throws ServiceForbiddenException 
+   * @throws ServiceAuthException 
    * @throws ConflictingDataException 
    * @throws BackingStoreChangedException 
    */
-  public <T> Optional<T> tryReadEntity(Response response, Class<T> entityType) throws RestClientException, ProcessingException, IllegalStateException, BackingStoreChangedException, ConflictingDataException, ServiceForbiddenException, RestServerException {
+  public <T> Optional<T> tryReadEntity(Response response, Class<T> entityType) throws RestClientException, ProcessingException, IllegalStateException, BackingStoreChangedException, ConflictingDataException, ServiceAuthException, RestServerException {
     Optional<T> entity = readEntity(response, entityType, response::readEntity, Optional::ofNullable);
 
     return entity;
@@ -157,11 +155,11 @@ public final class RestClientUtil {
    * @throws IllegalStateException
    *           see {@link Response#readEntity(GenericType)}
    * @throws RestServerException 
-   * @throws ServiceForbiddenException 
+   * @throws ServiceAuthException 
    * @throws ConflictingDataException 
    * @throws BackingStoreChangedException 
    */
-  public <T> Optional<T> tryReadEntity(Response response, GenericType<T> entityType) throws RestClientException, ProcessingException, IllegalStateException, BackingStoreChangedException, ConflictingDataException, ServiceForbiddenException, RestServerException {
+  public <T> Optional<T> tryReadEntity(Response response, GenericType<T> entityType) throws RestClientException, ProcessingException, IllegalStateException, BackingStoreChangedException, ConflictingDataException, ServiceAuthException, RestServerException {
     Optional<T> entity = readEntity(response, entityType, response::readEntity, Optional::ofNullable);
 
     return entity;
@@ -189,11 +187,11 @@ public final class RestClientUtil {
    * @throws IllegalStateException
    *           see {@link Response#readEntity(Class)}
    * @throws RestServerException 
-   * @throws ServiceForbiddenException 
+   * @throws ServiceAuthException 
    * @throws ConflictingDataException 
    * @throws BackingStoreChangedException 
    */
-  public static <T> Optional<T> readEntity(Response response, Class<T> entityType) throws RestClientException, ProcessingException, IllegalStateException, BackingStoreChangedException, ConflictingDataException, ServiceForbiddenException, RestServerException {
+  public static <T> Optional<T> readEntity(Response response, Class<T> entityType) throws RestClientException, ProcessingException, IllegalStateException, BackingStoreChangedException, ConflictingDataException, ServiceAuthException, RestServerException {
     Optional<T> entity = readEntity(response, entityType, response::readEntity, Optional::of);
 
     return entity;
@@ -221,17 +219,17 @@ public final class RestClientUtil {
    * @throws IllegalStateException
    *           see {@link Response#readEntity(GenericType)}
    * @throws RestServerException 
-   * @throws ServiceForbiddenException 
+   * @throws ServiceAuthException 
    * @throws ConflictingDataException 
    * @throws BackingStoreChangedException 
    */
-  public static <T> Optional<T> readEntity(Response response, GenericType<T> entityType) throws RestClientException, ProcessingException, IllegalStateException, BackingStoreChangedException, ConflictingDataException, ServiceForbiddenException, RestServerException {
+  public static <T> Optional<T> readEntity(Response response, GenericType<T> entityType) throws RestClientException, ProcessingException, IllegalStateException, BackingStoreChangedException, ConflictingDataException, ServiceAuthException, RestServerException {
     Optional<T> entity = readEntity(response, entityType, response::readEntity, Optional::of);
 
     return entity;
   }
 
-  private static <T, E> Optional<E> readEntity(Response response, T entityType, Function<T, E> readEntity, Function<E, Optional<E>> optionalOf) throws RestClientException, ProcessingException, IllegalStateException, BackingStoreChangedException, ConflictingDataException, ServiceForbiddenException, RestServerException {
+  private static <T, E> Optional<E> readEntity(Response response, T entityType, Function<T, E> readEntity, Function<E, Optional<E>> optionalOf) throws RestClientException, ProcessingException, IllegalStateException, BackingStoreChangedException, ConflictingDataException, ServiceAuthException, RestServerException {
     Optional<E> result;
 
     if (response.getStatus() == Response.Status.NOT_FOUND.getStatusCode()) {
