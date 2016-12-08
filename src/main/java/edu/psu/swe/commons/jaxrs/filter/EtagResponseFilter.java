@@ -26,13 +26,18 @@ public class EtagResponseFilter implements ContainerResponseFilter {
     Object entity = responseContext.getEntity();
     EntityTag etag;
     
-    try {
-      etag = RestResourceMetadata.hash(entity);
-    } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
-      throw new IllegalArgumentException("unable to create ETag", e);
+    if(entity != null){
+      try {
+        etag = RestResourceMetadata.hash(entity);
+      } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
+        throw new IllegalArgumentException("unable to create ETag", e);
+      }
+      
+      responseContext.getHeaders().add("ETag", etag.getValue());
     }
-    
-    responseContext.getHeaders().add("ETag", etag.getValue());
+    else{
+      LOG.info("Entity was null, can't create etag");
+    }    
   }
 
 }
