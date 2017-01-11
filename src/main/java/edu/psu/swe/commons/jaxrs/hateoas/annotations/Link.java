@@ -35,5 +35,7 @@ public @interface Link {
   String rel();
 
   String title() default "";
+  
+  String field() default "";
 
 }
