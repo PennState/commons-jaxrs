@@ -21,7 +21,6 @@ import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-import javax.ws.rs.BadRequestException;
 import javax.ws.rs.ProcessingException;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
@@ -133,9 +132,7 @@ public final class RestClientUtil {
    * @throws BackingStoreChangedException 
    */
   public <T> Optional<T> tryReadEntity(Response response, Class<T> entityType) throws RestClientException, ProcessingException, IllegalStateException, BackingStoreChangedException, ConflictingDataException, ServiceAuthException, RestServerException {
-    Optional<T> entity = readEntity(response, entityType, response::readEntity, Optional::ofNullable);
-
-    return entity;
+    return readEntity(response, entityType, response::readEntity, Optional::ofNullable);
   }
 
   /**
@@ -160,9 +157,7 @@ public final class RestClientUtil {
    * @throws BackingStoreChangedException 
    */
   public <T> Optional<T> tryReadEntity(Response response, GenericType<T> entityType) throws RestClientException, ProcessingException, IllegalStateException, BackingStoreChangedException, ConflictingDataException, ServiceAuthException, RestServerException {
-    Optional<T> entity = readEntity(response, entityType, response::readEntity, Optional::ofNullable);
-
-    return entity;
+    return readEntity(response, entityType, response::readEntity, Optional::ofNullable);
   }
 
   /**
@@ -192,9 +187,7 @@ public final class RestClientUtil {
    * @throws BackingStoreChangedException 
    */
   public static <T> Optional<T> readEntity(Response response, Class<T> entityType) throws RestClientException, ProcessingException, IllegalStateException, BackingStoreChangedException, ConflictingDataException, ServiceAuthException, RestServerException {
-    Optional<T> entity = readEntity(response, entityType, response::readEntity, Optional::of);
-
-    return entity;
+    return readEntity(response, entityType, response::readEntity, Optional::of);
   }
 
   /**
@@ -224,9 +217,7 @@ public final class RestClientUtil {
    * @throws BackingStoreChangedException 
    */
   public static <T> Optional<T> readEntity(Response response, GenericType<T> entityType) throws RestClientException, ProcessingException, IllegalStateException, BackingStoreChangedException, ConflictingDataException, ServiceAuthException, RestServerException {
-    Optional<T> entity = readEntity(response, entityType, response::readEntity, Optional::of);
-
-    return entity;
+    return readEntity(response, entityType, response::readEntity, Optional::of);
   }
 
   private static <T, E> Optional<E> readEntity(Response response, T entityType, Function<T, E> readEntity, Function<E, Optional<E>> optionalOf) throws RestClientException, ProcessingException, IllegalStateException, BackingStoreChangedException, ConflictingDataException, ServiceAuthException, RestServerException {
@@ -241,5 +232,16 @@ public final class RestClientUtil {
       result = optionalOf.apply(responseEntity);
     }
     return result;
+  }
+  
+  public static Optional<String> extractIdFromLocationTag(Response response) {
+    String location = response.getHeaderString("Location");
+    if (location == null) {
+      return Optional.empty();
+    }
+    
+    String[] uriParts = location.split("/");
+    Integer nbrParts = uriParts.length;
+    return Optional.of(uriParts[nbrParts - 1]);
   }
 }
