@@ -147,9 +147,11 @@ public class HateoasWriteInterceptor implements WriterInterceptor {
       }
     }
 
-    atomLink.setHyperlink(uriInfo.getBaseUri() + path);
-
-    instance.getLinks().add(atomLink);
+    if (path != null && !path.trim().isEmpty()) { 
+      atomLink.setHyperlink(uriInfo.getBaseUri() + path);
+  
+      instance.getLinks().add(atomLink);
+    }
   }
 
 }
