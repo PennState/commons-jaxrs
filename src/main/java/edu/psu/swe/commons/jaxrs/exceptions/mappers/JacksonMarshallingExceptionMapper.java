@@ -8,7 +8,7 @@ import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 
 import edu.psu.swe.commons.jaxrs.ErrorMessage;
 
-public class JacksonMarchallingExceptionMapper implements ExceptionMapper<InvalidFormatException> {
+public class JacksonMarshallingExceptionMapper implements ExceptionMapper<InvalidFormatException> {
 
   @Override
   public Response toResponse(InvalidFormatException exception) {
