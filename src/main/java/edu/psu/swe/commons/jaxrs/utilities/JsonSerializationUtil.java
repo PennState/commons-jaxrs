@@ -1,4 +1,4 @@
-ckage edu.psu.swe.commons.jaxrs.utilities;
+package edu.psu.swe.commons.jaxrs.utilities;
 
 import java.io.IOException;
 import java.io.StringWriter;
