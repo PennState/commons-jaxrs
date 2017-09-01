@@ -144,6 +144,21 @@
       <scope>test</scope>
     </dependency>
     <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-annotations</artifactId>
+      <version>${jackson.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>${jackson.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.module</groupId>
+      <artifactId>jackson-module-jaxb-annotations</artifactId>
+      <version>${jackson.version}</version>
+    </dependency>
+    <dependency>
       <groupId>org.jboss.resteasy</groupId>
       <artifactId>resteasy-jaxb-provider</artifactId>
       <version>${resteasy.version}</version>
@@ -161,7 +176,7 @@
       <artifactId>javaee-api</artifactId>
       <version>7.0</version>
     </dependency>
-    <dependency>
+    <!-- <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-annotations</artifactId>
       <version>${jackson.version}</version>
@@ -175,7 +190,7 @@
       <groupId>com.fasterxml.jackson.module</groupId>
       <artifactId>jackson-module-jaxb-annotations</artifactId>
       <version>${jackson.version}</version>
-    </dependency>
+    </dependency> -->
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
