@@ -39,7 +39,7 @@ abstract class JsonReference {
    * @throws PropertyIsNullException
    * @throws FailedToRemovePropertyException
    */
-  abstract Object remove(Object parent, Type parentType) throws PropertyDoesNotExistException, PropertyIsNullException, FailedToRemovePropertyException;
+  abstract Object remove(Object parent, Type parentType, JsonNode jsonValue) throws PropertyDoesNotExistException, PropertyIsNullException, FailedToRemovePropertyException;
 
   /**
    * 

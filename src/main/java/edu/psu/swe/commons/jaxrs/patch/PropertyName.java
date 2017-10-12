@@ -110,7 +110,7 @@ class PropertyName extends JsonReference {
    * {@inheritDoc}
    */
   @Override
-  public Object remove(Object parent, Type parentType) throws  PropertyDoesNotExistException, PropertyIsNullException, FailedToRemovePropertyException {
+  public Object remove(Object parent, Type parentType, JsonNode jsonValue) throws  PropertyDoesNotExistException, PropertyIsNullException, FailedToRemovePropertyException {
     Class<?> parentClass = parent.getClass();
 
     if (!isAnnotated(parentClass)) {
@@ -135,7 +135,7 @@ class PropertyName extends JsonReference {
     } catch (InvocationTargetException addException) {
       throw new FailedToRemovePropertyException("Could not remove property because a method threw an exception in " + parentClass.getCanonicalName() + ": " + this.name, addException);
     }
-    Object newChild = super.next.remove(child, childType);
+    Object newChild = super.next.remove(child, childType, jsonValue);
 
     if (newChild != child) {
       try {
