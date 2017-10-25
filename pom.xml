@@ -14,7 +14,7 @@
   <name>Common JAXRS Libraries</name>
   <description>Common classes to make creating REST services more consistent.</description>
   <url>https://github.com/PennState/commons-jaxrs</url>
-  <version>1.23-SNAPSHOT</version>
+  <version>1.24-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <properties>
