@@ -49,7 +49,7 @@ public class PatchRequest {
         }
 
         case REMOVE: {
-          path.remove(object, null);
+          path.remove(object, null, value);
         } break;
 
         case REPLACE: {
