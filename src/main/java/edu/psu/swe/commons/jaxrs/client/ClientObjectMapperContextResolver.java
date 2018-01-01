@@ -2,6 +2,7 @@ package edu.psu.swe.commons.jaxrs.client;
 
 import javax.ws.rs.ext.ContextResolver;
 
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.AnnotationIntrospector;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -13,7 +14,7 @@ import com.fasterxml.jackson.module.jaxb.JaxbAnnotationModule;
 public class ClientObjectMapperContextResolver implements ContextResolver<ObjectMapper> {
 
   private ObjectMapper objectMapper;
-  
+
   public ClientObjectMapperContextResolver() {
     objectMapper = new ObjectMapper();
 
@@ -24,7 +25,10 @@ public class ClientObjectMapperContextResolver implements ContextResolver<Object
     AnnotationIntrospector jaxbIntrospector = new JaxbAnnotationIntrospector(objectMapper.getTypeFactory());
     AnnotationIntrospector jacksonIntrospector = new JacksonAnnotationIntrospector();
     AnnotationIntrospector pair = new AnnotationIntrospectorPair(jacksonIntrospector, jaxbIntrospector);
-    objectMapper.setAnnotationIntrospector(pair);  }
+    objectMapper.setAnnotationIntrospector(pair);
+
+    objectMapper.setSerializationInclusion(Include.NON_NULL);
+  }
 
   @Override
   public ObjectMapper getContext(Class<?> type) {
