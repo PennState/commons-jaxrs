@@ -20,7 +20,7 @@ public abstract class AbstractReferenceableDeserializer extends JsonDeserializer
 
   private static final Logger LOG = LoggerFactory.getLogger(AbstractReferenceableDeserializer.class);
 
-  private Class targetClass;
+  protected Class targetClass;
 
   @Override
   public Object deserialize(JsonParser jsonParser, DeserializationContext ctxt) throws IOException, JsonProcessingException {
