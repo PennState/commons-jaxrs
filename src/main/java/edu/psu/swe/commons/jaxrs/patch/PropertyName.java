@@ -528,7 +528,7 @@ class PropertyName extends JsonReference {
             }
             XmlElement xmlElement = method.getAnnotation(XmlElement.class);
 
-            if (xmlElement == null ||  method.getParameterCount() != 1 || method.getName().startsWith("set")) {
+            if (xmlElement == null ||  method.getParameterCount() != 1 || !method.getName().startsWith("set")) {
               continue;
             }
             String xmlElementName = xmlElement.name();
