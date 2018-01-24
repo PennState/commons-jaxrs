@@ -14,7 +14,7 @@
   <name>Common JAXRS Libraries</name>
   <description>Common classes to make creating REST services more consistent.</description>
   <url>https://github.com/PennState/commons-jaxrs</url>
-  <version>1.26-SNAPSHOT</version>
+  <version>1.27-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <properties>
@@ -24,18 +24,19 @@
     <java.compiler.target>1.8</java.compiler.target>
 
     <javaee-api.version>7.0</javaee-api.version>
-    <javax.mail.version>1.4.5</javax.mail.version>
-    <jackson.version>2.8.8</jackson.version>
-    <resteasy.version>3.1.2.Final</resteasy.version>
-    <commons-net.version>3.4</commons-net.version>
-    <bouncy-castle.version>140</bouncy-castle.version>
+    <javax.mail.version>1.6.0</javax.mail.version>
+    <jackson.version>2.9.3</jackson.version>
+    <resteasy.version>3.1.4.Final</resteasy.version>
+    <commons-net.version>3.6</commons-net.version>
+    <bouncy-castle.version>1.59</bouncy-castle.version>
+    <antlr-runtime.version>4.7.1</antlr-runtime.version>
 
-    <lombok.version>1.16.16</lombok.version>
+    <lombok.version>1.16.20</lombok.version>
 
     <slf4j.version>1.7.25</slf4j.version>
 
     <junit.version>4.12</junit.version>
-    <junit-params.version>1.1.0</junit-params.version>
+    <junit-params.version>1.1.1</junit-params.version>
     <mockito.version>1.10.19</mockito.version>
   </properties>
 
@@ -123,8 +124,8 @@
       <version>${javax.mail.version}</version>
     </dependency>
     <dependency>
-      <groupId>bouncycastle</groupId>
-      <artifactId>bcprov-jdk16</artifactId>
+      <groupId>org.bouncycastle</groupId>
+      <artifactId>bcprov-jdk15on</artifactId>
       <version>${bouncy-castle.version}</version>
     </dependency>
     <dependency>
@@ -141,11 +142,6 @@
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
-      <version>${jackson.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>com.fasterxml.jackson.module</groupId>
-      <artifactId>jackson-module-jaxb-annotations</artifactId>
       <version>${jackson.version}</version>
     </dependency>
     <dependency>
@@ -177,21 +173,11 @@
       <version>${resteasy.version}</version>
       <scope>provided</scope>
     </dependency>
-    <dependency>
-      <groupId>com.fasterxml.jackson.core</groupId>
-      <artifactId>jackson-databind</artifactId>
-      <version>${jackson.version}</version>
-    </dependency>
     <!-- CAUTION, CAUTION, CAUTION - javaee-api needs to be below the resteasy dependencies or the tests will stop working -->
     <dependency>
       <groupId>javax</groupId>
       <artifactId>javaee-api</artifactId>
       <version>${javaee-api.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.projectlombok</groupId>
-      <artifactId>lombok</artifactId>
-      <version>1.16.10</version>
     </dependency>
     <dependency>
       <groupId>commons-net</groupId>
@@ -238,7 +224,7 @@
     <dependency>
       <groupId>org.antlr</groupId>
       <artifactId>antlr4-runtime</artifactId>
-      <version>4.5.3</version>
+      <version>${antlr-runtime.version}</version>
     </dependency>
   </dependencies>
 
@@ -312,10 +298,9 @@
       <plugin>
         <groupId>org.owasp</groupId>
         <artifactId>dependency-check-maven</artifactId>
-        <version>1.4.5</version>
+        <version>3.0.2</version>
         <configuration>
-          <failBuildOnCVSS>6</failBuildOnCVSS>
-          <!-- <failBuildOnAnyVulnerability>true</failBuildOnAnyVulnerability> -->
+          <failBuildOnAnyVulnerability>true</failBuildOnAnyVulnerability>
         </configuration>
         <executions>
           <execution>
@@ -328,7 +313,7 @@
       <plugin>
         <groupId>org.antlr</groupId>
         <artifactId>antlr4-maven-plugin</artifactId>
-        <version>4.5.3</version>
+        <version>${antlr-runtime.version}</version>
         <executions>
           <execution>
             <goals>
