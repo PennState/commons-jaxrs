@@ -17,15 +17,15 @@ public class ConflictException extends ClientErrorException {
   private static final long serialVersionUID = -5403009371368084717L;
 
   public ConflictException() {
-    this(null, null);
+    this(null, null, null);
   }
 
-  public ConflictException(URI location) {
-    this(location, null);
+  public ConflictException(String message, URI location) {
+    this(message, location, null);
   }
 
-  public ConflictException(URI location, Object entity) {
-    super(Response.status(Status.CONFLICT)
+  public ConflictException(String message, URI location, Object entity) {
+    super(message, Response.status(Status.CONFLICT)
                   .location(location)
                   .entity(entity)
                   .build());

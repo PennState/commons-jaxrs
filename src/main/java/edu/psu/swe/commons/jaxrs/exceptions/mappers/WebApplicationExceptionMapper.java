@@ -20,7 +20,6 @@ public class WebApplicationExceptionMapper implements ExceptionMapper<WebApplica
 
   public Response toResponse(WebApplicationException e) {
     Response response;
-    boolean logError = true;
     boolean includeExceptionMessage = false;
     
     ErrorMessage em = new ErrorMessage(Status.BAD_REQUEST);
@@ -28,43 +27,40 @@ public class WebApplicationExceptionMapper implements ExceptionMapper<WebApplica
     /********************************************** CLIENT EXCEPTIONS (400s) *******************************************************/
     if (e.getClass().equals(BadRequestException.class)) {
       em.setStatus(Status.BAD_REQUEST);
-      logError = false;
       includeExceptionMessage = true;
+      log.info(e.getMessage());
       
     } else if (e.getClass().equals(NotFoundException.class)) {
-      logError = false;
       em.setStatus(Status.NOT_FOUND);
       includeExceptionMessage = true;
+      log.info(e.getMessage());
       
     } else if (e.getClass().equals(ForbiddenException.class)) {
       em.setStatus(Status.FORBIDDEN);
       includeExceptionMessage = true;
+      log.info(e.getMessage());
       
     } else if (e.getClass().equals(NotAuthorizedException.class)) {
-      logError = false;
       em.setStatus(Status.UNAUTHORIZED);
       includeExceptionMessage = true;
+      log.info(e.getMessage());
       
     } else if (e.getClass().equals(ConflictException.class)) {
-      logError = false;
       em.setStatus(Status.CONFLICT);
       includeExceptionMessage = true;
+      log.info(e.getMessage());
     }
     
     /********************************************** SERVER EXCEPTIONS (500s) *******************************************************/  
     else {
       //catch all and return as an internal error
       em.setStatus(Status.INTERNAL_SERVER_ERROR);
+      log.error(e.getMessage(), e);
     }
     
     //Build Error Message Body
     if (includeExceptionMessage) {
       em.addErrorMessage(e.getMessage());
-    }
-    
-    //Don't Log everything
-    if(logError){
-      log.error("Error in ead service: " + e.getMessage(), e);       
     }
     
     response = em.toResponse();
