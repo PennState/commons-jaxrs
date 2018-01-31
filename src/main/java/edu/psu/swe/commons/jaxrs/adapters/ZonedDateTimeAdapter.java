@@ -12,6 +12,7 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
 public class ZonedDateTimeAdapter extends XmlAdapter<String, ZonedDateTime> {
   
   private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ISO_DATE_TIME;
+  private static final DateTimeFormatter OUTPUT_FORMATTER = DateTimeFormatter.ISO_INSTANT;
 
   @Override
   public ZonedDateTime unmarshal(String v) throws Exception {
@@ -38,6 +39,6 @@ public class ZonedDateTimeAdapter extends XmlAdapter<String, ZonedDateTime> {
     if (v == null) {
       return null;
     }
-    return FORMATTER.format(v.withZoneSameInstant(ZoneId.of("UTC")));
+    return OUTPUT_FORMATTER.format(v);
   }
 }
