@@ -25,6 +25,7 @@ import javax.ws.rs.ProcessingException;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.Response.Status.Family;
 
 import edu.psu.swe.commons.jaxrs.ErrorMessage;
@@ -36,8 +37,6 @@ import edu.psu.swe.commons.jaxrs.exceptions.RestServerException;
 import edu.psu.swe.commons.jaxrs.exceptions.ServiceAuthException;
 
 public final class RestClientUtil {
-  
-  private static final int NOT_FOUND = 404;
 
   private RestClientUtil() {
 
@@ -54,7 +53,7 @@ public final class RestClientUtil {
         throw new ConflictingDataException(response);
       } else if (status == 412) {
         throw new BackingStoreChangedException(response);
-      } else if (status == NOT_FOUND) {
+      } else if (status == Status.NOT_FOUND.getStatusCode()) {
         //If the record doesn't exist let the client handle gracefully
         return;
       } else {
@@ -64,7 +63,7 @@ public final class RestClientUtil {
   }
   
   public static boolean checkForFourOhFour(WebTarget target, Response response) {
-    if (response.getStatus() == NOT_FOUND) {
+    if (response.getStatus() == Status.NOT_FOUND.getStatusCode()) {
       try {
         response.readEntity(ErrorMessage.class);
         return true;
@@ -76,10 +75,10 @@ public final class RestClientUtil {
   }
   
   public static void rethrowFourOhFour(WebTarget target, Response response) throws RestClientException {
-    if (response.getStatus() == NOT_FOUND) {
+    if (response.getStatus() == Status.NOT_FOUND.getStatusCode()) {
       try {
         ErrorMessage em = response.readEntity(ErrorMessage.class);
-        throw new RestClientException(NOT_FOUND, em);
+        throw new RestClientException(Status.NOT_FOUND.getStatusCode(), em);
       } catch (ProcessingException pe) {
         throw new BadUrlException(target.getUri().toASCIIString() + " could not be found");
       }
