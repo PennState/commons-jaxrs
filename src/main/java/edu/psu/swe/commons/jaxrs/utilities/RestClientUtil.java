@@ -36,6 +36,8 @@ import edu.psu.swe.commons.jaxrs.exceptions.RestServerException;
 import edu.psu.swe.commons.jaxrs.exceptions.ServiceAuthException;
 
 public final class RestClientUtil {
+  
+  private static final int NOT_FOUND = 404;
 
   private RestClientUtil() {
 
@@ -52,7 +54,7 @@ public final class RestClientUtil {
         throw new ConflictingDataException(response);
       } else if (status == 412) {
         throw new BackingStoreChangedException(response);
-      } else if (status == 404) {
+      } else if (status == NOT_FOUND) {
         //If the record doesn't exist let the client handle gracefully
         return;
       } else {
@@ -62,7 +64,7 @@ public final class RestClientUtil {
   }
   
   public static boolean checkForFourOhFour(WebTarget target, Response response) {
-    if (response.getStatus() == 404) {
+    if (response.getStatus() == NOT_FOUND) {
       try {
         response.readEntity(ErrorMessage.class);
         return true;
@@ -71,6 +73,17 @@ public final class RestClientUtil {
       }
     }
     return false;
+  }
+  
+  public static void rethrowFourOfFour(WebTarget target, Response response) throws RestClientException {
+    if (response.getStatus() == NOT_FOUND) {
+      try {
+        ErrorMessage em = response.readEntity(ErrorMessage.class);
+        throw new RestClientException(NOT_FOUND, em);
+      } catch (ProcessingException pe) {
+        throw new BadUrlException(target.getUri().toASCIIString() + " could not be found");
+      }
+    }
   }
 
   public static boolean isSuccessful(Response response) {
