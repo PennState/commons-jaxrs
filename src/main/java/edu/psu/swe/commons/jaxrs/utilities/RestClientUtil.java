@@ -63,15 +63,12 @@ public final class RestClientUtil {
   }
   
   public static boolean checkForFourOhFour(WebTarget target, Response response) {
-    if (response.getStatus() == Status.NOT_FOUND.getStatusCode()) {
-      try {
-        response.readEntity(ErrorMessage.class);
-        return true;
-      } catch (ProcessingException pe) {
-        throw new BadUrlException(target.getUri().toASCIIString() + " could not be found");
-      }
+    try {
+      verifyFourOhFour(target, response);
+      return true;
+    } catch (RestClientException e) {
+      return false;
     }
-    return false;
   }
   
   public static void verifyFourOhFour(WebTarget target, Response response) throws RestClientException {
