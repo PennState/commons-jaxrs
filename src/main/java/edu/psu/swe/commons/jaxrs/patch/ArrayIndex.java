@@ -8,6 +8,7 @@ import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
@@ -33,8 +34,8 @@ class ArrayIndex extends JsonReference {
   public Object add(Object parent, Type parentType, JsonNode jsonValue) throws PropertyDoesNotExistException, PropertyIsNullException, FailedToAddPropertyException {
     Object newParent;
 
-    if (parentType == null && parent instanceof List) {
-      throw new FailedToAddPropertyException("Cannot have a List at the root of a JSON pointer that is not the property of a container class");
+    if (parentType == null && (parent instanceof List || parent instanceof Set)) {
+      throw new FailedToAddPropertyException("Cannot have a List or Set at the root of a JSON pointer that is not the property of a container class");
     }
     Class<?> parentClass = parent.getClass();
 
@@ -86,18 +87,33 @@ class ArrayIndex extends JsonReference {
         if (index > length) {
           throw new PropertyDoesNotExistException("Index is out of bounds (" + length + "): " + this.getIndex());
         }
-        try {
-          Type type = ((ParameterizedType) parentType).getActualTypeArguments()[0];
-          Object value;
+        Type type = ((ParameterizedType) parentType).getActualTypeArguments()[0];
+        Object value;
 
-          try {
-            value = super.convert(jsonValue, type);
-          } catch (IllegalArgumentException convertException) {
-            throw new FailedToSetPropertyException("Failed to convert JSON to " + type.getTypeName() + ": " + this.getIndex(), convertException);
-          }
+        try {
+          value = super.convert(jsonValue, type);
+
           parentAsList.add(index, value);
+        } catch (IllegalArgumentException convertException) {
+          throw new FailedToSetPropertyException("Failed to convert JSON to " + type.getTypeName() + ": " + this.getIndex(), convertException);
         } catch (UnsupportedOperationException unsupportedOperationException) {
           throw new FailedToAddPropertyException("Cannot add to immutable List property", unsupportedOperationException);
+        }
+        newParent = parent;
+      } else if (parent instanceof Set) {
+        @SuppressWarnings("unchecked")
+        Set<Object> parentAsSet = (Set<Object>) parent;
+        Type type = ((ParameterizedType) parentType).getActualTypeArguments()[0];
+        Object value;
+
+        try {
+          value = super.convert(jsonValue, type);
+
+          parentAsSet.add(value);
+        }  catch (IllegalArgumentException convertException) {
+          throw new FailedToAddPropertyException("Failed to convert JSON to " + type.getTypeName(), convertException);
+        } catch (UnsupportedOperationException unsupportedOperationException) {
+          throw new FailedToAddPropertyException("Cannot add to immutable Set property", unsupportedOperationException);
         }
         newParent = parent;
       } else {
@@ -117,7 +133,7 @@ class ArrayIndex extends JsonReference {
    * {@inheritDoc}
    */
   @Override
-  public Object remove(Object parent, Type parentType) throws PropertyDoesNotExistException, PropertyIsNullException, FailedToRemovePropertyException {
+  public Object remove(Object parent, Type parentType, JsonNode jsonValue) throws PropertyDoesNotExistException, PropertyIsNullException, FailedToRemovePropertyException {
     Object newParent;
     Class<?> parentClass = parent.getClass();
 
@@ -130,7 +146,7 @@ class ArrayIndex extends JsonReference {
           throw new PropertyIsNullException("Index is null: " + this.getIndex());
         }
         Type childType = childProperty.getType();
-        Object newChild = super.next.remove(child, childType);
+        Object newChild = super.next.remove(child, childType, jsonValue);
 
         if (newChild != child) {
           this.setChild(parent, newChild);
@@ -161,6 +177,24 @@ class ArrayIndex extends JsonReference {
         } catch (UnsupportedOperationException unsupportedOperationException) {
           throw new FailedToRemovePropertyException("Cannot remove from immutable List property in " + parentClass.getCanonicalName(), unsupportedOperationException);
         }
+      } else if (parent instanceof Set) {
+        if (jsonValue == null) {
+          throw new FailedToRemovePropertyException("Value property was not provided in JSON Patch Remove request for a Set");
+        }
+        Set<?> parentAsSet = (Set<?>) parent;
+        Type type = ((ParameterizedType) parentType).getActualTypeArguments()[0];
+        Object value;
+
+        try {
+          value = super.convert(jsonValue, type);
+
+          parentAsSet.remove(value);
+        } catch (IllegalArgumentException convertException) {
+          throw new FailedToRemovePropertyException("Failed to convert JSON to " + type.getTypeName());
+        } catch (UnsupportedOperationException unsupportedOperationException) {
+          throw new FailedToRemovePropertyException("Cannot mutate immutable Set property in " + parentClass.getCanonicalName(), unsupportedOperationException);
+        }
+        newParent = parent;
       } else {
         throw new PropertyDoesNotExistException("Cannot index into " + parentClass.getCanonicalName());
       }
@@ -181,9 +215,8 @@ class ArrayIndex extends JsonReference {
     Class<?> parentClass = parent.getClass();
 
     try {
-      Property property = this.getChild(parent, parentType);
-
       if (super.next != null) {
+        Property property = this.getChild(parent, parentType);
         Object propertyValue = property.getObject();
 
         if (propertyValue == null) {
@@ -192,6 +225,7 @@ class ArrayIndex extends JsonReference {
         Type propertyType = property.getType();
         child = super.next.get(propertyValue, propertyType);
       } else {
+        Property property = this.getChild(parent, parentType);
         child = property.getObject();
       }
     } catch (IllegalArgumentException | IllegalAccessException unexpected) {
@@ -267,6 +301,26 @@ class ArrayIndex extends JsonReference {
         } catch (UnsupportedOperationException unsupportedOperationException) {
           throw new FailedToSetPropertyException("Cannot mutate immutable List property in " + parentClass.getCanonicalName(), unsupportedOperationException);
         }
+      } else if (parent instanceof Set) {
+        /**
+         * TODO see previous TODO
+         */
+        Type type = ((ParameterizedType) parentType).getActualTypeArguments()[0];
+        Object value;
+
+        try {
+          value = super.convert(jsonValue, type);
+        } catch (IllegalArgumentException convertException) {
+          throw new FailedToSetPropertyException("Failed to convert JSON to " + type.getTypeName());
+        }
+        @SuppressWarnings("unchecked")
+        Set<Object> parentAsSet = (Set<Object>) parent;
+
+        try {
+          parentAsSet.add(value);
+        } catch (UnsupportedOperationException unsupportedOperationException) {
+          throw new FailedToSetPropertyException("Cannot mutate immutable Set property in " + parentClass.getCanonicalName(), unsupportedOperationException);
+        }
       } else {
         throw new PropertyDoesNotExistException("Cannot index into " + parentClass.getCanonicalName());
       }
@@ -285,6 +339,8 @@ class ArrayIndex extends JsonReference {
     }
     Object child;
     Type childType;
+    Object value;
+    Type valueType;
     Class<?> parentClass = parent.getClass();
 
     try {
@@ -296,12 +352,13 @@ class ArrayIndex extends JsonReference {
           throw new PropertyIsNullException("Index is null: " + this.getIndex());
         }
         childType = property.getType();
-
         result = super.next.test(child, childType, jsonValue);
+      } else if (parent instanceof Set) {
+        Set<?> parentAsSet = (Set<?>) parent;
+        valueType = ((ParameterizedType) parentType).getActualTypeArguments()[0];
+        value = super.convert(jsonValue, valueType);
+        result = parentAsSet.contains(value);
       } else {
-        Object value;
-        Type valueType;
-
         if (parentClass.isArray()) {
           int length = Array.getLength(parent);
           int index = this.index == -1 ? length - 1 : this.index;

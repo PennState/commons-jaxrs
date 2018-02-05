@@ -79,11 +79,13 @@ class PropertyName extends JsonReference {
       throw new FailedToAddPropertyException("Cannot add properties to objects: " + this.name);
     }
     Object child;
+    Object origChild;
     Type childType;
 
     try {
       Property property = this.getChild(parent);
       child = property.getObject();
+      origChild = this.getChild(parent).getObject();
 
       if (child == null) {
         throw new PropertyIsNullException("Property is null in " + parentClass.getCanonicalName() + ": " + this.name);
@@ -96,7 +98,7 @@ class PropertyName extends JsonReference {
     }
     Object newChild = super.next.add(child, childType, jsonValue);
 
-    if (newChild != child) {
+    if (newChild != origChild) {
       try {
         this.setChild(parent, newChild);
       } catch (FailedToSetPropertyException setException) {
@@ -110,7 +112,7 @@ class PropertyName extends JsonReference {
    * {@inheritDoc}
    */
   @Override
-  public Object remove(Object parent, Type parentType) throws  PropertyDoesNotExistException, PropertyIsNullException, FailedToRemovePropertyException {
+  public Object remove(Object parent, Type parentType, JsonNode jsonValue) throws  PropertyDoesNotExistException, PropertyIsNullException, FailedToRemovePropertyException {
     Class<?> parentClass = parent.getClass();
 
     if (!isAnnotated(parentClass)) {
@@ -120,11 +122,13 @@ class PropertyName extends JsonReference {
       throw new FailedToRemovePropertyException("Cannot remove properties from objects: " + this.name);
     }
     Object child;
+    Object origChild;
     Type childType;
 
     try {
       Property property = this.getChild(parent);
       child = property.getObject();
+      origChild = this.getChild(parent).getObject();
 
       if (child == null) {
         throw new PropertyIsNullException("Property is null in " + parentClass.getCanonicalName() + ": " + this.name);
@@ -135,9 +139,9 @@ class PropertyName extends JsonReference {
     } catch (InvocationTargetException addException) {
       throw new FailedToRemovePropertyException("Could not remove property because a method threw an exception in " + parentClass.getCanonicalName() + ": " + this.name, addException);
     }
-    Object newChild = super.next.remove(child, childType);
+    Object newChild = super.next.remove(child, childType, jsonValue);
 
-    if (newChild != child) {
+    if (newChild != origChild) {
       try {
         this.setChild(parent, newChild);
       } catch (FailedToSetPropertyException setException) {
@@ -528,7 +532,7 @@ class PropertyName extends JsonReference {
             }
             XmlElement xmlElement = method.getAnnotation(XmlElement.class);
 
-            if (xmlElement == null ||  method.getParameterCount() != 1 || method.getName().startsWith("set")) {
+            if (xmlElement == null ||  method.getParameterCount() != 1 || !method.getName().startsWith("set")) {
               continue;
             }
             String xmlElementName = xmlElement.name();

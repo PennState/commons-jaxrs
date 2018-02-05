@@ -90,6 +90,56 @@ public class PatchOperation {
   }
 
   /**
+   * Create a generic `remove` PatchOperation where the last property is an index into a Set.
+   * @param jsonPointer
+   * @param value
+   * @return
+   */
+  public static PatchOperation remove(JsonPointer jsonPointer, JsonNode value) {
+    return new PatchOperation(Type.REMOVE, jsonPointer, value);
+  }
+
+  /**
+   * Create a `remove` PatchOperation for longs/ints where the last property is an index into a Set.
+   * @param jsonPointer
+   * @param value
+   * @return
+   */
+  public static PatchOperation remove(JsonPointer jsonPointer, long value) {
+    return new PatchOperation(Type.REMOVE, jsonPointer, JsonNodeFactory.instance.numberNode(value));
+  }
+
+  /**
+   * Create a `remove` PatchOperation for doubles/floats where the last property is an index into a Set.
+   * @param jsonPointer
+   * @param value
+   * @return
+   */
+  public static PatchOperation remove(JsonPointer jsonPointer, double value) {
+    return new PatchOperation(Type.REMOVE, jsonPointer, JsonNodeFactory.instance.numberNode(value));
+  }
+
+  /**
+   * Create a `remove` PatchOperation for Strings where the last property is an index into a Set.
+   * @param jsonPointer
+   * @param value
+   * @return
+   */
+  public static PatchOperation remove(JsonPointer jsonPointer, String value) {
+    return new PatchOperation(Type.REMOVE, jsonPointer, JsonNodeFactory.instance.textNode(value));
+  }
+
+  /**
+   * Create a `remove` PatchOperation for Objects where the last property is an index into a Set.
+   * @param jsonPointer
+   * @param value
+   * @return
+   */
+  public static PatchOperation remove(JsonPointer jsonPointer, Object value) {
+    return new PatchOperation(Type.REMOVE, jsonPointer, JsonNodeFactory.instance.pojoNode(value));
+  }
+
+  /**
    * Create a generic `replace` PatchOperation.
    * @param jsonPointer
    * @param value

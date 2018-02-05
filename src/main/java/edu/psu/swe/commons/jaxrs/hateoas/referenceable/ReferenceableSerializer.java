@@ -1,4 +1,4 @@
-package edu.psu.swe.commons.jaxrs.referenceable;
+package edu.psu.swe.commons.jaxrs.hateoas.referenceable;
 
 import java.io.IOException;
 
@@ -13,6 +13,7 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.jsontype.TypeSerializer;
 
+import edu.psu.swe.commons.jaxrs.hateoas.referenceable.RequestBean;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

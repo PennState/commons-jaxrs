@@ -1,4 +1,4 @@
-package edu.psu.swe.commons.jaxrs.referenceable;
+package edu.psu.swe.commons.jaxrs.hateoas.referenceable;
 
 import java.io.IOException;
 
@@ -16,20 +16,11 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.ContextualDeserializer;
 
-public class ReferenceableDeserializer extends JsonDeserializer<Object> implements ContextualDeserializer {
+public abstract class AbstractReferenceableDeserializer extends JsonDeserializer<Object> implements ContextualDeserializer {
 
-  private static final Logger LOG = LoggerFactory.getLogger(ReferenceableDeserializer.class);
+  private static final Logger LOG = LoggerFactory.getLogger(AbstractReferenceableDeserializer.class);
 
-  private Class targetClass;
-
-  public ReferenceableDeserializer() {
-    super();
-  }
-
-  public ReferenceableDeserializer(Class targetClass) {
-    super();
-    this.targetClass = targetClass;
-  }
+  protected Class targetClass;
 
   @Override
   public Object deserialize(JsonParser jsonParser, DeserializationContext ctxt) throws IOException, JsonProcessingException {
@@ -53,21 +44,14 @@ public class ReferenceableDeserializer extends JsonDeserializer<Object> implemen
       }
 
       r.loadReferenceableType(al);
-
     } catch (InstantiationException | IllegalAccessException e) {
       LOG.error("Error creating referenceable: " + e.getMessage(), e);
       throw new JsonGenerationException(e.getMessage());
     }
 
-    return r;
+    return getRestLookUpProxy(r, ctxt, href, targetClass);
   }
 
-  @Override
-  public JsonDeserializer<?> createContextual(DeserializationContext ctxt, BeanProperty property) throws JsonMappingException {
-    LOG.debug("Creating contextual referenceable deserialzer");
-
-    return new ReferenceableDeserializer(ctxt.getContextualType()
-                                             .getRawClass());
-  }
+  public abstract Object getRestLookUpProxy(Referenceable r, DeserializationContext ctxt, String href, Class targetClass);
 
 }

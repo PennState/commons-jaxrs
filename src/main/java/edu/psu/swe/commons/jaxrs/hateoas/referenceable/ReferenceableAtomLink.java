@@ -1,4 +1,4 @@
-package edu.psu.swe.commons.jaxrs.referenceable;
+package edu.psu.swe.commons.jaxrs.hateoas.referenceable;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;

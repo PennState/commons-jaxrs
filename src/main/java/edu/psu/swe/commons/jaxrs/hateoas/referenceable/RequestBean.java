@@ -1,4 +1,4 @@
-package edu.psu.swe.commons.jaxrs.referenceable;
+package edu.psu.swe.commons.jaxrs.hateoas.referenceable;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
