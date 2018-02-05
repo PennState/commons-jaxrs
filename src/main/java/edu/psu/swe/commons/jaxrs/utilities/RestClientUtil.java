@@ -74,7 +74,7 @@ public final class RestClientUtil {
     return false;
   }
   
-  public static void rethrowFourOhFour(WebTarget target, Response response) throws RestClientException {
+  public static void verifyFourOhFour(WebTarget target, Response response) throws RestClientException {
     if (response.getStatus() == Status.NOT_FOUND.getStatusCode()) {
       try {
         ErrorMessage em = response.readEntity(ErrorMessage.class);
