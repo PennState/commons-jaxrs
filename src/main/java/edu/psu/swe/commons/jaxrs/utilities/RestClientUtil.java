@@ -65,9 +65,9 @@ public final class RestClientUtil {
   public static boolean checkForFourOhFour(WebTarget target, Response response) {
     try {
       verifyFourOhFour(target, response);
-      return true;
-    } catch (RestClientException e) {
       return false;
+    } catch (RestClientException e) {
+      return true;
     }
   }
   
