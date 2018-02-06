@@ -64,14 +64,14 @@ public final class RestClientUtil {
   
   public static boolean checkForFourOhFour(WebTarget target, Response response) {
     try {
-      verifyFourOhFour(target, response);
+      verifyNotFourOhFour(target, response);
       return false;
     } catch (RestClientException e) {
       return true;
     }
   }
   
-  public static void verifyFourOhFour(WebTarget target, Response response) throws RestClientException {
+  public static void verifyNotFourOhFour(WebTarget target, Response response) throws RestClientException {
     if (response.getStatus() == Status.NOT_FOUND.getStatusCode()) {
       try {
         ErrorMessage em = response.readEntity(ErrorMessage.class);
