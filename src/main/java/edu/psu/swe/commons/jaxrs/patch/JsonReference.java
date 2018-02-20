@@ -78,17 +78,23 @@ abstract class JsonReference {
   protected Object convert(JsonNode jsonValue, Type type) throws IllegalArgumentException {
     Object value;
 
-    // prevent automatic conversion of some types by jackson such as numbers to strings and vice-versa
-    if (!jsonValue.isTextual() && type == String.class) {
-      throw new IllegalArgumentException("Cannot convert to " + type.getTypeName() + " from non-string");
-    } else if (!jsonValue.isFloatingPointNumber() && (type == Float.class || type == float.class || type == Double.class || type == double.class)) {
-      throw new IllegalArgumentException("Cannot convert to " + type.getTypeName() + " from non-floating point");
-    } else if (!jsonValue.isIntegralNumber() && (type == Long.class || type == long.class
-                                                 || type == Integer.class || type == int.class
-                                                 || type == Short.class || type == short.class
-                                                 || type == Byte.class || type == byte.class
-                                                 || type == Character.class || type == char.class)) {
-      throw new IllegalArgumentException("Cannot convert to " + type.getTypeName() + " from non-integral");
+    if (jsonValue.isNull()) {
+      if (type instanceof Class<?> && ((Class<?>) type).isPrimitive()) {
+        throw new IllegalArgumentException("Cannot set " + type.getTypeName() + " to null");
+      }
+    } else {
+      // prevent automatic conversion of some types by jackson such as numbers to strings and vice-versa
+      if (!jsonValue.isTextual() && type == String.class) {
+        throw new IllegalArgumentException("Cannot convert to " + type.getTypeName() + " from non-string");
+      } else if (!jsonValue.isFloatingPointNumber() && (type == Float.class || type == float.class || type == Double.class || type == double.class)) {
+        throw new IllegalArgumentException("Cannot convert to " + type.getTypeName() + " from non-floating point");
+      } else if (!jsonValue.isIntegralNumber() && (type == Long.class || type == long.class
+                                                   || type == Integer.class || type == int.class
+                                                   || type == Short.class || type == short.class
+                                                   || type == Byte.class || type == byte.class
+                                                   || type == Character.class || type == char.class)) {
+        throw new IllegalArgumentException("Cannot convert to " + type.getTypeName() + " from non-integral");
+      }
     }
     JavaType javaType = TypeFactory.defaultInstance().constructType(type);
     value = this.objectMapper.convertValue(jsonValue, javaType);
