@@ -1,9 +1,11 @@
 package edu.psu.swe.commons.jaxrs.exceptions;
 
+import javax.ejb.ApplicationException;
 import javax.ws.rs.core.Response;
 
 import edu.psu.swe.commons.jaxrs.ErrorMessage;
 
+@ApplicationException
 public class RestServerException extends RuntimeException {
   private static final long serialVersionUID = 7360783673606191576L;
   
