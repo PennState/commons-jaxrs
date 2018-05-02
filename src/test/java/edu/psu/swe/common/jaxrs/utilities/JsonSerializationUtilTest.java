@@ -225,7 +225,7 @@ public class JsonSerializationUtilTest {
   @NoArgsConstructor
   @EqualsAndHashCode(callSuper=true)
   @ToString(callSuper=true)
-  @XmlRootElement@XmlType
+  @XmlRootElement
   @XmlAccessorType(XmlAccessType.NONE)
   //@JsonTypeName(MessageA.TYPE)
   private static class MessageA extends BaseMessage {
@@ -247,7 +247,7 @@ public class JsonSerializationUtilTest {
   @NoArgsConstructor
   @EqualsAndHashCode(callSuper=true)
   @ToString(callSuper=true)
-  @XmlRootElement@XmlType
+  @XmlRootElement
   @XmlAccessorType(XmlAccessType.NONE)
   //@JsonTypeName(MessageB.TYPE)
   private static class MessageB extends BaseMessage {
