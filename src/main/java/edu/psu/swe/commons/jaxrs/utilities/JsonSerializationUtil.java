@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.constraints.NotNull;
+
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -38,6 +40,7 @@ private static final ObjectMapper mapper;
     return Optional.of(obj);
   }
   
+  @NotNull
   public static <T> List<T> deserializeList(String json, Class<T> clazz) throws IOException {
     if (json == null || json.trim().isEmpty()) {
       return new ArrayList<>();
