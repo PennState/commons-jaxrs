@@ -17,33 +17,33 @@ package edu.psu.swe.commons.jaxrs.adapters;
  * under the License.
  */
 
-
 import java.time.Instant;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
-public class InstantFormatAdapter extends XmlAdapter<String, Instant>
-{
-  private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ISO_DATE_TIME;
-  
+public class InstantFormatAdapter extends XmlAdapter<String, Instant> {
+  private static final DateTimeFormatter DTF_UNMARSHAL = DateTimeFormatter.ISO_DATE_TIME;
+  private static final DateTimeFormatter DTF_MARSHAL = DateTimeFormatter.ISO_DATE_TIME.withZone(ZoneId.of("Z"));
+
   @Override
-  public String marshal(Instant value) throws Exception
-  {
-	  if (value == null) {
-		  return null;
-	  }
-    return FORMATTER.format(value);
+  public String marshal(Instant value) throws Exception {
+    if (value == null) {
+      return null;
+    }
+    return DTF_MARSHAL.format(value);
   }
 
   @Override
-  public Instant unmarshal(String s) throws Exception
-  {
-	  if (s == null || s.trim().isEmpty()) {
-		  return null;
-	  }
-	  ZonedDateTime zdt = ZonedDateTime.parse(s, FORMATTER);
-	  return zdt.toInstant();
+  public Instant unmarshal(String s) throws Exception {
+    if (s == null || s.trim().isEmpty()) {
+      return null;
+    }
+    
+    ZonedDateTime zdt = ZonedDateTime.parse(s, DTF_UNMARSHAL);
+    return zdt.toInstant();
+    
   }
 }
