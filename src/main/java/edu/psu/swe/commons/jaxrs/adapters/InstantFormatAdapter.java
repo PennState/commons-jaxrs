@@ -19,13 +19,14 @@ package edu.psu.swe.commons.jaxrs.adapters;
 
 
 import java.time.Instant;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 public class InstantFormatAdapter extends XmlAdapter<String, Instant>
 {
-  private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ISO_INSTANT;
+  private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ISO_DATE_TIME;
   
   @Override
   public String marshal(Instant value) throws Exception
@@ -42,6 +43,7 @@ public class InstantFormatAdapter extends XmlAdapter<String, Instant>
 	  if (s == null || s.trim().isEmpty()) {
 		  return null;
 	  }
-    return Instant.parse(s);
+	  ZonedDateTime zdt = ZonedDateTime.parse(s, FORMATTER);
+	  return zdt.toInstant();
   }
 }
