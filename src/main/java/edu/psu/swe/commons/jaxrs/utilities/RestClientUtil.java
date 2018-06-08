@@ -25,6 +25,7 @@ import javax.ws.rs.ProcessingException;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.Response.Status.Family;
 
 import edu.psu.swe.commons.jaxrs.ErrorMessage;
@@ -52,7 +53,7 @@ public final class RestClientUtil {
         throw new ConflictingDataException(response);
       } else if (status == 412) {
         throw new BackingStoreChangedException(response);
-      } else if (status == 404) {
+      } else if (status == Status.NOT_FOUND.getStatusCode()) {
         //If the record doesn't exist let the client handle gracefully
         return;
       } else {
@@ -62,15 +63,23 @@ public final class RestClientUtil {
   }
   
   public static boolean checkForFourOhFour(WebTarget target, Response response) {
-    if (response.getStatus() == 404) {
+    try {
+      verifyNotFourOhFour(target, response);
+      return false;
+    } catch (RestClientException e) {
+      return true;
+    }
+  }
+  
+  public static void verifyNotFourOhFour(WebTarget target, Response response) throws RestClientException {
+    if (response.getStatus() == Status.NOT_FOUND.getStatusCode()) {
       try {
-        response.readEntity(ErrorMessage.class);
-        return true;
+        ErrorMessage em = response.readEntity(ErrorMessage.class);
+        throw new RestClientException(Status.NOT_FOUND.getStatusCode(), em);
       } catch (ProcessingException pe) {
         throw new BadUrlException(target.getUri().toASCIIString() + " could not be found");
       }
     }
-    return false;
   }
 
   public static boolean isSuccessful(Response response) {

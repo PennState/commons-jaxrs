@@ -14,7 +14,7 @@
   <name>Common JAXRS Libraries</name>
   <description>Common classes to make creating REST services more consistent.</description>
   <url>https://github.com/PennState/commons-jaxrs</url>
-  <version>1.18</version>
+  <version>1.30-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <properties>
@@ -23,10 +23,21 @@
     <java.compiler.source>1.8</java.compiler.source>
     <java.compiler.target>1.8</java.compiler.target>
 
-    <slf4j.version>1.7.12</slf4j.version>
-    
-    <resteasy.version>3.0.19.Final</resteasy.version>
-    <jackson.version>2.8.3</jackson.version>
+    <javaee-api.version>7.0</javaee-api.version>
+    <javax.mail.version>1.6.0</javax.mail.version>
+    <jackson.version>2.9.5</jackson.version>
+    <resteasy.version>3.1.4.Final</resteasy.version>
+    <commons-net.version>3.6</commons-net.version>
+    <bouncy-castle.version>1.59</bouncy-castle.version>
+    <antlr-runtime.version>4.7.1</antlr-runtime.version>
+
+    <lombok.version>1.16.20</lombok.version>
+
+    <slf4j.version>1.7.25</slf4j.version>
+
+    <junit.version>4.12</junit.version>
+    <junit-params.version>1.1.1</junit-params.version>
+    <mockito.version>1.10.19</mockito.version>
   </properties>
 
   <licenses>
@@ -110,56 +121,18 @@
     <dependency>
       <groupId>javax.mail</groupId>
       <artifactId>javax.mail-api</artifactId>
-      <version>1.4.5</version>
+      <version>${javax.mail.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.mockito</groupId>
-      <artifactId>mockito-all</artifactId>
-      <version>1.9.0</version>
-      <type>jar</type>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.10</version>
-      <type>jar</type>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>pl.pragmatists</groupId>
-      <artifactId>JUnitParams</artifactId>
-      <version>0.5.0</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>bouncycastle</groupId>
-      <artifactId>bcprov-jdk16</artifactId>
-      <version>140</version>
+      <groupId>org.bouncycastle</groupId>
+      <artifactId>bcprov-jdk15on</artifactId>
+      <version>${bouncy-castle.version}</version>
     </dependency>
     <dependency>
       <groupId>org.jboss.resteasy</groupId>
       <artifactId>resteasy-jaxrs</artifactId>
       <version>${resteasy.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.jboss.resteasy</groupId>
-      <artifactId>resteasy-jaxb-provider</artifactId>
-      <version>${resteasy.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.jboss.resteasy</groupId>
-      <artifactId>resteasy-jackson2-provider</artifactId>
-      <version>${resteasy.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <!-- CAUTION, CAUTION, CAUTION - javaee-api needs to be below the resteasy dependencies or the tests will stop working -->
-    <dependency>
-      <groupId>javax</groupId>
-      <artifactId>javaee-api</artifactId>
-      <version>7.0</version>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
@@ -177,24 +150,81 @@
       <version>${jackson.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.projectlombok</groupId>
-      <artifactId>lombok</artifactId>
-      <version>1.16.10</version>
+      <groupId>org.jboss.resteasy</groupId>
+      <artifactId>resteasy-jaxb-provider</artifactId>
+      <version>${resteasy.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.resteasy</groupId>
+      <artifactId>resteasy-jackson2-provider</artifactId>
+      <version>${resteasy.version}</version>
+      <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>com.fasterxml.jackson.core</groupId>
+          <artifactId>jackson-core</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.resteasy</groupId>
+      <artifactId>resteasy-validator-provider-11</artifactId>
+      <version>${resteasy.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <!-- CAUTION, CAUTION, CAUTION - javaee-api needs to be below the resteasy dependencies or the tests will stop working -->
+    <dependency>
+      <groupId>javax</groupId>
+      <artifactId>javaee-api</artifactId>
+      <version>${javaee-api.version}</version>
     </dependency>
     <dependency>
       <groupId>commons-net</groupId>
       <artifactId>commons-net</artifactId>
-      <version>3.4</version>
+      <version>${commons-net.version}</version>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
       <version>${slf4j.version}</version>
     </dependency>
+
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>${lombok.version}</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>${junit.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>pl.pragmatists</groupId>
+      <artifactId>JUnitParams</artifactId>
+      <version>${junit-params.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-all</artifactId>
+      <version>${mockito.version}</version>
+      <scope>test</scope>
+    </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-simple</artifactId>
       <version>${slf4j.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.antlr</groupId>
+      <artifactId>antlr4-runtime</artifactId>
+      <version>${antlr-runtime.version}</version>
     </dependency>
   </dependencies>
 
@@ -261,6 +291,33 @@
             <id>attach-sources</id>
             <goals>
               <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.owasp</groupId>
+        <artifactId>dependency-check-maven</artifactId>
+        <version>3.0.2</version>
+        <configuration>
+          <failBuildOnAnyVulnerability>true</failBuildOnAnyVulnerability>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>aggregate</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.antlr</groupId>
+        <artifactId>antlr4-maven-plugin</artifactId>
+        <version>${antlr-runtime.version}</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>antlr4</goal>
             </goals>
           </execution>
         </executions>
