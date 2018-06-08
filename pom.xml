@@ -326,9 +326,9 @@
     <pluginManagement>
       <plugins>
         <plugin>
-          <groupId>external.atlassian.jgitflow</groupId>
+          <groupId>io.ultreia.java4all.jgitflow</groupId>
           <artifactId>jgitflow-maven-plugin</artifactId>
-          <version>1.0-m4.3</version>
+          <version>1.0.0-rc-1</version>
           <configuration>
             <autoVersionSubmodules>true</autoVersionSubmodules>
             <flowInitContext>
