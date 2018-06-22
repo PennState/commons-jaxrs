@@ -1,4 +1,4 @@
-package edu.psu.swe.common.jaxrs.converters.param;
+package edu.psu.swe.commons.jaxrs.converters.param;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
