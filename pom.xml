@@ -300,7 +300,10 @@
         <artifactId>dependency-check-maven</artifactId>
         <version>3.2.1</version>
         <configuration>
+          <cveValidForHours>24</cveValidForHours>
+          <format>ALL</format>
           <failBuildOnAnyVulnerability>true</failBuildOnAnyVulnerability>
+          <failOnError>false</failOnError>
         </configuration>
         <executions>
           <execution>
