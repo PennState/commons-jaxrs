@@ -15,7 +15,7 @@ public class RequestBean {
   @Context
   private UriInfo uriInfo;
   
-  @Inject
+  @Context
   private HttpServletRequest request;
   
 }
