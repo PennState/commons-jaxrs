@@ -5,3 +5,4 @@ target
 .factorypath
 *.iml
 .idea/
+.vscode/
