@@ -8,6 +8,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.NullNode;
 
 import edu.psu.swe.commons.jaxrs.patch.exception.FailedOperationException;
 import edu.psu.swe.commons.jaxrs.patch.exception.PatchOperationFailedException;
@@ -35,6 +36,10 @@ public class PatchRequest {
         }
         JsonNode value = patchOperation.getValue();
 
+        // non-existent properties are null, not NullNode
+        if (value == null) {
+          value = NullNode.getInstance();
+        }
         switch (patchOperation.getOperation()) {
         case ADD: {
           path.add(object, null, value);
