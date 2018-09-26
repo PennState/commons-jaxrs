@@ -5,22 +5,26 @@ import java.io.IOException;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerResponseContext;
 import javax.ws.rs.container.ContainerResponseFilter;
+import javax.ws.rs.core.CacheControl;
 import javax.ws.rs.ext.Provider;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Provider
 @AddNoCacheHeader
 public class NoCacheResponseFilter implements ContainerResponseFilter {
 
-  private static final Logger LOG = LoggerFactory.getLogger(NoCacheResponseFilter.class);
-
   @Override
   public void filter(ContainerRequestContext requestContext, ContainerResponseContext responseContext) throws IOException {
 
+    CacheControl cc = new CacheControl();
+    cc.setNoCache(true);
+    cc.setNoStore(true);
+    cc.setMustRevalidate(true);
+    
     responseContext.getHeaders()
-                   .add("Cache-Control", "no-cache, no-store, must-revalidate");
+                   .add("Cache-Control", cc);
 
     responseContext.getHeaders()
                    .add("Pragma", "no-cache");
@@ -28,6 +32,6 @@ public class NoCacheResponseFilter implements ContainerResponseFilter {
     responseContext.getHeaders()
                    .add("Expires", "0");
     
-    LOG.info("Response Headers Added for no-cache: Cache-Control, Pragma, Expires");
+    log.debug("***************Response Headers Added for no-cache: Cache-Control, Pragma, Expires**********");
   }
 }
