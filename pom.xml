@@ -28,7 +28,6 @@
     <jackson.version>2.9.5</jackson.version>
     <resteasy.version>3.1.4.Final</resteasy.version>
     <commons-net.version>3.6</commons-net.version>
-    <bouncy-castle.version>1.59</bouncy-castle.version>
     <antlr-runtime.version>4.7.1</antlr-runtime.version>
 
     <lombok.version>1.16.20</lombok.version>
@@ -122,11 +121,6 @@
       <groupId>javax.mail</groupId>
       <artifactId>javax.mail-api</artifactId>
       <version>${javax.mail.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.bouncycastle</groupId>
-      <artifactId>bcprov-jdk15on</artifactId>
-      <version>${bouncy-castle.version}</version>
     </dependency>
     <dependency>
       <groupId>org.jboss.resteasy</groupId>
