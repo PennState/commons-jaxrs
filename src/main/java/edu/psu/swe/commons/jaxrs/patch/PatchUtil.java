@@ -11,7 +11,7 @@ public class PatchUtil {
   public static List<PatchOperation> buildPatchOperationsForFields(Boolean currentValue, Boolean newValue, String patchPointerName) throws JsonPointerParseException {
     List<PatchOperation> patchOperations = new ArrayList<>();
 
-    if ((currentValue == null && newValue != null) || (!currentValue.equals(newValue))) {
+    if ((currentValue == null && newValue != null) || (currentValue != null && !currentValue.equals(newValue))) {
       JsonPointer jsonPointer = new JsonPointer(patchPointerName);
       patchOperations.add(PatchOperation.replace(jsonPointer, newValue));
       log.info("Updating {} to {}", patchPointerName, newValue);
