@@ -22,9 +22,10 @@ public class NoValuePrintErrorMessageViolationExceptionMapper implements Excepti
 
     Exception e = resteasyViolationException.getException();
     List<ResteasyConstraintViolation> violations = resteasyViolationException.getViolations();
-    violations.stream()
-              .map(ResteasyConstraintViolation::toString)
-              .forEach(log::info);
+
+    List<String> messageViolations = this.extractMessages(violations);
+    messageViolations.stream()
+                     .forEach(log::info);
 
     if (e != null) {
       em.setStatus(Status.INTERNAL_SERVER_ERROR);
@@ -32,10 +33,10 @@ public class NoValuePrintErrorMessageViolationExceptionMapper implements Excepti
     } else if (resteasyViolationException.getReturnValueViolations()
                                          .isEmpty()) {
       em.setStatus(Status.BAD_REQUEST);
-      em.setErrorMessageList(extractMessages(violations));
-    } else {  
+      em.setErrorMessageList(messageViolations);
+    } else {
       em.setStatus(Status.INTERNAL_SERVER_ERROR);
-      em.setErrorMessageList(extractMessages(violations));
+      em.setErrorMessageList(messageViolations);
     }
     return em.toResponse();
   }
