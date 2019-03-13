@@ -3,16 +3,18 @@ package edu.psu.swe.commons.jaxrs.adapters;
 import java.time.DateTimeException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 public class ZonedDateTimeAdapter extends XmlAdapter<String, ZonedDateTime> {
   
   private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ISO_DATE_TIME;
-  private static final DateTimeFormatter OUTPUT_FORMATTER = DateTimeFormatter.ISO_INSTANT;
+  private static final DateTimeFormatter OUTPUT_FORMATTER = new DateTimeFormatterBuilder().parseCaseInsensitive()
+                                                                                          .appendInstant(3)
+                                                                                          .toFormatter();
 
   @Override
   public ZonedDateTime unmarshal(String v) throws Exception {
