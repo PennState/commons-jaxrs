@@ -18,6 +18,7 @@ package edu.psu.swe.commons.jaxrs.utilities;
  */
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.Date;
 import java.util.jar.Attributes;
@@ -47,8 +48,9 @@ public final class ManifestUtil {
     String manifestPath = classPath.replace(fullClassName,
         "META-INF/MANIFEST.MF");
 
-    Manifest manifest = new Manifest(new URL(manifestPath).openStream());
-    return manifest;
+    try (InputStream stream = new URL(manifestPath).openStream()) {
+      return new Manifest(stream);
+    }
   }
 
   public static Version getVersionInfo(Manifest manifest) {
