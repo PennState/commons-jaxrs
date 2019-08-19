@@ -296,7 +296,7 @@
         <configuration>
           <cveValidForHours>24</cveValidForHours>
           <format>ALL</format>
-          <failBuildOnAnyVulnerability>true</failBuildOnAnyVulnerability>
+          <failBuildOnAnyVulnerability>false</failBuildOnAnyVulnerability>
           <failOnError>false</failOnError>
         </configuration>
         <executions>
