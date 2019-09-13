@@ -20,17 +20,21 @@ package edu.psu.swe.commons.jaxrs.hateoas.interceptor;
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import java.net.URI;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.inject.Inject;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.ext.Provider;
 import javax.ws.rs.ext.WriterInterceptor;
 import javax.ws.rs.ext.WriterInterceptorContext;
 
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -52,6 +56,11 @@ public class HateoasWriteInterceptor implements WriterInterceptor {
 
   @Context
   private UriInfo uriInfo;
+  
+  @Inject
+  @ConfigProperty(name = "HATEOAS_FORCE_HTTPS", defaultValue="false")
+  private Boolean hateoasForceHttps = false;
+
 
   @Override
   public void aroundWriteTo(WriterInterceptorContext context) throws IOException, WebApplicationException {
@@ -107,7 +116,7 @@ public class HateoasWriteInterceptor implements WriterInterceptor {
    * @param linkAnnotation
    * @param object
    */
-  private void addAtomLink(Link linkAnnotation, Object object) {
+  protected void addAtomLink(Link linkAnnotation, Object object) {
     HateoasModel instance = (HateoasModel) object;
 
     AtomLink atomLink = new AtomLink();
@@ -148,9 +157,17 @@ public class HateoasWriteInterceptor implements WriterInterceptor {
     }
 
     if (path != null && !path.trim().isEmpty()) { 
-      atomLink.setHyperlink(uriInfo.getBaseUri() + path);
+      atomLink.setHyperlink(getBaseUri(uriInfo) + path);
   
       instance.getLinks().add(atomLink);
+    }
+  }
+  
+  protected URI getBaseUri(UriInfo uriInfo) {
+    if (hateoasForceHttps) {
+      return UriBuilder.fromUri(uriInfo.getBaseUri()).scheme("https").build();
+    } else {
+      return uriInfo.getBaseUri();
     }
   }
 
