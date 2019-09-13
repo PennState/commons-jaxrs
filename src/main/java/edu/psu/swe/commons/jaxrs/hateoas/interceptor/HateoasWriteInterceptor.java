@@ -25,7 +25,6 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.inject.Inject;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriBuilder;
@@ -34,7 +33,6 @@ import javax.ws.rs.ext.Provider;
 import javax.ws.rs.ext.WriterInterceptor;
 import javax.ws.rs.ext.WriterInterceptorContext;
 
-import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,14 +51,13 @@ import edu.psu.swe.commons.jaxrs.hateoas.model.HateoasModel;
 public class HateoasWriteInterceptor implements WriterInterceptor {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(HateoasWriteInterceptor.class);
+  
+  private static final String HATEOAS_FORCE_HTTPS = "HATEOAS_FORCE_HTTPS";
 
   @Context
   private UriInfo uriInfo;
   
-  @Inject
-  @ConfigProperty(name = "HATEOAS_FORCE_HTTPS", defaultValue="false")
-  private Boolean hateoasForceHttps = false;
-
+  private static Boolean hateoasForceHttps;
 
   @Override
   public void aroundWriteTo(WriterInterceptorContext context) throws IOException, WebApplicationException {
@@ -164,11 +161,20 @@ public class HateoasWriteInterceptor implements WriterInterceptor {
   }
   
   protected URI getBaseUri(UriInfo uriInfo) {
-    if (hateoasForceHttps) {
+    boolean forceHttps = getForceHttps();
+    if (forceHttps) {
       return UriBuilder.fromUri(uriInfo.getBaseUri()).scheme("https").build();
     } else {
       return uriInfo.getBaseUri();
     }
+  }
+  
+  private boolean getForceHttps() {
+    if (hateoasForceHttps != null) {
+      return hateoasForceHttps;
+    }
+    hateoasForceHttps = Boolean.parseBoolean(System.getenv(HATEOAS_FORCE_HTTPS));
+    return hateoasForceHttps;
   }
 
 }
