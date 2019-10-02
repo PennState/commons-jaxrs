@@ -20,12 +20,14 @@ package edu.psu.swe.commons.jaxrs.hateoas.interceptor;
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import java.net.URI;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.ext.Provider;
 import javax.ws.rs.ext.WriterInterceptor;
@@ -49,9 +51,13 @@ import edu.psu.swe.commons.jaxrs.hateoas.model.HateoasModel;
 public class HateoasWriteInterceptor implements WriterInterceptor {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(HateoasWriteInterceptor.class);
+  
+  private static final String HATEOAS_FORCE_HTTPS = "HATEOAS_FORCE_HTTPS";
 
   @Context
   private UriInfo uriInfo;
+  
+  private static Boolean hateoasForceHttps;
 
   @Override
   public void aroundWriteTo(WriterInterceptorContext context) throws IOException, WebApplicationException {
@@ -107,7 +113,7 @@ public class HateoasWriteInterceptor implements WriterInterceptor {
    * @param linkAnnotation
    * @param object
    */
-  private void addAtomLink(Link linkAnnotation, Object object) {
+  protected void addAtomLink(Link linkAnnotation, Object object) {
     HateoasModel instance = (HateoasModel) object;
 
     AtomLink atomLink = new AtomLink();
@@ -148,10 +154,27 @@ public class HateoasWriteInterceptor implements WriterInterceptor {
     }
 
     if (path != null && !path.trim().isEmpty()) { 
-      atomLink.setHyperlink(uriInfo.getBaseUri() + path);
+      atomLink.setHyperlink(getBaseUri(uriInfo) + path);
   
       instance.getLinks().add(atomLink);
     }
+  }
+  
+  protected URI getBaseUri(UriInfo uriInfo) {
+    boolean forceHttps = getForceHttps();
+    if (forceHttps) {
+      return UriBuilder.fromUri(uriInfo.getBaseUri()).scheme("https").build();
+    } else {
+      return uriInfo.getBaseUri();
+    }
+  }
+  
+  private boolean getForceHttps() {
+    if (hateoasForceHttps != null) {
+      return hateoasForceHttps;
+    }
+    hateoasForceHttps = Boolean.parseBoolean(System.getenv(HATEOAS_FORCE_HTTPS));
+    return hateoasForceHttps;
   }
 
 }
