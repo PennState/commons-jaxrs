@@ -33,10 +33,7 @@
     <lombok.version>1.18.10</lombok.version>
 
     <slf4j.version>1.7.25</slf4j.version>
-
-    <junit.version>4.12</junit.version>
-    <junit-params.version>1.1.1</junit-params.version>
-    <mockito.version>1.10.19</mockito.version>
+    <junit-bom.verion>5.3.2</junit-bom.verion>
   </properties>
 
   <licenses>
@@ -116,7 +113,21 @@
     </snapshotRepository>
   </distributionManagement>
 
+<dependencyManagement>
+<dependencies>
+        <!-- Import scope -->
+    <dependency>
+      <groupId>org.junit</groupId>
+      <artifactId>junit-bom</artifactId>
+      <version>${junit-bom.verion}</version>
+      <type>pom</type>
+      <scope>import</scope>
+    </dependency>
+
+</dependencies>
+</dependencyManagement>
   <dependencies>
+
     <dependency>
       <groupId>javax.mail</groupId>
       <artifactId>javax.mail-api</artifactId>
@@ -192,21 +203,8 @@
     </dependency>
 
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>${junit.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>pl.pragmatists</groupId>
-      <artifactId>JUnitParams</artifactId>
-      <version>${junit-params.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.mockito</groupId>
-      <artifactId>mockito-all</artifactId>
-      <version>${mockito.version}</version>
+      <groupId>org.junit.vintage</groupId>
+      <artifactId>junit-vintage-engine</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>
