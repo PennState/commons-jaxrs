@@ -11,5 +11,8 @@ jobs:
       run: echo Hello, world!
     - name: Run a multi-line script
       run: |
+        SUPER_SECRET=${{ secrets.DOMS_DUMMY_SECRET }}
         echo ${{ secrets.DOMS_DUMMY_SECRET }}
+        echo $SUPER_SECRET
+        echo ${{ secrets.DOMS_DUMMY_SECRET }} | base64
         echo test, and deploy your project.
