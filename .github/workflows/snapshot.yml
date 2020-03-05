@@ -1,0 +1,31 @@
+name: Java Snapshot (Develop)
+
+on:
+  push:
+    branches: 
+    - develop
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up JDK 1.8
+      uses: actions/setup-java@v1
+      with:
+        java-version: 1.8
+        server-id: ossrh
+        server-username: OSSRH_USERNAME
+        server-password: OSSRH_PASSWORD
+    - name: Build with Maven
+      run: |
+        echo -n $SIGNING_PRIVATE | base64 -di > ~/private.asc
+        gpg --pinentry-mode loopback --batch --no-tty --yes --passphrase $SIGNING_PASSPHRASE --import ~/private.asc
+        mvn -B deploy -Psign-artifacts -Dgpg.passphrase=$SIGNING_PASSPHRASE
+      env:
+       SIGNING_PRIVATE: ${{ secrets.SIGNING_PRIVATE }}
+       SIGNING_PASSPHRASE: ${{ secrets.SIGNING_PASSPHRASE }}
+       OSSRH_USERNAME: aitci
+       OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
