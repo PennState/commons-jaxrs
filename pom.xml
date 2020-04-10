@@ -352,7 +352,6 @@
               <versionTagPrefix>REL-</versionTagPrefix>
             </flowInitContext>
             <localOnly>true</localOnly>
-            <noDeploy>true</noDeploy>
             <incrementDevelopFromReleaseVersion>true</incrementDevelopFromReleaseVersion>
             <versionNumberToIncrement>1</versionNumberToIncrement>
           </configuration>
