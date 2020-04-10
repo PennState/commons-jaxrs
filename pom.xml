@@ -6,7 +6,8 @@
   IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language 
   governing permissions and limitations under the License. -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>edu.psu.swe.commons</groupId>
@@ -113,21 +114,21 @@
     </snapshotRepository>
   </distributionManagement>
 
-<dependencyManagement>
-<dependencies>
-        <!-- Import scope -->
-    <dependency>
-      <groupId>org.junit</groupId>
-      <artifactId>junit-bom</artifactId>
-      <version>${junit-bom.verion}</version>
-      <type>pom</type>
-      <scope>import</scope>
-    </dependency>
+  <dependencyManagement>
+    <dependencies>
+      <!-- Import scope -->
+      <dependency>
+        <groupId>org.junit</groupId>
+        <artifactId>junit-bom</artifactId>
+        <version>${junit-bom.verion}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
 
-</dependencies>
-</dependencyManagement>
+    </dependencies>
+  </dependencyManagement>
+
   <dependencies>
-
     <dependency>
       <groupId>javax.mail</groupId>
       <artifactId>javax.mail-api</artifactId>
