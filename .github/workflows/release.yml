@@ -30,9 +30,9 @@ jobs:
         export VERSION_TAG=`echo $GITHUB_REF | sed -n -e "s/.*\///gp"`
         mvn -B clean build-helper:parse-version jgitflow:release-start -DreleaseVersion=$VERSION_TAG $MAVEN_ARGS
         mvn -B jgitflow:release-finish -Dgpg.passphrase=$SIGNING_PASSPHRASE $MAVEN_ARGS 
-        git checkout develop
-        git commit --amend -m '[skip-ci] Updating develop poms back to pre merge state'
-        git push --all --follow-tags
+        # git checkout develop
+        # git commit --amend -m '[skip-ci] Updating develop poms back to pre merge state'
+        # git push --all --follow-tags
       env:
         SIGNING_PRIVATE: ${{ secrets.SIGNING_PRIVATE }}
         SIGNING_PASSPHRASE: ${{ secrets.SIGNING_PASSPHRASE }}
