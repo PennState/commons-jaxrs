@@ -1,0 +1,45 @@
+name: Java Release (Master)
+
+on:
+  release:
+    types:
+    - published
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up JDK 1.8
+      uses: actions/setup-java@v1
+      with:
+        java-version: 1.8
+        server-id: ossrh
+        server-username: OSSRH_USERNAME
+        server-password: OSSRH_PASSWORD
+    - name: Build with Maven
+      run: |
+        git config --global user.name "ais-swe-ci"
+        git config --global user.email "aitci@psu.edu"
+        git checkout master
+        git checkout develop
+        echo -n $SIGNING_PRIVATE | base64 -di > ~/private.asc
+        gpg --pinentry-mode loopback --batch --no-tty --yes --passphrase $SIGNING_PASSPHRASE --import ~/private.asc
+        export VERSION_TAG=`echo $GITHUB_REF | sed -n -e "s/.*\///gp"`
+        mvn -B clean build-helper:parse-version jgitflow:release-start -DreleaseVersion=$VERSION_TAG $MAVEN_ARGS
+        mvn -B jgitflow:release-finish -Dgpg.passphrase=$SIGNING_PASSPHRASE $MAVEN_ARGS 
+        git checkout develop
+        git commit --amend -m '[skip-ci] Updating develop poms back to pre merge state'
+        git push --all --follow-tags
+      env:
+        SIGNING_PRIVATE: ${{ secrets.SIGNING_PRIVATE }}
+        SIGNING_PASSPHRASE: ${{ secrets.SIGNING_PASSPHRASE }}
+        OSSRH_USERNAME: aitci
+        OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
+        MAVEN_ARGS: -DallowSnapshots=false -DallowUntracked=true -Psign-artifacts
+    # TODO: add steps to:
+    # - Version POMs
+    # - Update POM to next Snapshot version (on develop branch)
+    # - Add released artifacts to the release (publish) that started this build
