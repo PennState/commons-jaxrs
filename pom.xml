@@ -298,6 +298,7 @@
           <format>ALL</format>
           <failBuildOnAnyVulnerability>true</failBuildOnAnyVulnerability>
           <failOnError>false</failOnError>
+          <suppressionFiles>dependencyCheckSuppression.xml</suppressionFiles>
         </configuration>
         <executions>
           <execution>
