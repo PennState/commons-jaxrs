@@ -23,6 +23,7 @@ jobs:
       run: |
         echo -n $SIGNING_PRIVATE | base64 -di > ~/private.asc
         gpg --pinentry-mode loopback --batch --no-tty --yes --passphrase $SIGNING_PASSPHRASE --import ~/private.asc
+        gpg -k
         mvn -B deploy -Psign-artifacts -Dgpg.passphrase=$SIGNING_PASSPHRASE
       env:
        SIGNING_PRIVATE: ${{ secrets.SIGNING_PRIVATE }}
