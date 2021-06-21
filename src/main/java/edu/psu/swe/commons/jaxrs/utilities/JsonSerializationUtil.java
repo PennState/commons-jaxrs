@@ -2,8 +2,11 @@ package edu.psu.swe.commons.jaxrs.utilities;
 
 import java.io.IOException;
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -37,16 +40,17 @@ private static final ObjectMapper mapper;
     return Optional.of(obj);
   }
   
-  public static <T> Optional<List<T>> deserializeList(String json, Class<T> clazz) throws IOException {
+  @NotNull
+  public static <T> List<T> deserializeList(String json, Class<T> clazz) throws IOException {
     if (json == null || json.trim().isEmpty()) {
-      return Optional.empty();
+      return new ArrayList<>();
     }
     JavaType type = mapper.getTypeFactory().constructCollectionType(List.class, clazz);
     List<T> list = mapper.readValue(json, type);
     if (list.isEmpty()) {
-      return Optional.empty();
+      return new ArrayList<>();
     }
-    return Optional.of(list);
+    return list;
   }
 
 }
