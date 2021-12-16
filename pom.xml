@@ -21,20 +21,19 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-    <java.compiler.source>1.8</java.compiler.source>
-    <java.compiler.target>1.8</java.compiler.target>
+    <java-version>11</java-version>
 
-    <javaee-api.version>7.0</javaee-api.version>
+    <javaee-api.version>8.0.1</javaee-api.version>
     <javax.mail.version>1.6.0</javax.mail.version>
     <jackson.version>2.12.2</jackson.version>
-    <resteasy.version>3.15.1.Final</resteasy.version>
+    <resteasy.version>3.15.2.Final</resteasy.version>
     <commons-net.version>3.8.0</commons-net.version>
     <antlr-runtime.version>4.7.1</antlr-runtime.version>
 
-    <lombok.version>1.18.10</lombok.version>
+    <lombok.version>1.18.12</lombok.version>
 
-    <slf4j.version>1.7.25</slf4j.version>
-    <junit-bom.verion>5.3.2</junit-bom.verion>
+    <slf4j.version>1.7.30</slf4j.version>
+    <junit-bom.verion>5.7.1</junit-bom.verion>
   </properties>
 
   <licenses>
@@ -249,8 +248,8 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.1</version>
         <configuration>
-          <source>${java.compiler.source}</source>
-          <target>${java.compiler.target}</target>
+          <source>${java-version}</source>
+          <target>${java-version}</target>
         </configuration>
       </plugin>
       <plugin>
