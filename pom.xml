@@ -28,7 +28,7 @@
     <javax.mail.version>1.6.0</javax.mail.version>
     <jackson.version>2.12.2</jackson.version>
     <resteasy.version>3.15.1.Final</resteasy.version>
-    <commons-net.version>3.8.0</commons-net.version>
+    <commons-net.version>3.9.0</commons-net.version>
     <antlr-runtime.version>4.7.1</antlr-runtime.version>
 
     <lombok.version>1.18.10</lombok.version>
